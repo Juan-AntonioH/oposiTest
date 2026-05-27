@@ -25,7 +25,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({ question }) => {
             activeOpacity={0.7}
           >
             <Text style={[styles.optionText, isSelected && styles.textSelected]}>
-              {String.fromCharCode(65 + index)}) {option} {/* Renderiza A), B), C), D) */}
+              {String.fromCharCode(65 + index)} {option} {/* Renderiza A), B), C), D) */}
             </Text>
           </TouchableOpacity>
         );

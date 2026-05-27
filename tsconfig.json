@@ -4,8 +4,11 @@
     "strict": true,
     "paths": {
       "@/core/*": ["./src/core/*"],
+      "@/features/*": ["./src/features/*"],
+      "@/navigation/*": ["./src/navigation/*"],
+      "@/providers/*": ["./src/providers/*"],
       "@/shared/*": ["./src/shared/*"],
-      "@/features/*": ["./src/features/*"]
+      "@/store/*": ["./src/store/*"]
     }
   }
 }
