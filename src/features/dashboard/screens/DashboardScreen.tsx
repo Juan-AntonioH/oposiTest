@@ -30,7 +30,6 @@ export function DashboardScreen() {
 
       // 3. Modifica el onNavigate para gestionar las rutas del menú
       onNavigate={(screen) => {
-        console.log('Navigating to:', screen);
         if (screen === 'inicio') {
           navigation.navigate('Dashboard');
         }

@@ -57,9 +57,20 @@ export const LoginScreen: React.FC<Props> = ({
     // 3. Envolvemos toda la vista con ScreenLayout
     <ScreenLayout
       title="Iniciar Sesión"      // Define el título que saldrá en tu Toolbar
-      showSidebar={false}         // 👈 Crucial: Oculta el Sidebar y el botón hamburguesa
+      showSidebar={true}         // 👈 Crucial: Oculta el Sidebar y el botón hamburguesa
       sidebarOpen={sidebarOpen}
       setSidebarOpen={setSidebarOpen}
+      onMenuPress={() => setSidebarOpen(true)}
+          // 👈 CONFIGURA AQUÍ EL COMPORTAMIENTO DEL MENÚ PARA EL LOGIN
+    onNavigate={(screen) => {
+      
+      if (screen === 'inicio') {
+        setSidebarOpen(false); // Cierra el menú lateral primero
+        navigation.navigate('Dashboard'); // 👈 Redirige de vuelta al Dashboard en la pila
+      }
+      
+      // Aquí añadirás más condiciones en el futuro (ej: 'categorias')
+    }}
     >
       {/* Todo tu diseño original del formulario se queda dentro como "children" */}
       <View style={styles.container}>
