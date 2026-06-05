@@ -49,7 +49,7 @@ export function Sidebar({
         { label: 'Inicio', action: () => onNavigate?.('inicio') },
         { label: 'Categorías', action: () => onNavigate?.('categorias') },
         { label: 'Lista', action: () => onNavigate?.('lista') },
-        { label: 'Configuración', action: () => {} },
+        { label: 'Configuración', action: () =>  {} },
         {
           label: 'Logout',
           action: () => {
