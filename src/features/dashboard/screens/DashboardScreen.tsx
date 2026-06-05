@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import { ScreenLayout } from '@/shared/layouts/ScreenLayout';
+import { RootStackParamList } from '@/navigation'; // Importa el tipo que creamos en el index de navegación
 
-// import { Toolbar } from '@/shared/components/toolbar/ToolBar';
-// import { Sidebar } from '@/shared/components/sidebar/Sidebar';
-// import { styles } from './DashboardScreen.styles';
+// Tipamos la navegación para esta pantalla específica
+type DashboardNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Dashboard'>;
 
 export function DashboardScreen() {
+  // 1. Hook para obtener el control de la navegación
+  const navigation = useNavigation<DashboardNavigationProp>();
 
-    // Controla si el sidebar está abierto o cerrado
+  // Controla si el sidebar está abierto o cerrado
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
@@ -18,10 +22,20 @@ export function DashboardScreen() {
       sidebarOpen={sidebarOpen}
       setSidebarOpen={setSidebarOpen}
       onMenuPress={() => setSidebarOpen(true)}
-
-      isLoggedIn={true}
+      isLoggedIn={false}
       userName="Usuario Demo"
-      onNavigate={(screen) => console.log(screen)}
+      
+      // 2. Añade el callback para interceptar el click de Login
+      onLoginClick={() => navigation.navigate('Login')}
+
+      // 3. Modifica el onNavigate para gestionar las rutas del menú
+      onNavigate={(screen) => {
+        console.log('Navigating to:', screen);
+        if (screen === 'inicio') {
+          navigation.navigate('Dashboard');
+        }
+        // Aquí añadirás más pantallas (ej: 'categorias', 'lista') cuando las crees en tu Stack
+      }}
     >
       
       {/* CONTENIDO DEL DASHBOARD */}
