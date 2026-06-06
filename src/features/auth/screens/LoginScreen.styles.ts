@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { colors, spacing, radius, shadows } from '@/core/theme';
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     borderColor: '#D1D5DB',
     borderRadius: radius.md,
     paddingHorizontal: spacing.sm,
-    backgroundColor: '#fff',
+    // backgroundColor: '#fff',
   },
 
   icon: {
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   forgot: {
     textAlign: 'center',
     marginTop: spacing.md,
-    color: colors.primary,
+    // color: colors.primary,
     fontSize: 13,
   },
 
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
   or: {
     marginHorizontal: spacing.sm,
     color: '#9CA3AF',
-    fontSize: 12,
+    // fontSize: 12,
   },
     recoveryText: {
     color: colors.danger,

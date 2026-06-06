@@ -3,7 +3,6 @@ import {
   View,
   Text,
   TextInput,
-  StyleSheet,
   TouchableOpacity,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -12,6 +11,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { ScreenLayout } from '@/shared/layouts/ScreenLayout'; // 1. Importa tu layout
 import { CustomButton } from '@/shared/components/Button/CustomButton';
 import { colors, spacing, radius, shadows } from '@/core/theme';
+import { styles } from './LoginScreen.styles';
 import { RootStackParamList } from '@/navigation';
 import { MaterialIcons } from '@expo/vector-icons';
 
@@ -41,7 +41,7 @@ export const LoginScreen: React.FC<Props> = ({
     if (onLogin) {
       onLogin(email, password);
     } else {
-      navigation.navigate('Dashboard'); 
+      navigation.navigate('Dashboard');
     }
   };
 
@@ -49,10 +49,12 @@ export const LoginScreen: React.FC<Props> = ({
     if (onNavigateToRecovery) onNavigateToRecovery();
   };
 
-  const handleNavigateToRegister = () => {
-    if (onNavigateToRegister) onNavigateToRegister();
-  };
-
+  // const handleNavigateToRegister = () => {
+  //   if (onNavigateToRegister) onNavigateToRegister();
+  // };
+const handleNavigateToRegister = () => {
+  navigation.navigate('Register');
+};
   return (
     // 3. Envolvemos toda la vista con ScreenLayout
     <ScreenLayout
@@ -61,16 +63,16 @@ export const LoginScreen: React.FC<Props> = ({
       sidebarOpen={sidebarOpen}
       setSidebarOpen={setSidebarOpen}
       onMenuPress={() => setSidebarOpen(true)}
-          // 👈 CONFIGURA AQUÍ EL COMPORTAMIENTO DEL MENÚ PARA EL LOGIN
-    onNavigate={(screen) => {
-      
-      if (screen === 'inicio') {
-        setSidebarOpen(false); // Cierra el menú lateral primero
-        navigation.navigate('Dashboard'); // 👈 Redirige de vuelta al Dashboard en la pila
-      }
-      
-      // Aquí añadirás más condiciones en el futuro (ej: 'categorias')
-    }}
+      // 👈 CONFIGURA AQUÍ EL COMPORTAMIENTO DEL MENÚ PARA EL LOGIN
+      onNavigate={(screen) => {
+
+        if (screen === 'inicio') {
+          setSidebarOpen(false); // Cierra el menú lateral primero
+          navigation.navigate('Dashboard'); // 👈 Redirige de vuelta al Dashboard en la pila
+        }
+
+        // Aquí añadirás más condiciones en el futuro (ej: 'categorias')
+      }}
     >
       {/* Todo tu diseño original del formulario se queda dentro como "children" */}
       <View style={styles.container}>
@@ -92,7 +94,7 @@ export const LoginScreen: React.FC<Props> = ({
               <TextInput
                 value={email}
                 onChangeText={setEmail}
-                placeholder="tu@email.com"
+                placeholder="Pepito/tu@email.com"
                 placeholderTextColor="#9CA3AF"
                 style={styles.input}
                 autoCapitalize="none"
@@ -146,77 +148,3 @@ export const LoginScreen: React.FC<Props> = ({
     </ScreenLayout>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    padding: spacing.lg,
-    backgroundColor: '#F5F7FB',
-  },
-  card: {
-    backgroundColor: colors.white,
-    borderRadius: radius.lg,
-    padding: spacing.xl,
-    ...shadows.sm,
-  },
-  iconContainer: {
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    backgroundColor: colors.primary,
-    alignItems: 'center',
-    justifyContent: 'center',
-    alignSelf: 'center',
-    marginBottom: spacing.md,
-  },
-  title: {
-    fontSize: 22,
-    fontWeight: '600',
-    textAlign: 'center',
-    marginBottom: spacing.lg,
-    color: '#1F2937',
-  },
-  inputGroup: {
-    marginBottom: spacing.md,
-  },
-  label: {
-    fontSize: 13,
-    marginBottom: spacing.xs,
-    color: '#374151',
-    fontWeight: '500',
-  },
-  inputWrapper: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#D1D5DB',
-    borderRadius: radius.md,
-    paddingHorizontal: spacing.sm,
-  },
-  input: {
-    flex: 1,
-    paddingVertical: spacing.sm,
-    fontSize: 14,
-    color: '#111827',
-  },
-  forgot: {
-    textAlign: 'center',
-    marginTop: spacing.md,
-    fontSize: 13,
-  },
-  divider: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: spacing.md,
-  },
-  line: {
-    flex: 1,
-    height: 1,
-    backgroundColor: '#E5E7EB',
-  },
-  or: {
-    marginHorizontal: spacing.sm,
-    color: '#9CA3AF',
-  },
-});
