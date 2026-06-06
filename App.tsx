@@ -2,7 +2,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { Navigation } from '@/navigation';
 
-export default function App() { console.log("hola -> "+process.env.EXPO_PUBLIC_FIREBASE_PROJECT_ID);
+export default function App() {
   return (
     <SafeAreaProvider>
       <Navigation />
