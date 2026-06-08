@@ -1,6 +1,8 @@
 import { View, Text, Pressable } from 'react-native';
 
 import { styles } from './ToolBar.styles';
+import { MaterialIcons } from '@expo/vector-icons';
+import { colors } from '@/core/theme/colors';
 
 interface ToolbarProps {
   title: string;
@@ -17,7 +19,7 @@ export function Toolbar({ title, onMenuPress }: ToolbarProps) {
           style={styles.menuButton}
           onPress={onMenuPress}
         >
-          <Text style={styles.menuIcon}>☰</Text>
+          <MaterialIcons name="menu" size={32} color={colors.white}></MaterialIcons>
         </Pressable>
       ) : (
         // placeholder para mantener centrado el título

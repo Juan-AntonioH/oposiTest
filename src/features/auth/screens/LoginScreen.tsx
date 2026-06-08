@@ -4,6 +4,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  Pressable,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -11,7 +12,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { ScreenLayout } from '@/shared/layouts/ScreenLayout'; // 1. Importa tu layout
 import { CustomButton } from '@/shared/components/Button/CustomButton';
 import { colors, spacing, radius, shadows } from '@/core/theme';
-import { styles } from './LoginScreen.styles';
+import { styles } from '../styles/Auth.styles';
 import { RootStackParamList } from '@/navigation';
 import { MaterialIcons } from '@expo/vector-icons';
 
@@ -26,7 +27,7 @@ type LoginScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, '
 export const LoginScreen: React.FC<Props> = ({
   onLogin,
   onNavigateToRecovery,
-  onNavigateToRegister,
+  // onNavigateToRegister,
 }) => {
   const navigation = useNavigation<LoginScreenNavigationProp>();
   const [email, setEmail] = useState('');
@@ -52,9 +53,9 @@ export const LoginScreen: React.FC<Props> = ({
   // const handleNavigateToRegister = () => {
   //   if (onNavigateToRegister) onNavigateToRegister();
   // };
-const handleNavigateToRegister = () => {
-  navigation.navigate('Register');
-};
+  // const handleNavigateToRegister = () => {
+  //   navigation.navigate('Register');
+  // };
   return (
     // 3. Envolvemos toda la vista con ScreenLayout
     <ScreenLayout
@@ -74,6 +75,15 @@ const handleNavigateToRegister = () => {
         // Aquí añadirás más condiciones en el futuro (ej: 'categorias')
       }}
     >
+      {/* BOTÓN VOLVER */}
+      <View style={styles.backButtonContainer}>
+        <Pressable
+          style={styles.backButton}
+          onPress={() => navigation.goBack()} // ← Te regresa automáticamente a la pantalla anterior (Login)
+        >
+          <Text style={styles.backButtonText}>← Volver</Text>
+        </Pressable>
+      </View>
       {/* Todo tu diseño original del formulario se queda dentro como "children" */}
       <View style={styles.container}>
         <View style={styles.card}>
@@ -140,7 +150,7 @@ const handleNavigateToRegister = () => {
           {/* REGISTER */}
           <CustomButton
             title="Crear cuenta nueva"
-            onPress={handleNavigateToRegister}
+            onPress={() => navigation.navigate('Register')}
             variant="outline"
           />
         </View>
