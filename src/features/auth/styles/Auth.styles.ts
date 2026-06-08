@@ -91,9 +91,27 @@ export const styles = StyleSheet.create({
     color: '#9CA3AF',
     // fontSize: 12,
   },
-    recoveryText: {
+  recoveryText: {
     color: colors.danger,
     textAlign: 'center',
     fontSize: 14,
   },
+  backButtonText: {
+    color: '#64748B', // Usa tu paleta de colores del tema global si existe
+    fontSize: 15,
+    fontWeight: '600',
+  },
+  backButtonContainer: {
+    width: '100%',
+    alignItems: 'flex-start',
+    marginBottom: 12,
+    paddingHorizontal: 4, // Pequeño margen para que no pegue directo al borde de la pantalla
+  },
+
+  // Área táctil del botón volver (facilita la pulsación del usuario)
+  backButton: {
+    paddingVertical: 8,
+    paddingRight: 16, // Espacio interactivo hacia la derecha
+  },
+
 });
