@@ -23,7 +23,7 @@ type RegisterScreenNavigationProp = NativeStackNavigationProp<RootStackParamList
 export function RegisterScreen() {
   // Inicialización tipada idéntica a tu Login
   const navigation = useNavigation<RegisterScreenNavigationProp>();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  // const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const [accountName, setAccountName] = useState('');
   const [username, setUsername] = useState('');
@@ -124,27 +124,28 @@ export function RegisterScreen() {
     };
 
     console.log('Enviando registro a la base de datos:', payload);
-    Alert.alert('Registro Exitoso', `Usuario creado. Avatar guardado como: ${payload.avatar}`);
+    // Alert.alert('Registro Exitoso', `Usuario creado. Avatar guardado como: ${payload.avatar}`);
+    navigation.navigate('Authenticator', { email: payload.email });
   };
 
   return (
     <ScreenLayout
       title="Crear Cuenta"
       showSidebar={true}
-      // sidebarOpen={sidebarOpen}
-      // setSidebarOpen={setSidebarOpen}
-      // onMenuPress={() => setSidebarOpen(true)}
-      // onLoginClick={() => navigation.navigate('Login')}
-      // 👈 CONFIGURA AQUÍ EL COMPORTAMIENTO DEL MENÚ PARA EL LOGIN
-      onNavigate={(screen) => {
+    // sidebarOpen={sidebarOpen}
+    // setSidebarOpen={setSidebarOpen}
+    // onMenuPress={() => setSidebarOpen(true)}
+    // onLoginClick={() => navigation.navigate('Login')}
+    // 👈 CONFIGURA AQUÍ EL COMPORTAMIENTO DEL MENÚ PARA EL LOGIN
+    // onNavigate={(screen) => {
 
-        if (screen === 'inicio') {
-          setSidebarOpen(false); // Cierra el menú lateral primero
-          navigation.navigate('Dashboard'); // 👈 Redirige de vuelta al Dashboard en la pila
-        }
+    //   if (screen === 'inicio') {
+    //     setSidebarOpen(false); // Cierra el menú lateral primero
+    //     navigation.navigate('Dashboard'); // 👈 Redirige de vuelta al Dashboard en la pila
+    //   }
 
-        // Aquí añadirás más condiciones en el futuro (ej: 'categorias')
-      }}
+    //   // Aquí añadirás más condiciones en el futuro (ej: 'categorias')
+    // }}
     >
       <ScrollView
         contentContainerStyle={[styles.scrollContent, styles.localScroll]}
