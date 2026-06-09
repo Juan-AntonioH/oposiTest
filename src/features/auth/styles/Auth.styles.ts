@@ -107,11 +107,30 @@ export const styles = StyleSheet.create({
     marginBottom: 12,
     paddingHorizontal: 4, // Pequeño margen para que no pegue directo al borde de la pantalla
   },
-
   // Área táctil del botón volver (facilita la pulsación del usuario)
   backButton: {
     paddingVertical: 8,
     paddingRight: 16, // Espacio interactivo hacia la derecha
   },
-
+  disabledButton: { backgroundColor: '#CBD5E1' },
+  submitButtonText: { 
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: 'bold' 
+  },
+  localScroll: { paddingBottom: 40 },
+  submitButton: {
+    backgroundColor: '#94A3B8',
+    borderRadius: 10,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 24,
+  },
+    scrollContent: {
+    flexGrow: 1,          // Permite que el scroll se estire correctamente si el contenido es menor a la pantalla
+    paddingHorizontal: 16, // Margen interno izquierdo y derecho para que no pegue al borde del dispositivo
+    paddingTop: 10,
+    paddingBottom: 30,    // Espaciado inferior para que el botón de Crear Cuenta no quede cortado
+  },
 });

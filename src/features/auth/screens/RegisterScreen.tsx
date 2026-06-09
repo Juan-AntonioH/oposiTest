@@ -1,99 +1,6 @@
-// import React, { useState } from 'react';
-// import {
-//   View,
-//   Text,
-//   ScrollView,
-// } from 'react-native';
-
-// import { ScreenLayout } from '@/shared/layouts/ScreenLayout';
-// import { AuthCard } from '../components/AuthCard';
-// import { AuthInput } from '../components/AuthInput';
-// import { AvatarSelector } from '../components/AvatarSelector';
-// import { PasswordRequirements } from '../components/PasswordRequirements';
-// import { PRESET_AVATARS } from '../constants/avatars';
-
-// import { styles } from '../styles/Auth.styles';
-// import { registerStyles } from '../styles/Register.styles';
-
-// export function RegisterScreen() {
-//   const [accountName, setAccountName] = useState('');
-//   const [username, setUsername] = useState('');
-//   const [email, setEmail] = useState('');
-//   const [password, setPassword] = useState('');
-
-//   // avatar mostrado arriba
-//   const [selectedAvatar, setSelectedAvatar] =
-//     useState('default_avatar');
-
-//   return (
-//     <ScreenLayout
-//       title="Crear Cuenta"
-//       showSidebar={true}
-//     >
-//       <ScrollView
-//         contentContainerStyle={registerStyles.scrollContent}
-//         showsVerticalScrollIndicator={false}
-//       >
-//         <AuthCard title="Crear Cuenta Nueva">
-
-//           {/* AVATAR */}
-//           <AvatarSelector
-//             selectedAvatar={selectedAvatar}
-//             onSelectAvatar={setSelectedAvatar}
-//           />
-
-//           {/* ALIAS */}
-//           <AuthInput
-//             label="Nombre o Alias"
-//             icon="person-outline"
-//             value={accountName}
-//             onChangeText={setAccountName}
-//             placeholder="Juan Pérez"
-//           />
-
-//           {/* USERNAME */}
-//           <AuthInput
-//             label="Nombre de usuario"
-//             icon="alternate-email"
-//             value={username}
-//             onChangeText={setUsername}
-//             placeholder="usuario123"
-//             helperText="Debe ser único"
-//           />
-
-//           {/* EMAIL */}
-//           <AuthInput
-//             label="Correo electrónico"
-//             icon="email"
-//             value={email}
-//             onChangeText={setEmail}
-//             placeholder="tu@email.com"
-//             keyboardType="email-address"
-//             autoCapitalize="none"
-//           />
-
-//           {/* PASSWORD */}
-//           <AuthInput
-//             label="Contraseña"
-//             icon="lock-outline"
-//             value={password}
-//             onChangeText={setPassword}
-//             placeholder="••••••••"
-//             secureTextEntry
-//           />
-
-//           {/* REQUISITOS */}
-//           <PasswordRequirements
-//             password={password}
-//           />
-
-//         </AuthCard>
-//       </ScrollView>
-//     </ScreenLayout>
-//   );
-// }
 import React, { useState } from 'react';
 import { View, ScrollView, StyleSheet, Pressable, Text, Alert } from 'react-native';
+import { styles } from '../styles/Auth.styles';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
 import { useNavigation } from '@react-navigation/native';
@@ -109,7 +16,6 @@ import { PRESET_AVATARS } from '../constants/avatars';
 import { colors } from '@/core/theme';
 
 import { RootStackParamList } from '@/navigation';
-import { registerStyles } from '../styles/Register.styles'; // ← Importa la lista de rutas
 
 // Define el tipo específico de navegación para la pantalla de registro
 type RegisterScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Register'>;
@@ -225,9 +131,10 @@ export function RegisterScreen() {
     <ScreenLayout
       title="Crear Cuenta"
       showSidebar={true}
-      sidebarOpen={sidebarOpen}
-      setSidebarOpen={setSidebarOpen}
-      onMenuPress={() => setSidebarOpen(true)}
+      // sidebarOpen={sidebarOpen}
+      // setSidebarOpen={setSidebarOpen}
+      // onMenuPress={() => setSidebarOpen(true)}
+      // onLoginClick={() => navigation.navigate('Login')}
       // 👈 CONFIGURA AQUÍ EL COMPORTAMIENTO DEL MENÚ PARA EL LOGIN
       onNavigate={(screen) => {
 
@@ -240,7 +147,7 @@ export function RegisterScreen() {
       }}
     >
       <ScrollView
-        contentContainerStyle={[registerStyles.scrollContent, styles.localScroll]}
+        contentContainerStyle={[styles.scrollContent, styles.localScroll]}
         showsVerticalScrollIndicator={false}
       >
 
@@ -323,34 +230,3 @@ export function RegisterScreen() {
     </ScreenLayout>
   );
 }
-
-const styles = StyleSheet.create({
-  localScroll: { paddingBottom: 40 },
-  submitButton: {
-    backgroundColor: '#94A3B8',
-    borderRadius: 10,
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 24,
-  },
-  disabledButton: { backgroundColor: '#CBD5E1' },
-  submitButtonText: { color: '#FFFFFF', fontSize: 16, fontWeight: 'bold' },
-  backButtonText: {
-    color: '#64748B', // Usa tu paleta de colores del tema global si existe
-    fontSize: 15,
-    fontWeight: '600',
-  },
-  backButtonContainer: {
-    width: '100%',
-    alignItems: 'flex-start',
-    marginBottom: 12,
-    paddingHorizontal: 4, // Pequeño margen para que no pegue directo al borde de la pantalla
-  },
-
-  // Área táctil del botón volver (facilita la pulsación del usuario)
-  backButton: {
-    paddingVertical: 8,
-    paddingRight: 16, // Espacio interactivo hacia la derecha
-  },
-});
