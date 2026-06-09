@@ -1,44 +1,124 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, GestureResponderEvent } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  GestureResponderEvent,
+} from 'react-native';
+
+import { colors, spacing, radius, shadows} from '@/core/theme';
 
 interface CustomButtonProps {
   title: string;
   onPress: (event: GestureResponderEvent) => void;
-  variant?: 'primary' | 'secondary';
+  variant?: 'primary' | 'secondary' | 'outline' | 'danger';
 }
 
-export const CustomButton: React.FC<CustomButtonProps> = ({ title, onPress, variant = 'primary' }) => {
-  const isPrimary = variant === 'primary';
+export const CustomButton: React.FC<CustomButtonProps> = ({
+  title,
+  onPress,
+  variant = 'primary',
+}) => {
+
+  const getButtonStyle = () => {
+    switch (variant) {
+
+      case 'secondary':
+        return styles.secondaryBtn;
+
+      case 'outline':
+        return styles.outlineBtn;
+
+      case 'danger':
+        return styles.dangerBtn;
+
+      default:
+        return styles.primaryBtn;
+    }
+  };
+
+  const getTextStyle = () => {
+    switch (variant) {
+
+      case 'outline':
+        return styles.outlineText;
+
+      case 'danger':
+        return styles.dangerText;
+
+      case 'secondary':
+        return styles.secondaryText;
+
+      default:
+        return styles.primaryText;
+    }
+  };
 
   return (
-    <TouchableOpacity 
-      style={[styles.button, isPrimary ? styles.primaryBtn : styles.secondaryBtn]} 
+    <TouchableOpacity
+      style={[styles.button, getButtonStyle()]}
       onPress={onPress}
       activeOpacity={0.8}
     >
-      <Text style={[styles.text, isPrimary ? styles.primaryText : styles.secondaryText]}>
+      <Text style={[styles.text, getTextStyle()]}>
         {title}
       </Text>
     </TouchableOpacity>
   );
 };
-
 const styles = StyleSheet.create({
+
   button: {
-    paddingVertical: 14,
-    borderRadius: 8,
+    paddingVertical: spacing.lg,
+    borderRadius: radius.md,
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 2,
+    
+    ...shadows.sm,
+    // shadowColor: '#000',
+    // shadowOffset: { width: 0, height: 1 },
+    // shadowOpacity: 0.1,
+    // shadowRadius: 2,
+    // elevation: 2,
   },
-  primaryBtn: { backgroundColor: '#1A56DB' },
-  secondaryBtn: { backgroundColor: '#F3F4F6', borderWidth: 1, borderColor: '#E5E7EB' },
-  text: { fontSize: 16, fontWeight: '600' },
-  primaryText: { color: '#FFFFFF' },
-  secondaryText: { color: '#374151' },
+
+  primaryBtn: {
+    backgroundColor: colors.primary,
+  },
+
+  secondaryBtn: {
+    backgroundColor: colors.secondary,
+  },
+
+  outlineBtn: {
+    backgroundColor: colors.white,
+    borderWidth: 2,
+    borderColor: colors.secondary,
+  },
+
+  dangerBtn: {
+    backgroundColor: colors.danger,
+  },
+
+  text: {
+    fontSize: 16,
+    fontWeight: '600',
+  },
+
+  primaryText: {
+    color: colors.white,
+  },
+
+  secondaryText: {
+    color: colors.white,
+  },
+
+  outlineText: {
+    color: colors.secondary,
+  },
+
+  dangerText: {
+    color: colors.white,
+  },
 });
