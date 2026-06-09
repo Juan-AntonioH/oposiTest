@@ -113,10 +113,10 @@ export const styles = StyleSheet.create({
     paddingRight: 16, // Espacio interactivo hacia la derecha
   },
   disabledButton: { backgroundColor: '#CBD5E1' },
-  submitButtonText: { 
+  submitButtonText: {
     color: '#FFFFFF',
     fontSize: 16,
-    fontWeight: 'bold' 
+    fontWeight: 'bold'
   },
   localScroll: { paddingBottom: 40 },
   submitButton: {
@@ -127,10 +127,137 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 24,
   },
-    scrollContent: {
+  scrollContent: {
     flexGrow: 1,          // Permite que el scroll se estire correctamente si el contenido es menor a la pantalla
     paddingHorizontal: 16, // Margen interno izquierdo y derecho para que no pegue al borde del dispositivo
     paddingTop: 10,
     paddingBottom: 30,    // Espaciado inferior para que el botón de Crear Cuenta no quede cortado
+  },
+  /* ==========================================================================
+    NUEVOS ESTILOS PARA AUTHENTICATOR
+    ========================================================================== */
+  subtitle: {
+    fontSize: 14,
+    color: '#64748B',
+    textAlign: 'center',
+    lineHeight: 20,
+    marginBottom: spacing.xl,
+  },
+
+  emailText: {
+    fontWeight: '600',
+    color: '#334155',
+  },
+
+  codeContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    marginBottom: spacing.xl,
+  },
+
+  codeInput: {
+    width: '14%',
+    height: 50,
+    borderWidth: 1,
+    borderColor: '#D1D5DB',
+    borderRadius: radius.md, // 👈 Reutiliza tus esquinas del tema
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#111827',
+    backgroundColor: colors.white,
+    // textAlign: 'center',
+  },
+
+  resendText: {
+    fontSize: 14,
+    color: '#64748B',
+    // textAlign: 'center',
+    // marginTop: spacing.md,
+  },
+
+  resendLink: {
+    color: colors.primary, // 👈 Reutiliza tu color principal para el enlace
+    fontWeight: '600',
+  },
+  button: {
+    width: '100%',
+    height: 48,
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 24,
+  },
+  buttonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  buttonDisabled: {
+    backgroundColor: '#94A3B8', // Gris desactivado como en tu captura
+  },
+  buttonActive: {
+    backgroundColor: '#1D4ED8', // Cambia a azul brillante al completarse
+  },
+  authenticatorContainer: {
+    flex: 1,
+    backgroundColor: '#F8FAFC',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    paddingTop: 40,
+  },
+  authenticatorCard: {
+    width: '90%',
+    backgroundColor: '#ffffff',
+    borderRadius: 16,
+    padding: 24,
+    alignItems: 'center',
+    // Sombra suave para la tarjeta blanca
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    elevation: 2,
+  },
+  /* ==========================================================================
+  NUEVOS ESTILOS PARA AUTHENTICATOR MODAL
+  ========================================================================== */
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.4)', // Fondo oscuro translúcido
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContent: {
+    width: '80%',
+    backgroundColor: '#FFFFFF',
+    borderRadius: radius.lg,
+    padding: spacing.xl,
+    alignItems: 'center',
+    // Sombra pronunciada para dar efecto de flotación
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 12,
+    elevation: 5,
+  },
+  successIconContainer: {
+    marginBottom: spacing.sm,
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#1F2937',
+    marginBottom: spacing.xs,
+    textAlign: 'center',
+  },
+  modalMessage: {
+    fontSize: 14,
+    color: '#4B5563',
+    textAlign: 'center',
+    lineHeight: 20,
+  },
+  iconWrapper: {
+    marginBottom: spacing.sm,
   },
 });
