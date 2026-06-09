@@ -5,11 +5,13 @@ import {
   Pressable,
   Modal,
   Animated,
+  Image,
 } from 'react-native';
 
 import { SidebarProps } from './Sidebar.types';
 import { styles } from './Sidebar.styles';
-
+import { MaterialIcons } from '@expo/vector-icons';
+import { PRESET_AVATARS } from '@/features/auth/constants/avatars';
 export function Sidebar({
   isOpen,
   onClose,
@@ -21,7 +23,7 @@ export function Sidebar({
   onLogout,
   onNavigate,
 }: SidebarProps) {
-  
+
   // Animación simple de entrada (slide from left)
   const translateX = React.useRef(new Animated.Value(-300)).current;
 
@@ -46,21 +48,22 @@ export function Sidebar({
   // Menú dinámico según login
   const menuItems = isLoggedIn
     ? [
-        { label: 'Inicio', action: () => onNavigate?.('inicio') },
-        { label: 'Categorías', action: () => onNavigate?.('categorias') },
-        { label: 'Lista', action: () => onNavigate?.('lista') },
-        { label: 'Configuración', action: () =>  {} },
-        {
-          label: 'Logout',
-          action: () => {
-            onLogout?.();
-            onNavigate?.('inicio');
-          },
+      { label: 'Inicio', icon: 'home', action: () => onNavigate?.('inicio') },
+      { label: 'Categorías', icon: 'category', action: () => onNavigate?.('categorias') },
+      { label: 'Lista', icon: 'list', action: () => onNavigate?.('lista') },
+      { label: 'Configuración', icon: 'settings', action: () => { } },
+      {
+        label: 'Logout',
+        icon: 'logout',
+        action: () => {
+          onLogout?.();
+          onNavigate?.('inicio');
         },
-      ]
+      },
+    ]
     : [
-        { label: 'Inicio', action: () => onNavigate?.('inicio') },
-      ];
+      { label: 'Inicio', icon: 'home', action: () => onNavigate?.('inicio') },
+    ];
 
   return (
     <Modal
@@ -105,10 +108,24 @@ export function Sidebar({
               <Text style={styles.loginText}>Login</Text>
             </Pressable>
           ) : (
-            <Pressable onPress={onProfileClick}>
-              <Text style={styles.userName}>
-                {userName ?? 'Usuario'}
-              </Text>
+            <Pressable style={styles.profileContainer} onPress={onProfileClick}>
+              {/* AVATAR DESDE TU BANCO DE IMÁGENES */}
+              <Image
+                source={
+                  PRESET_AVATARS.find((avatar) => avatar.id === (userAvatar || 'avatar_01'))?.image ||
+                  PRESET_AVATARS[0].image
+                }
+                style={styles.avatar}
+              />
+              {/* DATOS DE USUARIO */}
+              <View style={styles.userInfo}>
+                <Text style={styles.userName} numberOfLines={1}>
+                  {userName ?? 'Juan Pérez Martínez'}
+                </Text>
+                <Text style={styles.profileLink}>
+                  Perfil
+                </Text>
+              </View>
             </Pressable>
           )}
         </View>
@@ -124,6 +141,14 @@ export function Sidebar({
                 onClose();
               }}
             >
+              {/* 🟢 ICONO MATERIALICON A LA IZQUIERDA */}
+              <MaterialIcons
+                name={item.icon as any}
+                size={24} // O el color de tu tema (ej: colors.white)
+                style={styles.menuIcon}
+              />
+
+              {/* TEXTO DE LA OPCIÓN */}
               <Text style={styles.menuText}>
                 {item.label}
               </Text>
@@ -134,3 +159,4 @@ export function Sidebar({
     </Modal>
   );
 }
+

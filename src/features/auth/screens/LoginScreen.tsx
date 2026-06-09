@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Pressable,
 } from 'react-native';
+import { useAuthStore } from '@/store/authStore'; // O la ruta correspondiente
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
@@ -29,27 +30,28 @@ export const LoginScreen: React.FC<Props> = ({
   onNavigateToRecovery,
   // onNavigateToRegister,
 }) => {
+  const loginGlobal = useAuthStore((state) => state.login);
   const navigation = useNavigation<LoginScreenNavigationProp>();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   // 2. Necesitamos pasar estas props de control obligatorias al layout, 
   // aunque al usar showSidebar={false} el Sidebar nunca se abrirá.
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  // const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const handleLogin = () => {
     if (!email || !password) return;
     if (onLogin) {
       onLogin(email, password);
     } else {
+      loginGlobal();
       navigation.navigate('Dashboard');
     }
   };
 
-  const handleNavigateToRecovery = () => {
-    if (onNavigateToRecovery) onNavigateToRecovery();
-  };
-
+  // const handleNavigateToRecovery = () => {
+  //   if (onNavigateToRecovery) onNavigateToRecovery();
+  // };
   // const handleNavigateToRegister = () => {
   //   if (onNavigateToRegister) onNavigateToRegister();
   // };
@@ -61,25 +63,25 @@ export const LoginScreen: React.FC<Props> = ({
     <ScreenLayout
       title="Iniciar Sesión"      // Define el título que saldrá en tu Toolbar
       showSidebar={true}         // 👈 Crucial: Oculta el Sidebar y el botón hamburguesa
-      sidebarOpen={sidebarOpen}
-      setSidebarOpen={setSidebarOpen}
-      onMenuPress={() => setSidebarOpen(true)}
-      // 👈 CONFIGURA AQUÍ EL COMPORTAMIENTO DEL MENÚ PARA EL LOGIN
-      onNavigate={(screen) => {
+    // sidebarOpen={sidebarOpen}
+    // setSidebarOpen={setSidebarOpen}
+    // onMenuPress={() => setSidebarOpen(true)}
+    // 👈 CONFIGURA AQUÍ EL COMPORTAMIENTO DEL MENÚ PARA EL LOGIN
+    // onNavigate={(screen) => {
 
-        if (screen === 'inicio') {
-          setSidebarOpen(false); // Cierra el menú lateral primero
-          navigation.navigate('Dashboard'); // 👈 Redirige de vuelta al Dashboard en la pila
-        }
+    //   if (screen === 'inicio') {
+    //     setSidebarOpen(false); // Cierra el menú lateral primero
+    //     navigation.navigate('Dashboard'); // 👈 Redirige de vuelta al Dashboard en la pila
+    //   }
 
-        // Aquí añadirás más condiciones en el futuro (ej: 'categorias')
-      }}
+    //   // Aquí añadirás más condiciones en el futuro (ej: 'categorias')
+    // }}
     >
       {/* BOTÓN VOLVER */}
       <View style={styles.backButtonContainer}>
         <Pressable
           style={styles.backButton}
-          onPress={() => navigation.goBack()} // ← Te regresa automáticamente a la pantalla anterior (Login)
+          onPress={() => navigation.navigate('Dashboard')} // ← Te regresa automáticamente a la pantalla anterior (Login)
         >
           <Text style={styles.backButtonText}>← Volver</Text>
         </Pressable>
@@ -136,7 +138,7 @@ export const LoginScreen: React.FC<Props> = ({
           />
 
           {/* LINKS */}
-          <TouchableOpacity onPress={handleNavigateToRecovery}>
+          <TouchableOpacity onPress={() => navigation.navigate('Recovery')}>
             <Text style={[styles.forgot, { color: colors.danger }]}>¿Olvidaste tu contraseña?</Text>
           </TouchableOpacity>
 
@@ -157,4 +159,4 @@ export const LoginScreen: React.FC<Props> = ({
       </View>
     </ScreenLayout>
   );
-};
+};  
