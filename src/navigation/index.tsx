@@ -11,6 +11,7 @@ import { LoginScreen } from '@/features/auth/screens/LoginScreen'; // Ajusta la 
 import { RegisterScreen } from '@/features/auth/screens/RegisterScreen';
 import { RecoveryScreen } from '@/features/auth/screens/RecoveryScreen';
 import { AuthenticatorScreen } from '@/features/auth/screens/AuthenticatorScreen'; // Nueva pantalla de autenticación
+import { OppositionsScreen } from '@/features/exam/screens/OppositionsScreen';
 
 // Definimos los nombres de las pantallas para TypeScript
 export type RootStackParamList = {
@@ -19,6 +20,7 @@ export type RootStackParamList = {
   Register: undefined;
   Recovery: undefined;
   Authenticator: { email: string }; // La pantalla de autenticación espera un parámetro de correo electrónico
+  Opossitions: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -35,6 +37,7 @@ export function Navigation() {
         <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen name="Recovery" component={RecoveryScreen} />
         <Stack.Screen name="Authenticator" component={AuthenticatorScreen} />
+        <Stack.Screen name="Opossitions" component={OppositionsScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

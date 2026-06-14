@@ -49,7 +49,7 @@ export function Sidebar({
   const menuItems = isLoggedIn
     ? [
       { label: 'Inicio', icon: 'home', action: () => onNavigate?.('inicio') },
-      { label: 'Categorías', icon: 'category', action: () => onNavigate?.('categorias') },
+      { label: 'Oposiciones', icon: 'category', action: () => onNavigate?.('oposiciones') },
       { label: 'Lista', icon: 'list', action: () => onNavigate?.('lista') },
       { label: 'Configuración', icon: 'settings', action: () => { } },
       {
@@ -63,6 +63,8 @@ export function Sidebar({
     ]
     : [
       { label: 'Inicio', icon: 'home', action: () => onNavigate?.('inicio') },
+      { label: 'Oposiciones', icon: 'category', action: () => onNavigate?.('oposiciones') },
+
     ];
 
   return (

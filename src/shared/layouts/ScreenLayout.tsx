@@ -55,7 +55,9 @@ export function ScreenLayout({
 
     if (screen === 'inicio') {
       navigation.navigate('Dashboard'); // 👈 Nombre exacto de tu ruta en la pila
-    }
+    } else if (screen === 'oposiciones') {
+    navigation.navigate('Opossitions');
+  }
     // Si agregas nuevas pantallas en el futuro, SOLO las agregas aquí 🚀
   };
   const handleLoginClick = () => {

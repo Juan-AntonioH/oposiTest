@@ -2,7 +2,7 @@
 export type SidebarRoute =
   | 'inicio'
   | 'lista'
-  | 'categorias'
+  | 'oposiciones'
   | 'login';
 
 export interface SidebarProps {
