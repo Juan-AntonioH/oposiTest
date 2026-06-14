@@ -12,6 +12,7 @@ import { SidebarProps } from './Sidebar.types';
 import { styles } from './Sidebar.styles';
 import { MaterialIcons } from '@expo/vector-icons';
 import { PRESET_AVATARS } from '@/features/auth/constants/avatars';
+
 export function Sidebar({
   isOpen,
   onClose,
@@ -26,7 +27,6 @@ export function Sidebar({
 
   // Animación simple de entrada (slide from left)
   const translateX = React.useRef(new Animated.Value(-300)).current;
-
   React.useEffect(() => {
     if (isOpen) {
       // abre el sidebar
@@ -58,12 +58,13 @@ export function Sidebar({
         action: () => {
           onLogout?.();
           onNavigate?.('inicio');
+          
         },
       },
     ]
     : [
       { label: 'Inicio', icon: 'home', action: () => onNavigate?.('inicio') },
-      { label: 'Oposiciones', icon: 'category', action: () => onNavigate?.('oposiciones') },
+      // { label: 'Oposiciones', icon: 'category', action: () => onNavigate?.('oposiciones') },
 
     ];
 

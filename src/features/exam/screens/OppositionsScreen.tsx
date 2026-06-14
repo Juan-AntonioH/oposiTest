@@ -8,8 +8,10 @@ export function OppositionsScreen() {
         <ScreenLayout
             title="Oposiciones"
             showSidebar={true}
-            isLoggedIn={true} // 👈 Pasa tu estado de autenticación real
-            // userName="Juan Pérez"
+            // isLoggedIn={isLoggedIn} // 👈 Pasa tu estado de autenticación real
+            // userName={userName}
+            // userAvatar={userAvatar}
+            // onLogout={logout}
         >
             <View style={styles.container}>
                 <Text>hola</Text>
