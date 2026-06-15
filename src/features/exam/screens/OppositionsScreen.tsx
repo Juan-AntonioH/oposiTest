@@ -85,19 +85,22 @@ import React from 'react';
 import { View, Text, FlatList, Pressable, StyleSheet } from 'react-native';
 import { ScreenLayout } from '@/shared/layouts/ScreenLayout';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { styles } from '../styles/exam.styles';
+import { colors } from '@/core/theme';
 
 interface OppositionCategory {
-    id: string;
-    title: string;
+    idDocument: string;
+    name: string;
     examsCount: number;
     icon: keyof typeof MaterialCommunityIcons.glyphMap;
+    id: string;
     iconColor: string;
     activo: boolean;
 }
 
 const OPPOSITIONS_DATA: OppositionCategory[] = [
-    { id: 'opo_01', title: 'Matemáticas', examsCount: 7, icon: 'grid', iconColor: '#2F70F2', activo: true },
-    { id: 'opo_02', title: 'Historia', examsCount: 5, icon: 'grid', iconColor: '#F2990A', activo: true },
+    { idDocument: 'opo_01', name: 'Técnico Auxiliar Administrativo', examsCount: 7, icon: 'grid', id: 'TAI', iconColor: 'purple', activo: true },
+    { idDocument: 'opo_02', name: 'Administración del Estado', examsCount: 5, icon: 'grid', id: 'AGE', iconColor: colors.success, activo: true },
 ];
 
 // 1. Tipamos la propiedad navigation para cumplir con las normas de TS
@@ -108,32 +111,32 @@ interface OppositionsScreenProps {
 }
 
 export function OppositionsScreen({ navigation }: OppositionsScreenProps) {
-    const oposicionesActivas = OPPOSITIONS_DATA.filter(categoria => categoria.activo === true);
+    const oposicionesActivas = OPPOSITIONS_DATA.filter(oposicion => oposicion.activo === true);
 
     const renderCategoryItem = ({ item }: { item: OppositionCategory }) => (
         <Pressable
             style={styles.card}
             android_ripple={{ color: '#E0E0E0' }}
             onPress={() => {
-                // 2. Navegamos exactamente igual que lo haces en registerScreen
                 navigation.navigate('OppositionScreen', {
+                    idDocument: item.idDocument,
                     id: item.id,
-                    title: item.title
+                    name: item.name
                 });
             }}
         >
             <View style={[styles.iconContainer, { backgroundColor: item.iconColor }]}>
-                <MaterialCommunityIcons name={item.icon} size={28} color="#FFFFFF" />
+                <Text style={{ color: '#E0E0E0', fontWeight: 'bold', fontSize:16 }}>{item.id}</Text>
             </View>
             <View style={styles.textContainer}>
-                <Text style={styles.cardTitle}>{item.title}</Text>
+                <Text style={styles.cardTitle}>{item.name}</Text>
                 <Text style={styles.cardSubtitle}>{item.examsCount} exámenes disponibles</Text>
             </View>
         </Pressable>
     );
 
     return (
-        <ScreenLayout title="Oposiciones" showSidebar={true}>
+        <ScreenLayout title="Oposiciones">
             {/* BOTÓN VOLVER */}
             <View style={styles.backButtonContainer}>
                 <Pressable
@@ -146,7 +149,7 @@ export function OppositionsScreen({ navigation }: OppositionsScreenProps) {
             <FlatList
                 data={oposicionesActivas}
                 renderItem={renderCategoryItem}
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item) => item.idDocument}
                 contentContainerStyle={styles.listContainer}
                 ListHeaderComponent={
                     <View style={styles.headerContainer}>
@@ -165,83 +168,3 @@ export function OppositionsScreen({ navigation }: OppositionsScreenProps) {
         </ScreenLayout>
     );
 }
-
-// 3. Estilos locales de la pantalla basados en la interfaz gráfica dada
-const styles = StyleSheet.create({
-    listContainer: {
-        paddingHorizontal: 20,
-        paddingBottom: 24,
-        backgroundColor: '#F8F9FC', // Fondo gris claro idéntico a la imagen
-        flexGrow: 1,
-    },
-    headerContainer: {
-        marginTop: 24,
-        marginBottom: 20,
-    },
-    titleRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 12,
-        marginBottom: 14,
-    },
-    mainTitle: {
-        fontSize: 26,
-        fontWeight: 'bold',
-        color: '#1C2434',
-    },
-    mainSubtitle: {
-        fontSize: 14,
-        color: '#64748B',
-    },
-    card: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: '#FFFFFF',
-        borderRadius: 16, // Bordes muy suaves
-        padding: 20,
-        marginBottom: 16,
-        // Configuración de sombras nativas para iOS y Android
-        shadowColor: '#000000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.04,
-        shadowRadius: 8,
-        elevation: 2,
-    },
-    iconContainer: {
-        width: 56,
-        height: 56,
-        borderRadius: 12,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    textContainer: {
-        marginLeft: 20,
-        flex: 1,
-    },
-    cardTitle: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        color: '#1C2434',
-        marginBottom: 4,
-    },
-    cardSubtitle: {
-        fontSize: 13,
-        color: '#64748B',
-    },
-      backButtonText: {
-    color: '#64748B', // Usa tu paleta de colores del tema global si existe
-    fontSize: 15,
-    fontWeight: '600',
-  },
-  backButtonContainer: {
-    width: '100%',
-    alignItems: 'flex-start',
-    marginBottom: 12,
-    paddingHorizontal: 4, // Pequeño margen para que no pegue directo al borde de la pantalla
-  },
-  // Área táctil del botón volver (facilita la pulsación del usuario)
-  backButton: {
-    paddingVertical: 8,
-    paddingRight: 16, // Espacio interactivo hacia la derecha
-  },
-});

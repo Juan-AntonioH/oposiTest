@@ -50,7 +50,7 @@ export function Sidebar({
     ? [
       { label: 'Inicio', icon: 'home', action: () => onNavigate?.('inicio') },
       { label: 'Oposiciones', icon: 'category', action: () => onNavigate?.('oposiciones') },
-      { label: 'Lista', icon: 'list', action: () => onNavigate?.('lista') },
+      { label: 'Tests Realizados', icon: 'list', action: () => onNavigate?.('list') },
       { label: 'Configuración', icon: 'settings', action: () => { } },
       {
         label: 'Logout',

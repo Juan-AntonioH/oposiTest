@@ -97,7 +97,7 @@ export function AuthenticatorScreen() {
         }, 3000);
     };
     return (
-        <ScreenLayout title="Verificación" showSidebar={true}>
+        <ScreenLayout title="Verificación">
             <View style={styles.authenticatorContainer}>
                 <View style={styles.authenticatorCard}>
 
