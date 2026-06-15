@@ -131,7 +131,7 @@ export function RegisterScreen() {
   return (
     <ScreenLayout
       title="Crear Cuenta"
-      showSidebar={true}
+      // showSidebar={true}
     // sidebarOpen={sidebarOpen}
     // setSidebarOpen={setSidebarOpen}
     // onMenuPress={() => setSidebarOpen(true)}

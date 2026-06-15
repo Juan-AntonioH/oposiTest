@@ -62,7 +62,7 @@ export const LoginScreen: React.FC<Props> = ({
     // 3. Envolvemos toda la vista con ScreenLayout
     <ScreenLayout
       title="Iniciar Sesión"      // Define el título que saldrá en tu Toolbar
-      showSidebar={true}         // 👈 Crucial: Oculta el Sidebar y el botón hamburguesa
+      // showSidebar={true}         // 👈 Crucial: Oculta el Sidebar y el botón hamburguesa
     // sidebarOpen={sidebarOpen}
     // setSidebarOpen={setSidebarOpen}
     // onMenuPress={() => setSidebarOpen(true)}
