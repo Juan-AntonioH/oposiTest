@@ -2,7 +2,7 @@
 export type SidebarRoute =
   | 'inicio'
   | 'lista'
-  | 'categorias'
+  | 'oposiciones'
   | 'login';
 
 export interface SidebarProps {
@@ -10,8 +10,12 @@ export interface SidebarProps {
   onClose: () => void;
 
   isLoggedIn?: boolean;
+  uid?: string;
   userName?: string;
+  accountName?: string;
   userAvatar?: string;
+  userEmail?: string;
+  userRole?: string;
 
   onLoginClick?: () => void;
   onProfileClick?: () => void;

@@ -1,24 +1,35 @@
-import { db } from '@/core/config/firebase';
-import { doc, getDoc } from 'firebase/firestore';
-import { Exam } from '../types';
+import { collection, query, where, getDocs } from 'firebase/firestore';
+import { db } from '@/core/config/firebase'; // Asegúrate de que apunte a tu instancia de Firestore
+import { Oposicion } from '@/features/exam';
 
 export const examService = {
-  getExamById: async (id: string): Promise<Exam> => {
-    // Apuntamos al documento exacto en la colección 'exams' de Firestore
-    const examRef = doc(db, 'exams', id);
-    const examSnap = await getDoc(examRef);
-
-    if (!examSnap.exists()) {
-      throw new Error('El examen solicitado no existe en las bases de datos.');
+  /**
+   * Obtiene todas las oposiciones activas de la base de datos
+   */
+  getOposicionesActivas: async (): Promise<Oposicion[]> => {
+    try {
+      const oposicionesRef = collection(db, 'oppositions');
+      // Filtramos directamente en la consulta de Firestore por rendimiento
+      const q = query(oposicionesRef, where('activo', '==', true));
+      const querySnapshot = await getDocs(q);
+      
+      const oposiciones: Oposicion[] = [];
+      
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        oposiciones.push({
+          idDocumento: doc.id, // Capturamos el ID del documento de Firestore
+          id: data.id,
+          nombre: data.nombre,
+          descripcion: data.descripcion,
+          activo: data.activo,
+        });
+      });
+      
+      return oposiciones;
+    } catch (error) {
+      console.error("Error obteniendo oposiciones: ", error);
+      throw error;
     }
-
-    // Mapeamos los datos de Firebase con nuestra interfaz de TypeScript
-    const data = examSnap.data();
-    return {
-      id: examSnap.id,
-      title: data.title,
-      syllabusCategory: data.syllabusCategory,
-      questions: data.questions || [],
-    } as Exam;
   }
 };
