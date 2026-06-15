@@ -47,7 +47,7 @@ export function ScreenLayout({
   // onNavigate,
   // onLogout,
   // onLoginClick,
-  onProfileClick,
+  // onProfileClick,
 }: Props) {
   const { isLoggedIn, uid, userName, accountName, userAvatar, userEmail, userRole, logout } = useAuthStore();
   // 1. Instanciamos la navegación nativa globalmente para el layout
@@ -61,7 +61,7 @@ export function ScreenLayout({
     if (screen === 'inicio') {
       navigation.navigate('Dashboard'); // 👈 Nombre exacto de tu ruta en la pila
     } else if (screen === 'oposiciones') {
-      navigation.navigate('Opossitions');
+      navigation.navigate('Oppositions');
     }
     // Si agregas nuevas pantallas en el futuro, SOLO las agregas aquí 🚀
   };
@@ -69,6 +69,11 @@ export function ScreenLayout({
     setSidebarOpen(false);
     navigation.navigate('Login');
   };
+  const onProfileClick = () => {
+    setSidebarOpen(false);
+    alert("Abrir ventana")
+  }
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
 
@@ -81,7 +86,7 @@ export function ScreenLayout({
           uid={uid}
           userName={userName}
           accountName={accountName}
-          userAvatar={userAvatar} // 👈 Aquí podrías pasar un prop real con el avatar del usuario
+          userAvatar={userAvatar}
           userEmail={userEmail}
           userRole={userRole}
           onNavigate={handleNavigate}

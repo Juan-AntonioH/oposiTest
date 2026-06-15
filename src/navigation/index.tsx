@@ -7,11 +7,12 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { DashboardScreen } from '@/features/dashboard/screens/DashboardScreen';
-import { LoginScreen } from '@/features/auth/screens/LoginScreen'; // Ajusta la ruta a tu ScreenLogin
+import { LoginScreen } from '@/features/auth/screens/LoginScreen';
 import { RegisterScreen } from '@/features/auth/screens/RegisterScreen';
 import { RecoveryScreen } from '@/features/auth/screens/RecoveryScreen';
-import { AuthenticatorScreen } from '@/features/auth/screens/AuthenticatorScreen'; // Nueva pantalla de autenticación
+import { AuthenticatorScreen } from '@/features/auth/screens/AuthenticatorScreen';
 import { OppositionsScreen } from '@/features/exam/screens/OppositionsScreen';
+import { OppositionScreen } from '@/features/exam/screens/OppositionScreen';
 
 // Definimos los nombres de las pantallas para TypeScript
 export type RootStackParamList = {
@@ -20,7 +21,8 @@ export type RootStackParamList = {
   Register: undefined;
   Recovery: undefined;
   Authenticator: { email: string }; // La pantalla de autenticación espera un parámetro de correo electrónico
-  Opossitions: undefined;
+  Oppositions: undefined;
+  OppositionScreen: { id: string; title: string };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -28,16 +30,17 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 export function Navigation() {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ 
+      <Stack.Navigator screenOptions={{
         headerShown: false,
         animation: 'none' // 👈 Desactiva todas las animaciones de transición de forma global
-        }}>
+      }}>
         <Stack.Screen name="Dashboard" component={DashboardScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen name="Recovery" component={RecoveryScreen} />
         <Stack.Screen name="Authenticator" component={AuthenticatorScreen} />
-        <Stack.Screen name="Opossitions" component={OppositionsScreen}/>
+        <Stack.Screen name="Oppositions" component={OppositionsScreen} />
+        <Stack.Screen name="OppositionScreen" component={OppositionScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

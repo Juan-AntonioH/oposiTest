@@ -31,7 +31,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   accountName: 'Cuenta Demo',
   userAvatar: 'avatar_01',
   userEmail: 'usuario@demo.com',
-  userRole: 'user',
+  userRole: 'admin',
 
   // // Al loguearse, guardamos todo lo que nos mande la API
   // login: (userData) => set({

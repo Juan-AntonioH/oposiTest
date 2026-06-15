@@ -35,9 +35,9 @@ export function DashboardScreen() {
       // userName={userName}
       // userAvatar={userAvatar}
       // 2. Añade el callback para interceptar el click de Login
-      onLoginClick={() => navigation.navigate('Login')}
+      // onLoginClick={() => navigation.navigate('Login')}
       // onProfileClick={() => navigation.navigate('Perfil')} // 👈 Añade el callback si existe la ruta
-      onProfileClick={() => alert('Ir a perfil')}
+      // onProfileClick={() => alert('Ir a perfil')}
       // 3️⃣ Añadimos el callback onLogout para cambiar el estado a false
       // onLogout={() => {
       //   setIsAuth(false);

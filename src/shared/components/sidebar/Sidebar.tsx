@@ -58,7 +58,7 @@ export function Sidebar({
         action: () => {
           onLogout?.();
           onNavigate?.('inicio');
-          
+
         },
       },
     ]
@@ -94,7 +94,7 @@ export function Sidebar({
           <Text style={styles.title}>Menú</Text>
 
           <Pressable onPress={onClose}>
-            <Text style={styles.close}>✕</Text>
+            <MaterialIcons name="close" size={30} />{/*<Text style={styles.close}>✕</Text>*/}
           </Pressable>
         </View>
 
@@ -112,7 +112,7 @@ export function Sidebar({
             </Pressable>
           ) : (
             <Pressable style={styles.profileContainer} onPress={onProfileClick}>
-              {/* AVATAR DESDE TU BANCO DE IMÁGENES */}
+              {/* AVATAR DESDE EL BANCO DE IMÁGENES */}
               <Image
                 source={
                   PRESET_AVATARS.find((avatar) => avatar.id === (userAvatar || 'avatar_01'))?.image ||
@@ -123,7 +123,7 @@ export function Sidebar({
               {/* DATOS DE USUARIO */}
               <View style={styles.userInfo}>
                 <Text style={styles.userName} numberOfLines={1}>
-                  {userName ?? 'Juan Pérez Martínez'}
+                  {userName ?? 'Opositor/a'}
                 </Text>
                 <Text style={styles.profileLink}>
                   Perfil
