@@ -99,7 +99,7 @@ interface OppositionCategory {
 }
 
 const OPPOSITIONS_DATA: OppositionCategory[] = [
-    { idDocument: 'opo_01', name: 'Técnico Auxiliar Administrativo', examsCount: 7, icon: 'grid', id: 'TAI', iconColor: 'purple', activo: true },
+    { idDocument: 'opo_01', name: 'Técnico Auxiliar Informática', examsCount: 7, icon: 'grid', id: 'TAI', iconColor: 'purple', activo: true },
     { idDocument: 'opo_02', name: 'Administración del Estado', examsCount: 5, icon: 'grid', id: 'AGE', iconColor: colors.success, activo: true },
 ];
 

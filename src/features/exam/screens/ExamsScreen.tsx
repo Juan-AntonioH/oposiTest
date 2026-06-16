@@ -31,7 +31,7 @@ export function ExamsScreen({ route }: ExamsScreenProps) {
     const [immediateSolution, setImmediateSolution] = useState(false);
 
     const exams: ExamItem[] = [
-        { opositionId: 'opo_01', year: 2025, convocatoria: 'Libre', nombreVisibilidad: 'Examen Oficial 2025 (Turno Libre)', numeroPreguntasTotales: 100, tiempoExamen: 90 },
+        { opositionId: 'opo_01', year: 2025, convocatoria: 'Libre', nombreVisibilidad: 'Examen Oficial 2025 (Turno Libre)', numeroPreguntasTotales: 100, tiempoExamen: 0.1 },
         { opositionId: 'opo_01', year: 2024, convocatoria: 'Libre', nombreVisibilidad: 'Examen Oficial 2024 (Turno Libre)', numeroPreguntasTotales: 100, tiempoExamen: 90 },
         { opositionId: 'opo_01', year: 2024, convocatoria: 'Interna', nombreVisibilidad: 'Examen Oficial 2024 (Turno Interno)', numeroPreguntasTotales: 100, tiempoExamen: 90 }
     ];

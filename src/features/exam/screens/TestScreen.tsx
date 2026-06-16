@@ -34,6 +34,7 @@ export function TestScreen({ route }: TestScreenProps) {
 
     // Cronómetro global del examen (en segundos)
     const [timeLeft, setTimeLeft] = useState<number>(setTime * 60);
+    const [isTimerActive, setIsTimerActive] = useState(true);
 
     // Métrica de tiempo individual por pregunta activa (no provoca renders innecesarios)
     const questionTimeRef = useRef<number>(0);
@@ -52,57 +53,75 @@ export function TestScreen({ route }: TestScreenProps) {
     }, [opositionId, examType]);
 
     // --- 2. Efecto del Temporizador global e individual ---
-    useEffect(() => {
-        if (loading || questions.length === 0) return;
+useEffect(() => {
+    // Si está cargando, no hay preguntas o el tiempo está pausado, no hace nada
+    if (loading || questions.length === 0 || !isTimerActive) return;
 
-        const timer = setInterval(() => {
-            setTimeLeft((prev) => {
-                if (prev <= 1) {
-                    clearInterval(timer);
-                    handleFinishExamProcess(true); // Finaliza por tiempo agotado
-                    return 0;
-                }
-                return prev - 1;
-            });
-
-            // Sumar segundo a la pregunta activa si no se está visualizando una explicación fija
-            if (!isShowingSolution) {
-                questionTimeRef.current += 1;
+    const timer = setInterval(() => {
+        setTimeLeft((prev) => {
+            if (prev <= 1) {
+                // 1. 🛑 DETENEMOS EL RELOJ EN EL ESTADO GLOBAL inmediatamente
+                setIsTimerActive(false); 
+                
+                // 2. 🧹 LIMPIAMOS ESTE INTERVALO para que no se ejecute el próximo segundo
+                clearInterval(timer); 
+                
+                // 3. 🚨 LANZAMOS TU PROCESO (que muestra la alerta una sola vez)
+                handleFinishExamProcess(true); 
+                
+                return 0;
             }
-        }, 1000);
+            return prev - 1;
+        });
 
-        return () => clearInterval(timer);
-    }, [currentIndex, loading, questions, isShowingSolution]);
+        // Sumar segundo a la pregunta activa si está el tiempo en marcha
+        questionTimeRef.current += 1;
+    }, 1000);
+
+    return () => clearInterval(timer);
+    
+}, [currentIndex, loading, questions, isTimerActive]); 
+
+
 
     // --- 3. Control de Flujo de Respuestas y Envío Definitivo ---
-    const handleConfirmAnswer = (isBlank: boolean = false) => {
-        const finalSelection = isBlank ? null : selectedOption;
+    const handleConfirmAnswer = (isBlank: boolean) => {
+        // 1. Decidimos la respuesta: si es en blanco pasamos null, si no, la opción seleccionada
+        const finalResponse = isBlank ? null : selectedOption;
 
-        if (immediateSolution && !isShowingSolution && !isBlank) {
-            // Guarda la respuesta en el store pero congela la pantalla para mostrar la tarjeta informativa
-            answerQuestion(finalSelection, questionTimeRef.current);
-            setIsShowingSolution(true);
-            return;
-        }
+        // 2. Guardamos definitivamente en tu Zustand usando tu acción nativa
+        answerQuestion(finalResponse, questionTimeRef.current);
 
-        // Flujo normal o salto tras ver la solución inmediata
-        answerQuestion(finalSelection, questionTimeRef.current);
-        advanceOrFinish();
-    };
-
-    const advanceOrFinish = () => {
-        // Resetear contadores locales de la pregunta
-        questionTimeRef.current = 0;
-        setSelectedOption(null);
-        setIsShowingSolution(false);
-
-        if (currentIndex < questions.length - 1) {
-            nextQuestion();
+        if (immediateSolution) {
+            setIsShowingSolution(true); // Muestra la tarjeta de explicación y colores
+            setIsTimerActive(false);     // 🛑 Detiene el tiempo inmediatamente
         } else {
-            // Llegó al final natural de la última pregunta
-            navigateToSummary(questions);
+            // Si no es solución inmediata (modo examen clásico), avanza directo
+            advanceOrFinish();
         }
     };
+
+
+const advanceOrFinish = () => {
+    // Limpiamos los estados visuales de la pantalla
+    setSelectedOption(null);
+    setIsShowingSolution(false);
+
+    if (currentIndex < questions.length - 1) {
+        // 🚀 CORRECCIÓN: Usamos tu acción de Zustand para avanzar
+        nextQuestion(); 
+        
+        // Reiniciamos el segundero de la pregunta local para el nuevo enunciado
+        questionTimeRef.current = 0; 
+        
+        // Reactivamos el temporizador global
+        setIsTimerActive(true); 
+    } else {
+        // Usamos tu método existente para finalizar el proceso entero del examen
+        handleFinishExamProcess(false); 
+    }
+};
+
 
     const handleCancelOrFinishAlert = () => {
         Alert.alert(
