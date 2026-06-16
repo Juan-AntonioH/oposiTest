@@ -59,7 +59,6 @@ export function OppositionScreen({ route }: OppositionScreenProps) {
                             onPress={() => {
                                 navigation.navigate(opcion.screen, {
                                     opositionId: idDocument,
-                                    id: id,
                                     name: name
                                 });
                             }}
