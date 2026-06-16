@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, StyleSheet, Pressable, ScrollView } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, Text, StyleSheet, Pressable, ScrollView, Alert } from 'react-native';
 import { ScreenLayout } from '@/shared/layouts/ScreenLayout';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { RouteProp, useNavigation } from '@react-navigation/native';
@@ -7,6 +7,20 @@ import { RootStackParamList } from '@/navigation'; // Ajusta la ruta a tu archiv
 import { styles } from '../styles/exam.styles';
 // 1. Importamos el store de Zustand idéntico a como lo tienes en ScreenLayout
 import { useAuthStore } from '@/store/authStore';
+
+// // Estructura preguntas
+interface Question {
+    numQuestion: number;
+    questionId: string;
+    blockId: string;
+    temaId: string;
+    question: string;
+    options: string[];
+    userResponse: number | null;
+    correctAnswer: number;
+    questionTimeSpent: number;
+    explanation?: string; // Añadido para la solución inmediata
+}
 
 interface TestScreenProps {
     route: RouteProp<RootStackParamList, 'TestScreen'>;
