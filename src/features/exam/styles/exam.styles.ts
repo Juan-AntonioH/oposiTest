@@ -125,4 +125,44 @@ export const styles = StyleSheet.create({
         paddingVertical: 8,
         paddingRight: 16, // Espacio interactivo hacia la derecha
     },
+    customCardTitle: {
+        fontSize: 16,
+        fontWeight: '500',
+        color: '#1C2434',
+        marginBottom: 4,
+    },
+    yearTextBold: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#1C2434',
+    },
+    toggleCard: {
+        backgroundColor: '#FFFFFF',
+        borderRadius: 16,
+        padding: 16,
+        marginBottom: 24,
+        shadowColor: '#000000',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.03,
+        shadowRadius: 6,
+        elevation: 2,
+    },
+    toggleHeader: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginBottom: 6,
+    },
+    toggleTitle: {
+        fontSize: 15,
+        fontWeight: '600',
+        color: '#1C2434',
+        flex: 1,
+    },
+    toggleSubtitle: {
+        fontSize: 12,
+        color: '#64748B',
+        lineHeight: 16,
+        paddingLeft: 28,
+    },
 });
