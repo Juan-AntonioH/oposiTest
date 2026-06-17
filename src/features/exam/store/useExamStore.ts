@@ -13,6 +13,21 @@ interface ExamState {
     nextQuestion: () => void;
     finishExamEarly: (currentQuestionTime: number) => any; // Retorna el objeto listo para la DB
     resetExam: () => void;
+    getExamSummary: (userId: string) => {
+        userId: string;
+        oppositionId: string;
+        oppositionName: string;
+        examType: string;
+        numberOfConfiguredQuestions: number;
+        timeConfigured: number;
+        date: Date;
+        successes: number;
+        errors: number;
+        unanswered: number;
+        note: number;
+        timeSpent: number;
+        answers: Question[];
+    };
 }
 
 export const useExamStore = create<ExamState>((set, get) => ({
@@ -88,5 +103,47 @@ export const useExamStore = create<ExamState>((set, get) => ({
     },
 
     // 6. Limpiador del estado al salir de la pantalla
-    resetExam: () => set({ questions: [], currentIndex: 0, loading: false })
+    resetExam: () => set({ questions: [], currentIndex: 0, loading: false }),
+
+    // 7. Genera el objeto estructurado listo para mandar a la DB
+    getExamSummary: (userId) => {
+        const { questions } = get();
+        
+        let successes = 0;
+        let errors = 0;
+        let unanswered = 0;
+        let totalTime = 0;
+
+        questions.forEach((q) => {
+            totalTime += q.questionTimeSpent || 0;
+            if (q.userResponse === null || q.userResponse === undefined) {
+                unanswered++;
+            } else if (q.userResponse === q.correctAnswer) {
+                successes++;
+            } else {
+                errors++;
+            }
+        });
+
+        // Fórmula estándar de oposición penalizando errores (Aciertos - (Errores / (4 opciones - 1)))
+        const totalQuestions = questions.length || 1;
+        const rawNote = ((successes - (errors / 3)) / totalQuestions) * 10;
+        const note = Math.max(0, parseFloat(rawNote.toFixed(2)));
+
+        return {
+            userId,
+            oppositionId: "opo_01", 
+            oppositionName: "Técnico Auxiliar Informática",
+            examType: "Examen_oficiales",
+            numberOfConfiguredQuestions: totalQuestions,
+            timeConfigured: 90,
+            date: new Date(), 
+            successes,
+            errors,
+            unanswered,
+            note,
+            timeSpent: Math.ceil(totalTime / 60), 
+            answers: questions
+        };
+    }
 }));

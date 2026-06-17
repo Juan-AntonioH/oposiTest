@@ -166,7 +166,6 @@ export const styles = StyleSheet.create({
         paddingLeft: 28,
     },
     // ESTILOS PARA REALIZACIÓN DE TEST
-    // Agregar o fusionar estas reglas dentro de tu styles de exam.styles.ts
     headerControlContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -421,5 +420,6 @@ export const styles = StyleSheet.create({
         paddingBottom: 32, // Margen extra abajo para que los botones de acción no se peguen al borde físico de la pantalla
         backgroundColor: '#F8FAFC', // Fondo grisáceo claro muy limpio para que resalten las tarjetas blancas
     },
-
+    /// EXAMSUMARYSCREEN
+    
 });
