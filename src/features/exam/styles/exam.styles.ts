@@ -421,5 +421,109 @@ export const styles = StyleSheet.create({
         backgroundColor: '#F8FAFC', // Fondo grisáceo claro muy limpio para que resalten las tarjetas blancas
     },
     /// EXAMSUMARYSCREEN
-    
+    mainTitleSumary: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: '#1C2434',
+    },
+    scoreCard: {
+        backgroundColor: '#FFFFFF',
+        borderRadius: 16,
+        padding: 20,
+        alignItems: 'center',
+        marginBottom: 20,
+        elevation: 2,
+        shadowColor: '#000000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.04,
+        shadowRadius: 8,
+    },
+    badgeContainer: {
+        width: 60,
+        height: 60,
+        borderRadius: 30,
+        backgroundColor: '#EFF6FF',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 8,
+    },
+    scoreNumber: {
+        fontSize: 34,
+        fontWeight: 'bold',
+        color: '#1C2434',
+    },
+    scoreLabel: {
+        fontSize: 13,
+        color: '#64748B',
+        fontWeight: '500',
+    },
+    gridContainer: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'space-between',
+        marginBottom: 12,
+    },
+    metricBox: {
+        backgroundColor: '#FFFFFF',
+        width: '48%',
+        borderRadius: 12,
+        padding: 14,
+        marginBottom: 12,
+        alignItems: 'center',
+        elevation: 2,
+        shadowColor: '#000000',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.02,
+        shadowRadius: 4,
+    },
+    metricValue: {
+        fontSize: 15,
+        fontWeight: 'bold',
+        color: '#1C2434',
+        marginTop: 4,
+    },
+    metricLabel: {
+        fontSize: 11,
+        color: '#64748B',
+        marginTop: 2,
+        textAlign: 'center',
+        fontWeight: '500',
+    },
+    footerContainer: {
+        marginTop: 12,
+    },
+
+    legendContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingHorizontal: 8,
+        marginTop: 8,
+    },
+    legendItem: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 6,
+    },
+    legendDot: {
+        width: 12,
+        height: 12,
+        borderRadius: 6,
+    },
+    legendText: {
+        fontSize: 12,
+        color: '#64748B',
+        fontWeight: '500',
+    },
+    backButtonContainerSumary: {
+        width: '100%',
+        marginBottom: 12,
+    },
+    backButtonSumary: {
+        borderRadius: 10,
+        paddingVertical: 12,
+    },
+    backButtonTextSumary: {
+        fontSize: 15,
+        fontWeight: '600',
+    },
 });
