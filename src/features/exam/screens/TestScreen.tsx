@@ -53,35 +53,58 @@ export function TestScreen({ route }: TestScreenProps) {
     }, [opositionId, examType]);
 
     // --- 2. Efecto del Temporizador global e individual ---
-useEffect(() => {
-    // Si está cargando, no hay preguntas o el tiempo está pausado, no hace nada
-    if (loading || questions.length === 0 || !isTimerActive) return;
+    useEffect(() => {
+        // Si está cargando, no hay preguntas o el tiempo está pausado, no hace nada
+        if (loading || questions.length === 0 || !isTimerActive) return;
 
-    const timer = setInterval(() => {
-        setTimeLeft((prev) => {
-            if (prev <= 1) {
-                // 1. 🛑 DETENEMOS EL RELOJ EN EL ESTADO GLOBAL inmediatamente
-                setIsTimerActive(false); 
-                
-                // 2. 🧹 LIMPIAMOS ESTE INTERVALO para que no se ejecute el próximo segundo
-                clearInterval(timer); 
-                
-                // 3. 🚨 LANZAMOS TU PROCESO (que muestra la alerta una sola vez)
-                handleFinishExamProcess(true); 
-                
-                return 0;
-            }
-            return prev - 1;
-        });
+        const timer = setInterval(() => {
+            setTimeLeft((prev) => {
+                if (prev <= 1) {
+                    // 1. 🛑 DETENEMOS EL RELOJ EN EL ESTADO GLOBAL inmediatamente
+                    setIsTimerActive(false);
 
-        // Sumar segundo a la pregunta activa si está el tiempo en marcha
-        questionTimeRef.current += 1;
-    }, 1000);
+                    // 2. 🧹 LIMPIAMOS ESTE INTERVALO para que no se ejecute el próximo segundo
+                    clearInterval(timer);
 
-    return () => clearInterval(timer);
-    
-}, [currentIndex, loading, questions, isTimerActive]); 
+                    // 3. 🚨 LANZAMOS TU PROCESO (que muestra la alerta una sola vez)
+                    handleFinishExamProcess(true);
 
+                    return 0;
+                }
+                return prev - 1;
+            });
+
+            // Sumar segundo a la pregunta activa si está el tiempo en marcha
+            questionTimeRef.current += 1;
+        }, 1000);
+
+        return () => clearInterval(timer);
+
+    }, [currentIndex, loading, questions, isTimerActive]);
+    // --- 2. Efecto del Temporizador global e individual (Corregido) ---
+    // useEffect(() => {
+    //     if (loading || questions.length === 0 || !isTimerActive || timeLeft <= 0) return;
+
+    //     const timer = setInterval(() => {
+    //         setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
+
+    //         // Sumar segundo a la pregunta activa de forma segura mediante la referencia
+    //         questionTimeRef.current += 1;
+    //     }, 1000);
+
+    //     return () => clearInterval(timer);
+    // }, [currentIndex, loading, questions, isTimerActive, timeLeft]);
+
+    // // --- 2B. Efecto Seguro para Controlar el Tiempo Agotado (Nuevo) ---
+    // useEffect(() => {
+    //     if (timeLeft === 0 && isTimerActive) {
+    //         // 1. Apagamos el reloj de forma segura fuera del hilo de cálculo principal
+    //         setIsTimerActive(false);
+
+    //         // 2. Ejecutamos el flujo de finalización sin colisiones de render
+    //         handleFinishExamProcess(true);
+    //     }
+    // }, [timeLeft, isTimerActive]);
 
 
     // --- 3. Control de Flujo de Respuestas y Envío Definitivo ---
@@ -102,37 +125,79 @@ useEffect(() => {
     };
 
 
-const advanceOrFinish = () => {
-    // Limpiamos los estados visuales de la pantalla
-    setSelectedOption(null);
-    setIsShowingSolution(false);
+    // const advanceOrFinish = () => {
+    //     // Limpiamos los estados visuales de la pantalla
+    //     setSelectedOption(null);
+    //     setIsShowingSolution(false);
 
-    if (currentIndex < questions.length - 1) {
-        // 🚀 CORRECCIÓN: Usamos tu acción de Zustand para avanzar
-        nextQuestion(); 
-        
-        // Reiniciamos el segundero de la pregunta local para el nuevo enunciado
-        questionTimeRef.current = 0; 
-        
-        // Reactivamos el temporizador global
-        setIsTimerActive(true); 
-    } else {
-        // Usamos tu método existente para finalizar el proceso entero del examen
-        handleFinishExamProcess(false); 
-    }
-};
+    //     if (currentIndex < questions.length - 1) {
+    //         // 🚀 CORRECCIÓN: Usamos tu acción de Zustand para avanzar
+    //         nextQuestion();
 
+    //         // Reiniciamos el segundero de la pregunta local para el nuevo enunciado
+    //         questionTimeRef.current = 0;
 
+    //         // Reactivamos el temporizador global
+    //         setIsTimerActive(true);
+    //     } else {
+    //         // Usamos tu método existente para finalizar el proceso entero del examen
+    //         handleFinishExamProcess(false);
+    //     }
+    // };
+    const advanceOrFinish = () => {
+        // Limpiamos los estados visuales de la pantalla
+        setSelectedOption(null);
+        setIsShowingSolution(false);
+
+        if (currentIndex < questions.length - 1) {
+            // 🚀 Avanzamos de pregunta usando tu acción de Zustand
+            nextQuestion();
+
+            // Reiniciamos el segundero de la pregunta local para el nuevo enunciado
+            questionTimeRef.current = 0;
+
+            // Reactivamos el temporizador global
+            setIsTimerActive(true);
+        } else {
+            // 🛑 DETENEMOS EL TIEMPO INMEDIATAMENTE al acabar la última pregunta
+            setIsTimerActive(false);
+
+            // Usamos tu método existente para finalizar el proceso entero del examen
+            handleFinishExamProcess(false);
+        }
+    };
+    // const handleCancelOrFinishAlert = () => {
+    //     Alert.alert(
+    //         "¿Finalizar test?",
+    //         "¿Estás seguro de que quieres terminar el examen actual? Las preguntas restantes se marcarán en blanco.",
+    //         [
+    //             { text: "Cancelar", style: "cancel" },
+    //             { text: "Sí, finalizar", style: "destructive", onPress: () => handleFinishExamProcess(false) }
+    //         ]
+    //     );
+    // };
     const handleCancelOrFinishAlert = () => {
+        // Pausamos el tiempo mientras el cuadro de diálogo de confirmación esté abierto
+        setIsTimerActive(false);
+
         Alert.alert(
             "¿Finalizar test?",
             "¿Estás seguro de que quieres terminar el examen actual? Las preguntas restantes se marcarán en blanco.",
             [
-                { text: "Cancelar", style: "cancel" },
-                { text: "Sí, finalizar", style: "destructive", onPress: () => handleFinishExamProcess(false) }
+                {
+                    text: "Cancelar",
+                    style: "cancel",
+                    onPress: () => setIsTimerActive(true) // ⏱️ Si cancela, reanudamos el tiempo
+                },
+                {
+                    text: "Sí, finalizar",
+                    style: "destructive",
+                    onPress: () => handleFinishExamProcess(false)
+                }
             ]
         );
     };
+
 
     const handleFinishExamProcess = (autoFinishedByTime = false) => {
         // Forzamos al store a rellenar el array restante con valores vacíos

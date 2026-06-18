@@ -16,6 +16,7 @@ import { OppositionScreen } from '@/features/exam/screens/OppositionScreen';
 import { ExamsScreen } from '@/features/exam/screens/ExamsScreen';
 import { TestScreen } from '@/features/exam/screens/TestScreen';
 import { ExamSummaryScreen } from '@/features/exam/screens/ExamSummaryScreen'
+import { ExamReviewScreen } from '@/features/exam/screens/ExamReviewScreen';
 
 // Definimos los nombres de las pantallas para TypeScript
 export type RootStackParamList = {
@@ -27,8 +28,9 @@ export type RootStackParamList = {
   Oppositions: undefined;
   OppositionScreen: { idDocument: string; id: string, name: string };
   ExamsScreen: { opositionId: string; name: string };
-  TestScreen: {opositionId: string; name: string, setTime: number, examType: string, year: number, immediateSolution: boolean }
+  TestScreen: { opositionId: string; name: string, setTime: number, examType: string, year: number, immediateSolution: boolean }
   ExamSummaryScreen: undefined;
+  ExamReviewScreen: { startIndex?: number };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -49,7 +51,8 @@ export function Navigation() {
         <Stack.Screen name="OppositionScreen" component={OppositionScreen} />
         <Stack.Screen name="ExamsScreen" component={ExamsScreen} />
         <Stack.Screen name="TestScreen" component={TestScreen} />
-        <Stack.Screen name ="ExamSummaryScreen" component={ExamSummaryScreen}/>
+        <Stack.Screen name="ExamSummaryScreen" component={ExamSummaryScreen} />
+        <Stack.Screen name="ExamReviewScreen" component={ExamReviewScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
