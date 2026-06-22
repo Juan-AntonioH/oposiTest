@@ -119,7 +119,7 @@ export const QuestionFormScreen = () => {
             <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
 
                 <Text style={styles.subHeader}>
-                    Categoría: <Text style={styles.boldText}>{nombreOposicion}</Text>
+                    Oposición: <Text style={styles.boldText}>{nombreOposicion}</Text>
                 </Text>
 
                 <View style={styles.card}>
@@ -261,4 +261,8 @@ const styles = StyleSheet.create({
     btnTextGuardar: { color: '#FFFFFF', fontWeight: 'bold', fontSize: 13 },
     btnTextEliminar: { color: '#FFFFFF', fontWeight: 'bold', fontSize: 13 },
     btnTextCancelar: { color: '#495057', fontSize: 13 },
+    backButton: {
+        paddingVertical: 8,
+        paddingRight: 16, // Espacio interactivo hacia la derecha
+    },
 });

@@ -3,7 +3,7 @@
 // import { ScreenLayout } from '@/shared/layouts/ScreenLayout';
 // import { MaterialCommunityIcons } from '@expo/vector-icons';
 // import { useFetchExam } from '@/features/exam/hooks/useFechExam';
-import { Oposicion } from '@/features/exam';
+// import { Oposicion } from '@/features/exam';
 
 // interface OppositionsScreenProps {
 //     navigation: any;
