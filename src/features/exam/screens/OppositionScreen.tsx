@@ -101,7 +101,14 @@ export function OppositionScreen({ route }: OppositionScreenProps) {
                         <Pressable
                             style={[styles.btn, styles.btnBlue]}
                             android_ripple={{ color: '#1B54C5' }}
-                            onPress={() => console.log(`Redirigir a lista de preguntas para la opo: ${idDocument}`)}
+                            onPress={() => {
+                                console.log(`Redirigir a lista de preguntas para la opo: ${idDocument}`)
+                                navigation.navigate('QuestionsList', {
+                                    idDocument: idDocument,    // P. ej. 'opo_01'
+                                    nombreOposicion: name,
+                                    siglas: id    // P. ej. 'Técnico auxiliar informática'
+                                });
+                            }}
                         >
                             <MaterialCommunityIcons name="square-edit-outline" size={18} color="#FFF" />
                             <Text style={styles.btnText}>Editar Preguntas</Text>

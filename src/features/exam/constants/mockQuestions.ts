@@ -58,7 +58,10 @@ export const MOCK_QUESTIONS: Question[] = [
         correctAnswer: 0,
         questionTimeSpent: 0,
         explanation: "El plazo para la interposición del recurso de alzada será de un mes si el acto fuera expreso, de acuerdo con la Ley de Procedimiento Administrativo Común.",
-        oppositionId: "opo_01"
+        oppositionId: "opo_01",
+        esOficial: true,
+        examYear: 2011,
+        examConvocatoria: "Libre"
     },
     {
         numQuestion: 3,
@@ -76,7 +79,10 @@ export const MOCK_QUESTIONS: Question[] = [
         correctAnswer: 2,
         questionTimeSpent: 0,
         explanation: "El artículo 1.2 de la Constitución establece explícitamente que la soberanía nacional reside en el pueblo español, del que emanan los poderes del Estado.",
-        oppositionId: "opo_01"
+        oppositionId: "opo_01",
+        esOficial: true,
+        examYear: 2011,
+        examConvocatoria: "Libre"
     },
     {
         numQuestion: 4,
@@ -94,7 +100,10 @@ export const MOCK_QUESTIONS: Question[] = [
         correctAnswer: 1,
         questionTimeSpent: 0,
         explanation: "En caso de extraordinaria y urgente necesidad, el Gobierno podrá dictar disposiciones legislativas provisionales que tomarán la forma de Decretos-leyes.",
-        oppositionId: "opo_01"
+        oppositionId: "opo_01",
+        esOficial: true,
+        examYear: 2011,
+        examConvocatoria: "Libre"
     },
     {
         numQuestion: 5,
@@ -116,5 +125,5 @@ export const MOCK_QUESTIONS: Question[] = [
         esOficial: true,
         examYear: 2014,
         examConvocatoria: "Libre"
-    }
+    },
 ];
