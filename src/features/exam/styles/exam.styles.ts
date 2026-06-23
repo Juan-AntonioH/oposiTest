@@ -747,7 +747,6 @@ export const styles = StyleSheet.create({
     },
     boldText: {
         fontWeight: 'bold'
-
     },
     cardQuestion: {
         backgroundColor: '#FFFFFF',
@@ -874,5 +873,34 @@ export const styles = StyleSheet.create({
     selectedText: {
         color: '#000',
         fontSize: 14,
+    },
+    ///// QuestionsListScreen
+    containerList: { flex: 1, backgroundColor: '#F5F7FA' },
+    contentContainerList: { padding: 16 },
+    filterCard: { backgroundColor: '#FFF', borderRadius: 8, padding: 16, marginBottom: 16, borderWidth: 1, borderColor: '#EEE' },
+    labelList: { fontSize: 13, fontWeight: '600', color: '#555', marginBottom: 6 },
+    searchInput: { height: 45, borderColor: '#DDD', borderWidth: 1, borderRadius: 8, paddingHorizontal: 12, backgroundColor: '#FFF', marginBottom: 14, fontSize: 14 },
+    dropdownList: { height: 45, borderColor: '#DDD', borderWidth: 1, borderRadius: 8, paddingHorizontal: 12, backgroundColor: '#FFF', marginBottom: 14 },
+    resultsText: { fontSize: 12, color: '#777', marginTop: 4 },
+    questionCardList: { backgroundColor: '#FFF', borderRadius: 8, padding: 16, marginBottom: 12, borderWidth: 1, borderColor: '#EEE' },
+    questionHeaderRow: { flexDirection: 'row', alignItems: 'flex-start' },
+    questionTextList: { fontSize: 14, color: '#333', lineHeight: 20, flex: 1 },
+    metaRow: { flexDirection: 'row', marginTop: 8, alignItems: 'center' },
+    metaText: { fontSize: 12, color: '#666' },
+    metaDot: { marginHorizontal: 8, color: '#999' },
+    btnVolver: { backgroundColor: '#FFF', borderColor: '#DDD', borderWidth: 1, borderRadius: 8, height: 48, justifyContent: 'center', alignItems: 'center', marginTop: 12 },
+    btnVolverText: { color: '#333', fontSize: 15, fontWeight: '500' },
+    btnClearFilters: {
+        marginTop: 12,
+        backgroundColor: '#F0F4F8',
+        borderRadius: 6,
+        height: 36,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    btnClearFiltersText: {
+        color: '#475569',
+        fontSize: 13,
+        fontWeight: '600',
     },
 });
