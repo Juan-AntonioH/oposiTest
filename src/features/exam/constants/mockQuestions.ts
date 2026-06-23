@@ -112,6 +112,9 @@ export const MOCK_QUESTIONS: Question[] = [
         correctAnswer: 0,
         questionTimeSpent: 0,
         explanation: "La capital del Estado es la villa de Madrid, tal y como recoge el artículo 5 de la Constitución Española.",
-        oppositionId: "opo_01"
+        oppositionId: "opo_01",
+        esOficial: true,
+        examYear: 2014,
+        examConvocatoria: "Libre"
     }
 ];
