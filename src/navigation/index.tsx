@@ -33,7 +33,7 @@ export type RootStackParamList = {
   Oppositions: undefined;
   OppositionScreen: { idDocument: string; id: string, name: string };
   ExamsScreen: { opositionId: string; name: string };
-  TestScreen: { opositionId: string; name: string, setTime: number, examType: string, year: number, immediateSolution: boolean }
+  TestScreen: { opositionId: string; name: string, setTime: number, examType: string, year: number, immediateSolution: boolean, titleParam: string }
   ExamSummaryScreen: undefined;
   ExamReviewScreen: { startIndex?: number };
   // Añadida la ruta del formulario con el tipado oficial de tu base de datos

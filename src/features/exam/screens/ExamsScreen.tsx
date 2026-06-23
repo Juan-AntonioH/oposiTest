@@ -33,7 +33,7 @@ export function ExamsScreen({ route }: ExamsScreenProps) {
     const exams: ExamItem[] = [
         { opositionId: 'opo_01', year: 2025, convocatoria: 'Libre', nombreVisibilidad: 'Examen Oficial 2025 (Turno Libre)', numeroPreguntasTotales: 100, tiempoExamen: 0.1 },
         { opositionId: 'opo_01', year: 2024, convocatoria: 'Libre', nombreVisibilidad: 'Examen Oficial 2024 (Turno Libre)', numeroPreguntasTotales: 100, tiempoExamen: 90 },
-        { opositionId: 'opo_01', year: 2024, convocatoria: 'Interna', nombreVisibilidad: 'Examen Oficial 2024 (Turno Interno)', numeroPreguntasTotales: 100, tiempoExamen: 90 }
+        { opositionId: 'opo_01', year: 2023, convocatoria: 'Interna', nombreVisibilidad: 'Examen Oficial 2023 (Turno Interno)', numeroPreguntasTotales: 100, tiempoExamen: 90 }
     ];
 
     // Manejador del clic que empaqueta y envía todos los parámetros requeridos
@@ -44,7 +44,8 @@ export function ExamsScreen({ route }: ExamsScreenProps) {
             setTime: exam.tiempoExamen,
             examType: 'Examen_oficial',
             year: exam.year,
-            immediateSolution: immediateSolution // Pasamos el booleano del interruptor
+            immediateSolution: immediateSolution, // Pasamos el booleano del interruptor
+            titleParam: `Examen Oficial ${exam.year}` // 🚀 Añadido: Así cada pantalla controla su propio título
         });
     };
 

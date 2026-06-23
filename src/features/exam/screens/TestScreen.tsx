@@ -16,8 +16,8 @@ export function TestScreen({ route }: TestScreenProps) {
     const navigation = useNavigation<any>();
 
     // Parámetros de navegación
-    const { opositionId, name, setTime, examType, year, immediateSolution } = route.params || {
-        opositionId: '', name: '', setTime: 90, examType: '', immediateSolution: false
+    const { opositionId, name, setTime, examType, year, immediateSolution, titleParam } = route.params || {
+        opositionId: '', name: '', setTime: 90, examType: '', immediateSolution: false, titleParam: 'Test'
     };
 
     // Consumo del Store Global del Examen
@@ -46,11 +46,18 @@ export function TestScreen({ route }: TestScreenProps) {
 
     // --- 1. Efecto de Carga de Preguntas de la Base de Datos / Mocks ---
     useEffect(() => {
-        loadExamQuestions(opositionId, examType);
+        if (examType === 'simulacrum') {
+            // Cargamos el nuevo generador aleatorio de 100 preguntas
+            useExamStore.getState().loadSimulacrumQuestions(opositionId);
+        } else {
+            // Mantiene el flujo clásico para exámenes oficiales
+            loadExamQuestions(opositionId, examType);
+        }
 
-        // Limpieza al desmontar la pantalla (evita conservar exámenes anteriores)
+        // Limpieza al desmontar la pantalla
         return () => resetExam();
     }, [opositionId, examType]);
+
 
     // --- 2. Efecto del Temporizador global e individual ---
     useEffect(() => {
@@ -81,32 +88,6 @@ export function TestScreen({ route }: TestScreenProps) {
         return () => clearInterval(timer);
 
     }, [currentIndex, loading, questions, isTimerActive]);
-    // --- 2. Efecto del Temporizador global e individual (Corregido) ---
-    // useEffect(() => {
-    //     if (loading || questions.length === 0 || !isTimerActive || timeLeft <= 0) return;
-
-    //     const timer = setInterval(() => {
-    //         setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
-
-    //         // Sumar segundo a la pregunta activa de forma segura mediante la referencia
-    //         questionTimeRef.current += 1;
-    //     }, 1000);
-
-    //     return () => clearInterval(timer);
-    // }, [currentIndex, loading, questions, isTimerActive, timeLeft]);
-
-    // // --- 2B. Efecto Seguro para Controlar el Tiempo Agotado (Nuevo) ---
-    // useEffect(() => {
-    //     if (timeLeft === 0 && isTimerActive) {
-    //         // 1. Apagamos el reloj de forma segura fuera del hilo de cálculo principal
-    //         setIsTimerActive(false);
-
-    //         // 2. Ejecutamos el flujo de finalización sin colisiones de render
-    //         handleFinishExamProcess(true);
-    //     }
-    // }, [timeLeft, isTimerActive]);
-
-
     // --- 3. Control de Flujo de Respuestas y Envío Definitivo ---
     const handleConfirmAnswer = (isBlank: boolean) => {
         // 1. Decidimos la respuesta: si es en blanco pasamos null, si no, la opción seleccionada
@@ -124,26 +105,6 @@ export function TestScreen({ route }: TestScreenProps) {
         }
     };
 
-
-    // const advanceOrFinish = () => {
-    //     // Limpiamos los estados visuales de la pantalla
-    //     setSelectedOption(null);
-    //     setIsShowingSolution(false);
-
-    //     if (currentIndex < questions.length - 1) {
-    //         // 🚀 CORRECCIÓN: Usamos tu acción de Zustand para avanzar
-    //         nextQuestion();
-
-    //         // Reiniciamos el segundero de la pregunta local para el nuevo enunciado
-    //         questionTimeRef.current = 0;
-
-    //         // Reactivamos el temporizador global
-    //         setIsTimerActive(true);
-    //     } else {
-    //         // Usamos tu método existente para finalizar el proceso entero del examen
-    //         handleFinishExamProcess(false);
-    //     }
-    // };
     const advanceOrFinish = () => {
         // Limpiamos los estados visuales de la pantalla
         setSelectedOption(null);
@@ -166,16 +127,7 @@ export function TestScreen({ route }: TestScreenProps) {
             handleFinishExamProcess(false);
         }
     };
-    // const handleCancelOrFinishAlert = () => {
-    //     Alert.alert(
-    //         "¿Finalizar test?",
-    //         "¿Estás seguro de que quieres terminar el examen actual? Las preguntas restantes se marcarán en blanco.",
-    //         [
-    //             { text: "Cancelar", style: "cancel" },
-    //             { text: "Sí, finalizar", style: "destructive", onPress: () => handleFinishExamProcess(false) }
-    //         ]
-    //     );
-    // };
+
     const handleCancelOrFinishAlert = () => {
         // Pausamos el tiempo mientras el cuadro de diálogo de confirmación esté abierto
         setIsTimerActive(false);
@@ -228,7 +180,7 @@ export function TestScreen({ route }: TestScreenProps) {
     // Loader de seguridad mientras Zustand procesa las preguntas
     if (loading || questions.length === 0) {
         return (
-            <ScreenLayout title={`Examen Oficial ${year}`} showSidebar={false}>
+            <ScreenLayout title={titleParam} showSidebar={false}>
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                     <ActivityIndicator size="large" color="#2563EB" />
                     <Text style={{ marginTop: 12, color: '#64748B' }}>Cargando cuestionario...</Text>

@@ -25,7 +25,7 @@ export function OppositionScreen({ route }: OppositionScreenProps) {
     // Opciones del menú basadas en tu interfaz gráfica
     const opcionesTest = [
         { idDocument: '1', name: 'Exámenes', sub: 'Exámenes de años anteriores', icon: 'book-open-blank-variant', color: '#2F70F2', screen: 'ExamsScreen' },
-        { idDocument: '2', name: 'Simulacros', sub: 'Simulacros sin solución inmediata', icon: 'target', color: '#00BA52', screen: 'simulacrumScreen' },
+        { idDocument: '2', name: 'Simulacros', sub: 'Simulacros sin solución inmediata', icon: 'target', color: '#00BA52', screen: 'TestScreen' },
         { idDocument: '3', name: 'Test por bloques', sub: 'Selecciona uno o varios bloques', icon: 'apps', color: '#A447FF', screen: 'BlockScreen' },
         { idDocument: '4', name: 'Test por temas', sub: 'Elige temas específicos', icon: 'format-list-bulleted', color: '#F2990A', screen: 'ThemesScreen' },
         { idDocument: '5', name: 'Test personalizado', sub: 'Configura tu propio test', icon: 'cog-outline', color: '#EF4444', screen: 'customizedScreen' },
@@ -57,10 +57,24 @@ export function OppositionScreen({ route }: OppositionScreenProps) {
                             style={styles.card}
                             android_ripple={{ color: '#E0E0E0' }}
                             onPress={() => {
-                                navigation.navigate(opcion.screen, {
-                                    opositionId: idDocument,
-                                    name: name
-                                });
+                                // Si pulsa simulacro, preconfiguramos los datos requeridos
+                                if (opcion.idDocument === '2') {
+                                    navigation.navigate('TestScreen', {
+                                        opositionId: idDocument,
+                                        name: `${name}`,
+                                        setTime: 100,               // 100 preguntas = 100 minutos (1 min por pregunta)
+                                        examType: 'simulacrum',     // Identificador del tipo de examen
+                                        year: new Date().getFullYear().toString(),
+                                        immediateSolution: false,    // Siempre desactivado en simulacros
+                                        titleParam: 'Simulacro'
+                                    });
+                                } else {
+                                    // Flujo normal para el resto de pantallas selectoras (Exams, Blocks, Themes...)
+                                    navigation.navigate(opcion.screen, {
+                                        opositionId: idDocument,
+                                        name: name
+                                    });
+                                }
                             }}
                         >
                             <View style={[styles.iconBox, { backgroundColor: opcion.color }]}>
@@ -113,7 +127,6 @@ export function OppositionScreen({ route }: OppositionScreenProps) {
                             <MaterialCommunityIcons name="square-edit-outline" size={18} color="#FFF" />
                             <Text style={styles.btnText}>Editar Preguntas</Text>
                         </Pressable>
-
                     </View>
                 )}
 
