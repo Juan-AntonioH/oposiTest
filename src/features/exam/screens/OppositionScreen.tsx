@@ -27,7 +27,7 @@ export function OppositionScreen({ route }: OppositionScreenProps) {
         { idDocument: '1', name: 'Exámenes', sub: 'Exámenes de años anteriores', icon: 'book-open-blank-variant', color: '#2F70F2', screen: 'ExamsScreen' },
         { idDocument: '2', name: 'Simulacros', sub: 'Simulacros sin solución inmediata', icon: 'target', color: '#00BA52', screen: 'simulacrumScreen' },
         { idDocument: '3', name: 'Test por bloques', sub: 'Selecciona uno o varios bloques', icon: 'apps', color: '#A447FF', screen: 'BlockScreen' },
-        { idDocument: '4', name: 'Test por temas', sub: 'Elige temas específicos', icon: 'format-list-bulleted', color: '#F2990A', screen: 'TemasScreen' },
+        { idDocument: '4', name: 'Test por temas', sub: 'Elige temas específicos', icon: 'format-list-bulleted', color: '#F2990A', screen: 'ThemesScreen' },
         { idDocument: '5', name: 'Test personalizado', sub: 'Configura tu propio test', icon: 'cog-outline', color: '#EF4444', screen: 'customizedScreen' },
     ];
 
@@ -105,8 +105,8 @@ export function OppositionScreen({ route }: OppositionScreenProps) {
                                 console.log(`Redirigir a lista de preguntas para la opo: ${idDocument}`)
                                 navigation.navigate('QuestionsList', {
                                     idDocument: idDocument,    // P. ej. 'opo_01'
-                                    nombreOposicion: name,
-                                    siglas: id    // P. ej. 'Técnico auxiliar informática'
+                                    nombreOposicion: name, // P. ej. 'Técnico auxiliar informática'
+                                    siglas: id    // P. ej. 'TAI'
                                 });
                             }}
                         >

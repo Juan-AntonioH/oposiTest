@@ -4,9 +4,9 @@ import {
     Text,
     TextInput,
     ScrollView,
-    StyleSheet,
     TouchableOpacity
 } from 'react-native';
+import { styles } from '@/features/exam/styles/exam.styles';
 import { RouteProp, useRoute, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Dropdown } from 'react-native-element-dropdown';
@@ -58,11 +58,11 @@ export const QuestionsListScreen = () => {
 
     return (
         <ScreenLayout title={`Preguntas: ${siglas}`}>
-            <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+            <ScrollView style={styles.containerList} contentContainerStyle={styles.contentContainerList}>
 
                 {/* PANEL DE FILTROS */}
                 <View style={styles.filterCard}>
-                    <Text style={styles.label}>Buscar pregunta</Text>
+                    <Text style={styles.labelList}>Buscar pregunta</Text>
                     <TextInput
                         style={styles.searchInput}
                         placeholder="🔍 Escribe para buscar..."
@@ -70,9 +70,9 @@ export const QuestionsListScreen = () => {
                         onChangeText={setSearchQuery}
                     />
 
-                    <Text style={styles.label}>Filtrar por bloque</Text>
+                    <Text style={styles.labelList}>Filtrar por bloque</Text>
                     <Dropdown
-                        style={styles.dropdown}
+                        style={styles.dropdownList}
                         placeholderStyle={styles.placeholder}
                         selectedTextStyle={styles.selectedText}
                         data={datosBloques}
@@ -82,9 +82,9 @@ export const QuestionsListScreen = () => {
                         onChange={(item: { value: string }) => setFiltroBloque(item.value)}
                     />
 
-                    <Text style={styles.label}>Filtrar por tema</Text>
+                    <Text style={styles.labelList}>Filtrar por tema</Text>
                     <Dropdown
-                        style={styles.dropdown}
+                        style={styles.dropdownList}
                         placeholderStyle={styles.placeholder}
                         selectedTextStyle={styles.selectedText}
                         data={datosTemas}
@@ -115,7 +115,7 @@ export const QuestionsListScreen = () => {
                 {preguntasFiltradas.map((item: Question) => (
                     <TouchableOpacity
                         key={item.questionId}
-                        style={styles.questionCard}
+                        style={styles.questionCardList}
                         onPress={() => {
                             // 👈 SOLUCIÓN AL ERROR: Forzamos la aserción segura para cumplir con el contrato de RootStackParamList
                             // const questionDataForm = {
@@ -142,7 +142,7 @@ export const QuestionsListScreen = () => {
                         }}
                     >
                         <View style={styles.questionHeaderRow}>
-                            <Text style={styles.questionText}>
+                            <Text style={styles.questionTextList}>
                                 📝 <Text style={styles.boldText}>{item.questionId}:</Text> {item.question}
                             </Text>
                         </View>
@@ -166,38 +166,3 @@ export const QuestionsListScreen = () => {
         </ScreenLayout>
     );
 };
-
-// ... Mantén el mismo objeto styles de la respuesta anterior ...
-const styles = StyleSheet.create({
-    container: { flex: 1, backgroundColor: '#F5F7FA' },
-    contentContainer: { padding: 16 },
-    filterCard: { backgroundColor: '#FFF', borderRadius: 8, padding: 16, marginBottom: 16, borderWidth: 1, borderColor: '#EEE' },
-    label: { fontSize: 13, fontWeight: '600', color: '#555', marginBottom: 6 },
-    searchInput: { height: 45, borderColor: '#DDD', borderWidth: 1, borderRadius: 8, paddingHorizontal: 12, backgroundColor: '#FFF', marginBottom: 14, fontSize: 14 },
-    dropdown: { height: 45, borderColor: '#DDD', borderWidth: 1, borderRadius: 8, paddingHorizontal: 12, backgroundColor: '#FFF', marginBottom: 14 },
-    placeholder: { color: '#999', fontSize: 14 },
-    selectedText: { color: '#000', fontSize: 14 },
-    resultsText: { fontSize: 12, color: '#777', marginTop: 4 },
-    questionCard: { backgroundColor: '#FFF', borderRadius: 8, padding: 16, marginBottom: 12, borderWidth: 1, borderColor: '#EEE' },
-    questionHeaderRow: { flexDirection: 'row', alignItems: 'flex-start' },
-    questionText: { fontSize: 14, color: '#333', lineHeight: 20, flex: 1 },
-    boldText: { fontWeight: 'bold' },
-    metaRow: { flexDirection: 'row', marginTop: 8, alignItems: 'center' },
-    metaText: { fontSize: 12, color: '#666' },
-    metaDot: { marginHorizontal: 8, color: '#999' },
-    btnVolver: { backgroundColor: '#FFF', borderColor: '#DDD', borderWidth: 1, borderRadius: 8, height: 48, justifyContent: 'center', alignItems: 'center', marginTop: 12 },
-    btnVolverText: { color: '#333', fontSize: 15, fontWeight: '500' },
-        btnClearFilters: {
-        marginTop: 12,
-        backgroundColor: '#F0F4F8',
-        borderRadius: 6,
-        height: 36,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    btnClearFiltersText: {
-        color: '#475569',
-        fontSize: 13,
-        fontWeight: '600',
-    },
-});
