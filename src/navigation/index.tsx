@@ -20,6 +20,7 @@ import { ExamReviewScreen } from '@/features/exam/screens/ExamReviewScreen';
 
 // Importaciones del módulo de Administración
 import { QuestionFormScreen } from '@/features/admin/screens/QuestionFormScreen';
+import { QuestionsListScreen } from '@/features/admin/screens/QuestionsListScreen';
 import { FirebaseQuestion } from '@/features/admin/types/question';
 
 // Definimos los nombres de las pantallas para TypeScript
@@ -36,6 +37,11 @@ export type RootStackParamList = {
   ExamSummaryScreen: undefined;
   ExamReviewScreen: { startIndex?: number };
   // Añadida la ruta del formulario con el tipado oficial de tu base de datos
+  QuestionsList: {
+    idDocument: string;            // ID de la oposición
+    nombreOposicion: string;
+    siglas: string;       // Nombre de la oposición para el título dinámico
+  };
   QuestionForm: {
     idDocument: string;            // ID de la oposición (ej: 'opo_01')
     nombreOposicion: string;       // Nombre de la oposición (ej: 'Técnico auxiliar informática')
@@ -63,6 +69,8 @@ export function Navigation() {
         <Stack.Screen name="TestScreen" component={TestScreen} />
         <Stack.Screen name="ExamSummaryScreen" component={ExamSummaryScreen} />
         <Stack.Screen name="ExamReviewScreen" component={ExamReviewScreen} />
+        {/* PANTALLAS DE ADMINISTRACIÓN */}
+        <Stack.Screen name="QuestionsList" component={QuestionsListScreen} />
         <Stack.Screen name="QuestionForm" component={QuestionFormScreen} />
       </Stack.Navigator>
     </NavigationContainer>
