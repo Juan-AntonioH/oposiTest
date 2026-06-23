@@ -3,7 +3,7 @@ import { RootStackParamList } from "@/navigation";
 import { RouteProp, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { ScreenLayout } from '@/shared/layouts/ScreenLayout';
-import { ScrollView, Text, View, Switch, TouchableOpacity, StyleSheet } from 'react-native';
+import { ScrollView, Text, View, Switch, TouchableOpacity, StyleSheet, Pressable } from 'react-native';
 import { styles } from '../styles/exam.styles';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -23,7 +23,7 @@ interface ExamItem {
 
 export function ExamsScreen({ route }: ExamsScreenProps) {
     const { opositionId, name } = route.params || { opositionId: '', name: 'Detalle' };
-    
+
     // Hook de navegación con tipado estricto de tu RootStackParamList
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
@@ -50,6 +50,14 @@ export function ExamsScreen({ route }: ExamsScreenProps) {
 
     return (
         <ScreenLayout title="Seleccionar Examen">
+            <View style={styles.backButtonContainer}>
+                <Pressable
+                    style={styles.backButton}
+                    onPress={() => navigation.goBack()} // ← Te regresa automáticamente a la pantalla anterior (Login)
+                >
+                    <Text style={styles.backButtonText}>← Volver</Text>
+                </Pressable>
+            </View>
             <ScrollView
                 style={styles.listContainer}
                 showsVerticalScrollIndicator={false}
@@ -60,11 +68,11 @@ export function ExamsScreen({ route }: ExamsScreenProps) {
                 <View style={styles.toggleCard}>
                     <View style={styles.toggleHeader}>
                         {/* El icono cambia dinámicamente según el estado del booleano */}
-                        <Ionicons 
-                            name={immediateSolution ? "eye-outline" : "eye-off-outline"} 
-                            size={20} 
-                            color={immediateSolution ? "#2F70F2" : "#64748B"} 
-                            style={{ marginRight: 8 }} 
+                        <Ionicons
+                            name={immediateSolution ? "eye-outline" : "eye-off-outline"}
+                            size={20}
+                            color={immediateSolution ? "#2F70F2" : "#64748B"}
+                            style={{ marginRight: 8 }}
                         />
                         <Text style={styles.toggleTitle}>Mostrar solución inmediata</Text>
                         <Switch

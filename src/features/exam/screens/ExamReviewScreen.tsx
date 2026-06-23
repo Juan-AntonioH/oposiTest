@@ -173,8 +173,30 @@ export function ExamReviewScreen() {
                         style={styles.adminEditButton}
                         android_ripple={{ color: '#1C54C4' }}
                         onPress={() => {
-                            console.log("Navegar a la edición de la pregunta ID:", currentQuestion.questionId);
-                            // navigation.navigate('EditQuestionScreen', { questionId: currentQuestion.questionId });
+                            console.log("Navegando de forma tipada a la edición de la pregunta ID:", currentQuestion.questionId);
+
+                            navigation.navigate('QuestionForm', {
+                                // Parámetros obligatorios requeridos por el formulario
+                                idDocument: currentQuestion.oppositionId || 'opo_01',
+                                nombreOposicion: 'Técnico auxiliar informática',
+
+                                // Pasamos la estructura limpia mapeando campos directos del store
+                                questionData: {
+                                    id: currentQuestion.id || currentQuestion.questionId || 'mock_id',
+                                    questionId: currentQuestion.questionId,
+                                    oppositionId: currentQuestion.oppositionId || 'opo_01',
+                                    blockId: currentQuestion.blockId || 'bloque_01',
+                                    temaId: currentQuestion.temaId || 'tema_01',
+                                    question: currentQuestion.question,
+                                    options: currentQuestion.options,
+                                    correctAnswer: currentQuestion.correctAnswer,
+                                    explanation: currentQuestion.explanation || '',
+                                    randomId: currentQuestion.randomId || Math.random(),
+                                    esOficial: currentQuestion.esOficial ?? true,
+                                    examYear: currentQuestion.examYear || 2026,
+                                    examConvocatoria: currentQuestion.examConvocatoria || 'Libre'
+                                }
+                            });
                         }}
                     >
                         <MaterialCommunityIcons name="square-edit-outline" size={20} color="#FFFFFF" />

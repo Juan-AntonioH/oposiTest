@@ -18,6 +18,10 @@ import { TestScreen } from '@/features/exam/screens/TestScreen';
 import { ExamSummaryScreen } from '@/features/exam/screens/ExamSummaryScreen'
 import { ExamReviewScreen } from '@/features/exam/screens/ExamReviewScreen';
 
+// Importaciones del módulo de Administración
+import { QuestionFormScreen } from '@/features/admin/screens/QuestionFormScreen';
+import { FirebaseQuestion } from '@/features/admin/types/question';
+
 // Definimos los nombres de las pantallas para TypeScript
 export type RootStackParamList = {
   Dashboard: undefined;
@@ -31,6 +35,12 @@ export type RootStackParamList = {
   TestScreen: { opositionId: string; name: string, setTime: number, examType: string, year: number, immediateSolution: boolean }
   ExamSummaryScreen: undefined;
   ExamReviewScreen: { startIndex?: number };
+  // Añadida la ruta del formulario con el tipado oficial de tu base de datos
+  QuestionForm: {
+    idDocument: string;            // ID de la oposición (ej: 'opo_01')
+    nombreOposicion: string;       // Nombre de la oposición (ej: 'Técnico auxiliar informática')
+    questionData?: FirebaseQuestion; // Opcional: activa el modo EDICIÓN si se provee
+  };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -53,6 +63,7 @@ export function Navigation() {
         <Stack.Screen name="TestScreen" component={TestScreen} />
         <Stack.Screen name="ExamSummaryScreen" component={ExamSummaryScreen} />
         <Stack.Screen name="ExamReviewScreen" component={ExamReviewScreen} />
+        <Stack.Screen name="QuestionForm" component={QuestionFormScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

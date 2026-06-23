@@ -104,7 +104,7 @@ export function ExamSummaryScreen({ navigation }: ExamSummaryScreenProps) {
                     <Text style={styles.legendText}>Incorrecta</Text>
                 </View>
                 <View style={styles.legendItem}>
-                    <View style={[styles.legendDot, { backgroundColor: '#F8F9FA', borderWidth: 1, borderColor: '#CBD5E1' }]} />
+                    <View style={[styles.legendDot, { backgroundColor: '#E9EBEE', borderWidth: 1, borderColor: '#CBD5E1' }]} />
                     <Text style={styles.legendText}>Sin responder</Text>
                 </View>
             </View>
@@ -137,7 +137,7 @@ export function ExamSummaryScreen({ navigation }: ExamSummaryScreenProps) {
                 ListFooterComponent={renderSummaryFooter}
                 columnWrapperStyle={{ gap: 8, marginBottom: 8, justifyContent: 'flex-start' }}
                 renderItem={({ item, index }) => {
-                    let customStyle = { backgroundColor: '#F8F9FA' }; // Por defecto: Sin responder
+                    let customStyle = { backgroundColor: '#e9ebee' }; // Por defecto: Sin responder
                     let textStyle = { color: '#444' };
 
                     if (item.userResponse !== null && item.userResponse !== undefined) {

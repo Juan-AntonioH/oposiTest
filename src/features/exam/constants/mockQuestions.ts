@@ -9,10 +9,18 @@ export interface Question {
     correctAnswer: number;
     questionTimeSpent: number;
     explanation?: string;
+
+    // 👈 AÑADIMOS ESTOS METADATOS DE FIRESTORE COMO OPCIONALES
+    id?: string;
+    oppositionId?: string;
+    randomId?: number;
+    esOficial?: boolean;
+    examYear?: number;
+    examConvocatoria?: string;
 }
 
 export const MOCK_QUESTIONS: Question[] = [
-     {
+    {
         numQuestion: 1,
         questionId: "p320",
         blockId: "bloque_01",
@@ -25,9 +33,14 @@ export const MOCK_QUESTIONS: Question[] = [
             "Opción D de la pregunta 1"
         ],
         userResponse: null,
-        correctAnswer: 2, // Índice de la Opción C
+        correctAnswer: 2,
         questionTimeSpent: 0,
-        explanation: "Esta es la explicación detallada de por qué la opción correcta es la respuesta adecuada para la pregunta 1. En el contexto de la oposición, este concepto es fundamental porque..."
+        explanation: "Esta es la explicación detallada de por qué la opción correcta es la respuesta adecuada para la pregunta 1. En el contexto de la oposición, este concepto es fundamental porque...",
+        // Opcionales simulados para pruebas
+        oppositionId: "opo_01",
+        esOficial: true,
+        examYear: 2011,
+        examConvocatoria: "Libre"
     },
     {
         numQuestion: 2,
@@ -44,7 +57,8 @@ export const MOCK_QUESTIONS: Question[] = [
         userResponse: null,
         correctAnswer: 0,
         questionTimeSpent: 0,
-        explanation: "El plazo para la interposición del recurso de alzada será de un mes si el acto fuera expreso, de acuerdo con la Ley de Procedimiento Administrativo Común."
+        explanation: "El plazo para la interposición del recurso de alzada será de un mes si el acto fuera expreso, de acuerdo con la Ley de Procedimiento Administrativo Común.",
+        oppositionId: "opo_01"
     },
     {
         numQuestion: 3,
@@ -61,7 +75,8 @@ export const MOCK_QUESTIONS: Question[] = [
         userResponse: null,
         correctAnswer: 2,
         questionTimeSpent: 0,
-        explanation: "El artículo 1.2 de la Constitución establece explícitamente que la soberanía nacional reside en el pueblo español, del que emanan los poderes del Estado."
+        explanation: "El artículo 1.2 de la Constitución establece explícitamente que la soberanía nacional reside en el pueblo español, del que emanan los poderes del Estado.",
+        oppositionId: "opo_01"
     },
     {
         numQuestion: 4,
@@ -78,7 +93,8 @@ export const MOCK_QUESTIONS: Question[] = [
         userResponse: null,
         correctAnswer: 1,
         questionTimeSpent: 0,
-        explanation: "En caso de extraordinaria y urgente necesidad, el Gobierno podrá dictar disposiciones legislativas provisionales que tomarán la forma de Decretos-leyes."
+        explanation: "En caso de extraordinaria y urgente necesidad, el Gobierno podrá dictar disposiciones legislativas provisionales que tomarán la forma de Decretos-leyes.",
+        oppositionId: "opo_01"
     },
     {
         numQuestion: 5,
@@ -95,6 +111,10 @@ export const MOCK_QUESTIONS: Question[] = [
         userResponse: null,
         correctAnswer: 0,
         questionTimeSpent: 0,
-        explanation: "La capital del Estado es la villa de Madrid, tal y como recoge el artículo 5 de la Constitución Española."
+        explanation: "La capital del Estado es la villa de Madrid, tal y como recoge el artículo 5 de la Constitución Española.",
+        oppositionId: "opo_01",
+        esOficial: true,
+        examYear: 2014,
+        examConvocatoria: "Libre"
     }
 ];

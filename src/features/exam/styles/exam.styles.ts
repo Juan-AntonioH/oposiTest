@@ -526,4 +526,353 @@ export const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight: '600',
     },
+    ///// EXAMREVIEWSCREEN
+    scrollContainerReview: {
+        paddingHorizontal: 20,
+        paddingBottom: 40,
+        backgroundColor: '#F8F9FC',
+    },
+    topControlBar: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingHorizontal: 12,
+        marginVertical: 12,
+    },
+    navArrowButton: {
+        width: 44,
+        height: 44,
+        borderRadius: 22,
+        backgroundColor: '#FFFFFF',
+        justifyContent: 'center',
+        alignItems: 'center',
+        elevation: 2,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.1,
+        shadowRadius: 2,
+    },
+    navArrowDisabled: {
+        backgroundColor: '#F1F5F9',
+        elevation: 0,
+    },
+    topButtonWrapper: {
+        flex: 1,
+        alignItems: 'center',
+        marginHorizontal: 16,
+    },
+    headerActionButton: {
+        backgroundColor: '#2F70F2',
+        borderRadius: 8,
+        paddingVertical: 10,
+        paddingHorizontal: 16,
+        alignSelf: 'stretch',
+        alignItems: 'center',
+    },
+    headerActionText: {
+        color: '#FFFFFF',
+        fontWeight: 'bold',
+        fontSize: 14,
+    },
+    questionMainCard: {
+        backgroundColor: '#FFFFFF',
+        borderRadius: 16,
+        padding: 16,
+        elevation: 2,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.02,
+        shadowRadius: 6,
+        marginBottom: 20,
+    },
+    progressRow: {
+        borderBottomWidth: 1,
+        borderColor: '#F1F5F9',
+        paddingBottom: 10, marginBottom: 16,
+    },
+    progressText: {
+        fontSize: 14,
+        color: '#64748B',
+        fontWeight: '500',
+    },
+    questionStatement: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#1C2434',
+        lineHeight: 24,
+        marginBottom: 20,
+    },
+    optionsWrapper: {
+        gap: 12,
+        marginBottom: 20,
+    },
+    optionCardReview: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderWidth: 1,
+        borderRadius: 12,
+        padding: 14,
+    },
+    optionCardNormal: {
+        borderColor: '#E2E8F0',
+        backgroundColor: '#FFFFFF',
+    },
+    optionCardCorrectReview: {
+        borderColor: '#2ECC71',
+        backgroundColor: '#F0FBF4',
+
+    },
+    optionCardIncorrectReview: {
+        borderColor: '#E74C3C',
+        backgroundColor: '#FDF2F1',
+
+    },
+    letterBadge: {
+        width: 30,
+        height: 30,
+        borderRadius: 15,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 12,
+
+    },
+    badgeNormal: {
+        borderWidth: 1,
+        borderColor: '#94A3B8',
+        backgroundColor: '#FFFFFF',
+
+    },
+    badgeCorrect: {
+        backgroundColor: '#2ECC71',
+
+    },
+    badgeIncorrect: {
+        backgroundColor: '#E74C3C',
+    },
+    letterBadgeText: {
+        fontSize: 14,
+        fontWeight: '600',
+
+    },
+    badgeTextNormal: {
+        color: '#475569',
+
+    },
+    badgeTextWhite: {
+        color: '#FFFFFF',
+    },
+    optionContentText: {
+        flex: 1,
+        fontSize: 14,
+        color: '#334155',
+        lineHeight: 20,
+
+    },
+    explanationBox: {
+        backgroundColor: '#EFF6FF',
+        borderLeftWidth: 4,
+        borderColor: '#2F70F2',
+        borderRadius: 8,
+        padding: 14,
+        marginTop: 8,
+
+    },
+    explanationTitleReview: {
+        fontSize: 14,
+        fontWeight: 'bold',
+        color: '#1E40AF',
+        marginBottom: 6,
+
+    },
+    explanationBody: {
+        fontSize: 13,
+        color: '#1E3A8A',
+        lineHeight: 18,
+
+    },
+    adminEditButton: {
+        flexDirection: 'row',
+        backgroundColor: '#00BA52',
+        // Mantenemos tu paleta verde para acciones de creación/edición
+        borderRadius: 10,
+        height: 48,
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: 8,
+        elevation: 2,
+    },
+    adminButtonText: {
+        color: '#FFFFFF',
+        fontSize: 15,
+        fontWeight: '600',
+    },
+    centerContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 24,
+    },
+    errorText: {
+        fontSize: 16,
+        color: '#64748B',
+        textAlign: 'center',
+        marginBottom: 16,
+    },
+    btnBack: {
+        backgroundColor: '#2F70F2',
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        borderRadius: 8,
+    },
+    btnBackText: {
+        color: '#FFFFFF',
+        fontWeight: '600',
+    },
+    //QUESTIONFORMSCREEN
+    containerQuestion: {
+        flex: 1,
+        backgroundColor: '#F8F9FA'
+    },
+    contentContainer: {
+        paddingHorizontal: 16,
+        paddingBottom: 32,
+        paddingTop: 8
+
+    },
+    subHeader: {
+        fontSize: 18,
+        color: '#333333',
+        marginBottom: 16
+
+    },
+    boldText: {
+        fontWeight: 'bold'
+
+    },
+    cardQuestion: {
+        backgroundColor: '#FFFFFF',
+        borderRadius: 12,
+        padding: 16,
+        elevation: 3,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+    },
+    label: {
+        fontSize: 14,
+        fontWeight: '600',
+        color: '#495057',
+        marginTop: 14,
+        marginBottom: 6
+
+    },
+    input: {
+        borderWidth: 1,
+        borderColor: '#CED4DA',
+        borderRadius: 8,
+        paddingHorizontal: 12,
+        paddingVertical: 10,
+        fontSize: 15,
+        backgroundColor: '#FAFAFA',
+        color: '#212529',
+    },
+    textArea: {
+        textAlignVertical: 'top',
+        minHeight: 80
+    },
+    optionContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 10
+
+    },
+    optionBadge: {
+        width: 32,
+        height: 32,
+        borderRadius: 16,
+        backgroundColor: '#E8F0FE',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 10,
+    },
+    optionBadgeText: {
+        color: '#1A73E8',
+        fontWeight: 'bold'
+
+    },
+    optionInput: {
+        flex: 1,
+        borderWidth: 1,
+        borderColor: '#CED4DA',
+        borderRadius: 8,
+        paddingHorizontal: 12,
+        paddingVertical: 8,
+        fontSize: 14,
+        backgroundColor: '#FAFAFA',
+        color: '#212529',
+    },
+    buttonRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: 24,
+        gap: 8
+
+    },
+    btnQuestion: {
+        flex: 1,
+        paddingVertical: 12,
+        borderRadius: 8,
+        alignItems: 'center',
+        justifyContent: 'center'
+
+    },
+    btnGuardar: {
+        backgroundColor: '#00A650'
+
+    },
+    btnEliminar: {
+        backgroundColor: '#D90404'
+
+    },
+    btnCancelar: {
+        borderWidth: 1,
+        borderColor: '#CED4DA',
+        backgroundColor: '#FFFFFF'
+
+    },
+    btnTextGuardar: {
+        color: '#FFFFFF',
+        fontWeight: 'bold',
+        fontSize: 13
+
+    },
+    btnTextEliminar: {
+        color: '#FFFFFF',
+        fontWeight: 'bold',
+        fontSize: 13
+
+    },
+    btnTextCancelar: {
+        color: '#495057',
+        fontSize: 13
+
+    },
+    dropdown: {
+        height: 50,
+        borderColor: '#ccc',
+        borderWidth: 1,
+        borderRadius: 8,
+        paddingHorizontal: 12,
+        backgroundColor: '#fff',
+        marginBottom: 16,
+    },
+    placeholder: {
+        color: '#999',
+        fontSize: 14,
+    },
+    selectedText: {
+        color: '#000',
+        fontSize: 14,
+    },
 });

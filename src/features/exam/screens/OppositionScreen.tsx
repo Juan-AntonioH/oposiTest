@@ -82,7 +82,16 @@ export function OppositionScreen({ route }: OppositionScreenProps) {
                         <Pressable
                             style={[styles.btn, styles.btnGreen]}
                             android_ripple={{ color: '#009943' }}
-                            onPress={() => console.log(`Redirigir a creador de preguntas para la opo: ${idDocument}`)}
+                            onPress={() => {
+                                console.log(`Redirigiendo al creador de preguntas para la opo: ${idDocument}`);
+
+                                // Navegamos pasando únicamente los parámetros requeridos para la creación
+                                navigation.navigate('QuestionForm', {
+                                    idDocument: idDocument,    // P. ej. 'opo_01'
+                                    nombreOposicion: name      // P. ej. 'Técnico auxiliar informática'
+                                    // NOTA: Al no enviar 'questionData', la pantalla se inicializa automáticamente como "Nueva Pregunta"
+                                });
+                            }}
                         >
                             <MaterialIcons name="add" size={20} color="#FFF" />
                             <Text style={styles.btnText}>Añadir Pregunta</Text>
