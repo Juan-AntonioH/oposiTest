@@ -17,7 +17,7 @@ export function TestScreen({ route }: TestScreenProps) {
 
     // Parámetros de navegación
     const { opositionId, name, setTime, examType, year, immediateSolution, titleParam } = route.params || {
-        opositionId: '', name: '', setTime: 90, examType: '', immediateSolution: false, titleParam: 'Test'
+        opositionId: '', name: '', setTime: 90, examType: '', immediateSolution: false, titleParam: ''
     };
 
     // Consumo del Store Global del Examen
@@ -226,7 +226,7 @@ export function TestScreen({ route }: TestScreenProps) {
     };
 
     return (
-        <ScreenLayout title={`Examen Oficial ${year}`} showSidebar={false}>
+        <ScreenLayout title={titleParam} showSidebar={false}>
 
             {/* 🛑 CABECERA DE CONTROL (Botón Finalizar Test) */}
             <View style={styles.headerControlContainer}>
