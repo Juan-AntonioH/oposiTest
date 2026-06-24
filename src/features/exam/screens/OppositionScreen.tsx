@@ -26,9 +26,9 @@ export function OppositionScreen({ route }: OppositionScreenProps) {
     const opcionesTest = [
         { idDocument: '1', name: 'Exámenes', sub: 'Exámenes de años anteriores', icon: 'book-open-blank-variant', color: '#2F70F2', screen: 'ExamsScreen' },
         { idDocument: '2', name: 'Simulacros', sub: 'Simulacros sin solución inmediata', icon: 'target', color: '#00BA52', screen: 'TestScreen' },
-        { idDocument: '3', name: 'Test por bloques', sub: 'Selecciona uno o varios bloques', icon: 'apps', color: '#A447FF', screen: 'BlockScreen' },
+        { idDocument: '3', name: 'Test por bloques', sub: 'Selecciona uno o varios bloques', icon: 'apps', color: '#A447FF', screen: 'BlocksScreen' },
         { idDocument: '4', name: 'Test por temas', sub: 'Elige temas específicos', icon: 'format-list-bulleted', color: '#F2990A', screen: 'ThemesScreen' },
-        { idDocument: '5', name: 'Test personalizado', sub: 'Configura tu propio test', icon: 'cog-outline', color: '#EF4444', screen: 'customizedScreen' },
+        { idDocument: '5', name: 'Test personalizado', sub: 'Configura tu propio test', icon: 'cog-outline', color: '#EF4444', screen: 'CustomizedScreen' },
     ];
 
     return (
