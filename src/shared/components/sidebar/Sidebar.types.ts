@@ -1,8 +1,8 @@
 // Define los tipos de navegación disponibles en la app
 export type SidebarRoute =
   | 'inicio'
-  | 'lista'
-  | 'categorias'
+  | 'list'
+  | 'oposiciones'
   | 'login';
 
 export interface SidebarProps {
@@ -10,8 +10,12 @@ export interface SidebarProps {
   onClose: () => void;
 
   isLoggedIn?: boolean;
+  uid?: string;
   userName?: string;
+  accountName?: string;
   userAvatar?: string;
+  userEmail?: string;
+  userRole?: string;
 
   onLoginClick?: () => void;
   onProfileClick?: () => void;

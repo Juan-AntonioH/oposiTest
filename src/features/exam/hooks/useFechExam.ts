@@ -1,11 +1,28 @@
-import { useQuery } from '@tanstack/react-query';
-import { examService } from '../services/examService';
-import { Exam } from '../types';
+import { useState, useEffect } from 'react';
+import { examService } from '@/features/exam/services/examService';
+import { Oposicion } from '@/features/exam';
 
-export const useFetchExam = (examId: string) => {
-  return useQuery<Exam, Error>({
-    queryKey: ['exam', examId],
-    queryFn: () => examService.getExamById(examId),
-    staleTime: 1000 * 60 * 10, // 10 minutos de caché (Estándar de rendimiento en apps móviles)
-  });
-};
+export function useFetchExam() {
+  const [oposiciones, setOposiciones] = useState<Oposicion[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const cargarOposiciones = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const datos = await examService.getOposicionesActivas();
+      setOposiciones(datos);
+    } catch (err) {
+      setError('No se pudieron cargar las oposiciones. Inténtalo de nuevo.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    cargarOposiciones();
+  }, []);
+
+  return { oposiciones, loading, error, refrescar: cargarOposiciones };
+}

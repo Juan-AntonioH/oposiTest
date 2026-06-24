@@ -59,7 +59,6 @@ export function RecoveryScreen() {
     return (
         <ScreenLayout
             title="Recuperar Contraseña"
-            showSidebar={true}
         >
             <ScrollView
                 contentContainerStyle={[styles.scrollContent, styles.localScroll]}

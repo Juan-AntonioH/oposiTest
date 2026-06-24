@@ -12,6 +12,7 @@ import { SidebarProps } from './Sidebar.types';
 import { styles } from './Sidebar.styles';
 import { MaterialIcons } from '@expo/vector-icons';
 import { PRESET_AVATARS } from '@/features/auth/constants/avatars';
+
 export function Sidebar({
   isOpen,
   onClose,
@@ -26,7 +27,6 @@ export function Sidebar({
 
   // Animación simple de entrada (slide from left)
   const translateX = React.useRef(new Animated.Value(-300)).current;
-
   React.useEffect(() => {
     if (isOpen) {
       // abre el sidebar
@@ -49,8 +49,8 @@ export function Sidebar({
   const menuItems = isLoggedIn
     ? [
       { label: 'Inicio', icon: 'home', action: () => onNavigate?.('inicio') },
-      { label: 'Categorías', icon: 'category', action: () => onNavigate?.('categorias') },
-      { label: 'Lista', icon: 'list', action: () => onNavigate?.('lista') },
+      { label: 'Oposiciones', icon: 'category', action: () => onNavigate?.('oposiciones') },
+      { label: 'Tests Realizados', icon: 'list', action: () => onNavigate?.('list') },
       { label: 'Configuración', icon: 'settings', action: () => { } },
       {
         label: 'Logout',
@@ -58,11 +58,14 @@ export function Sidebar({
         action: () => {
           onLogout?.();
           onNavigate?.('inicio');
+
         },
       },
     ]
     : [
       { label: 'Inicio', icon: 'home', action: () => onNavigate?.('inicio') },
+      // { label: 'Oposiciones', icon: 'category', action: () => onNavigate?.('oposiciones') },
+
     ];
 
   return (
@@ -91,7 +94,7 @@ export function Sidebar({
           <Text style={styles.title}>Menú</Text>
 
           <Pressable onPress={onClose}>
-            <Text style={styles.close}>✕</Text>
+            <MaterialIcons name="close" size={30} />{/*<Text style={styles.close}>✕</Text>*/}
           </Pressable>
         </View>
 
@@ -109,7 +112,7 @@ export function Sidebar({
             </Pressable>
           ) : (
             <Pressable style={styles.profileContainer} onPress={onProfileClick}>
-              {/* AVATAR DESDE TU BANCO DE IMÁGENES */}
+              {/* AVATAR DESDE EL BANCO DE IMÁGENES */}
               <Image
                 source={
                   PRESET_AVATARS.find((avatar) => avatar.id === (userAvatar || 'avatar_01'))?.image ||
@@ -120,7 +123,7 @@ export function Sidebar({
               {/* DATOS DE USUARIO */}
               <View style={styles.userInfo}>
                 <Text style={styles.userName} numberOfLines={1}>
-                  {userName ?? 'Juan Pérez Martínez'}
+                  {userName ?? 'Opositor/a'}
                 </Text>
                 <Text style={styles.profileLink}>
                   Perfil

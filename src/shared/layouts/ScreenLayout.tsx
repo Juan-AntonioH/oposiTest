@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import { Toolbar } from '@/shared/components/toolbar/ToolBar';
 import { Sidebar } from '@/shared/components/sidebar/Sidebar';
+import { useAuthStore } from '@/store/authStore';
 
 interface Props {
   children: React.ReactNode;
@@ -20,10 +21,13 @@ interface Props {
   // sidebar control
   sidebarOpen?: boolean;
   setSidebarOpen?: (value: boolean) => void;
-
   isLoggedIn?: boolean;
+  uid?: string;
   userName?: string;
-  userAvatar?: string; // 👈 ID/Key de tu banco de avatares
+  accountName?: string;
+  userAvatar?: string;
+  userEmail?: string;
+  userRole?: string;
   onNavigate?: (screen: string) => void;
   onLogout?: () => void;
   onLoginClick?: () => void;
@@ -37,14 +41,15 @@ export function ScreenLayout({
   // onMenuPress,
   // sidebarOpen,
   // setSidebarOpen,
-  isLoggedIn,
-  userName,
-  userAvatar,
+  // isLoggedIn,
+  // userName,
+  // userAvatar,
   // onNavigate,
-  onLogout,
+  // onLogout,
   // onLoginClick,
-  onProfileClick,
+  // onProfileClick,
 }: Props) {
+  const { isLoggedIn, uid, userName, accountName, userAvatar, userEmail, userRole, logout } = useAuthStore();
   // 1. Instanciamos la navegación nativa globalmente para el layout
   const navigation = useNavigation<any>();
   // 2. Estado local del menú controlado por el propio Layout
@@ -55,6 +60,8 @@ export function ScreenLayout({
 
     if (screen === 'inicio') {
       navigation.navigate('Dashboard'); // 👈 Nombre exacto de tu ruta en la pila
+    } else if (screen === 'oposiciones') {
+      navigation.navigate('Oppositions');
     }
     // Si agregas nuevas pantallas en el futuro, SOLO las agregas aquí 🚀
   };
@@ -62,6 +69,11 @@ export function ScreenLayout({
     setSidebarOpen(false);
     navigation.navigate('Login');
   };
+  const onProfileClick = () => {
+    setSidebarOpen(false);
+    alert("Abrir ventana")
+  }
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
 
@@ -71,10 +83,14 @@ export function ScreenLayout({
           isOpen={sidebarOpen}
           onClose={() => setSidebarOpen(false)}
           isLoggedIn={isLoggedIn}
+          uid={uid}
           userName={userName}
-          userAvatar={userAvatar} // 👈 Aquí podrías pasar un prop real con el avatar del usuario
+          accountName={accountName}
+          userAvatar={userAvatar}
+          userEmail={userEmail}
+          userRole={userRole}
           onNavigate={handleNavigate}
-          onLogout={onLogout}
+          onLogout={logout}
           onLoginClick={handleLoginClick}
           onProfileClick={onProfileClick}
         />
