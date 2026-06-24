@@ -42,7 +42,7 @@ export function ExamsScreen({ route }: ExamsScreenProps) {
             opositionId: opositionId || exam.opositionId,
             name: name,
             setTime: exam.tiempoExamen,
-            examType: 'Examen_oficial',
+            examType: 'oficial',
             year: exam.year,
             immediateSolution: immediateSolution, // Pasamos el booleano del interruptor
             titleParam: `Examen Oficial ${exam.year}` // 🚀 Añadido: Así cada pantalla controla su propio título

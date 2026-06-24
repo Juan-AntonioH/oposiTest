@@ -24,6 +24,7 @@ import { QuestionsListScreen } from '@/features/admin/screens/QuestionsListScree
 import { FirebaseQuestion } from '@/features/admin/types/question';
 import { BlocksScreen } from '@/features/exam/screens/BlocksScreen';
 import { ThemesScreen } from '@/features/exam/screens/ThemesScreen';
+import { CustomTestScreen } from '@/features/exam/screens/CustomTestScreen';
 
 // Definimos los nombres de las pantallas para TypeScript
 export type RootStackParamList = {
@@ -37,6 +38,7 @@ export type RootStackParamList = {
   ExamsScreen: { opositionId: string; name: string };
   BlocksScreen: { opositionId: string; name: string };
   ThemesScreen: { opositionId: string; name: string };
+  CustomTestScreen: { opositionId: string; name: string };
   TestScreen: { opositionId: string; name: string, setTime: number, examType: string, year: number, immediateSolution: boolean, titleParam: string }
   ExamSummaryScreen: undefined;
   ExamReviewScreen: { startIndex?: number };
@@ -72,6 +74,7 @@ export function Navigation() {
         <Stack.Screen name="ExamsScreen" component={ExamsScreen} />
         <Stack.Screen name="BlocksScreen" component={BlocksScreen} />
         <Stack.Screen name="ThemesScreen" component={ThemesScreen} />
+        <Stack.Screen name="CustomTestScreen" component={CustomTestScreen} />
         <Stack.Screen name="TestScreen" component={TestScreen} />
         <Stack.Screen name="ExamSummaryScreen" component={ExamSummaryScreen} />
         <Stack.Screen name="ExamReviewScreen" component={ExamReviewScreen} />
