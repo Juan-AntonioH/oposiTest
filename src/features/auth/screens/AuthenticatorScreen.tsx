@@ -1,55 +1,130 @@
-import React from 'react';
-import { View, Text, Pressable } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { View, Text, Pressable, ActivityIndicator } from 'react-native';
+import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import { ScreenLayout } from '@/shared/layouts/ScreenLayout';
-import { useEmailVerification } from '../hooks/useEmailVerification';
-import { colors } from '@/core/theme';
+import { RootStackParamList } from '@/navigation/types';
+import { auth } from '@/core/config/firebase';
+import { sendEmailVerification } from 'firebase/auth';
+
+type Nav = NativeStackNavigationProp<RootStackParamList, 'Authenticator'>;
+type Route = RouteProp<RootStackParamList, 'Authenticator'>;
 
 export function AuthenticatorScreen() {
-    const {
-        loading,
-        cooldown,
-        resendEmail,
-        verifyEmail,
-    } = useEmailVerification();
+    const navigation = useNavigation<Nav>();
+    const route = useRoute<Route>();
+
+    const email = route.params?.email;
+
+    const [loading, setLoading] = useState(false);
+    const [cooldown, setCooldown] = useState(0);
+    const [checking, setChecking] = useState(false);
+
+    const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+    // =========================
+    // ENVIAR EMAIL VERIFICACIÓN
+    // =========================
+    const sendVerification = async () => {
+        const user = auth.currentUser;
+        if (!user) return;
+
+        setLoading(true);
+
+        try {
+            await sendEmailVerification(user);
+            setCooldown(60);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // =========================
+    // COOLDOWN REENVIOS
+    // =========================
+    useEffect(() => {
+        if (cooldown <= 0) return;
+
+        const interval = setInterval(() => {
+            setCooldown((c) => c - 1);
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, [cooldown]);
+
+    // =========================
+    // POLLING VERIFICACIÓN
+    // =========================
+    useEffect(() => {
+        intervalRef.current = setInterval(async () => {
+            const user = auth.currentUser;
+            if (!user) return;
+
+            await user.reload();
+
+            if (user.emailVerified) {
+                if (intervalRef.current) {
+                    clearInterval(intervalRef.current);
+                }
+
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'Dashboard' }],
+                });
+            }
+        }, 3000);
+
+        return () => {
+            if (intervalRef.current) {
+                clearInterval(intervalRef.current);
+            }
+        };
+    }, []);
+
+    const canResend = cooldown === 0 && !loading;
 
     return (
-        <ScreenLayout title="Verifica tu correo">
+        <ScreenLayout title="Verifica tu cuenta">
 
-            <View style={{ padding: 20 }}>
+            <View style={{ padding: 20, gap: 20 }}>
 
-                <Text style={{ marginBottom: 10 }}>
-                    Te hemos enviado un correo de verificación
+                <Text style={{ textAlign: 'center', fontSize: 16 }}>
+                    Hemos enviado un email de verificación a:
                 </Text>
 
-                <Text style={{ fontWeight: 'bold', marginBottom: 30 }}>
-                    Revisa tu bandeja de entrada
+                <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>
+                    {email}
                 </Text>
 
-                {/* CHECK */}
+                {checking && (
+                    <View style={{ alignItems: 'center' }}>
+                        <ActivityIndicator />
+                        <Text>Comprobando verificación...</Text>
+                    </View>
+                )}
+
                 <Pressable
-                    onPress={verifyEmail}
-                    disabled={loading}
+                    onPress={sendVerification}
+                    disabled={!canResend}
                     style={{
-                        backgroundColor: colors.primary,
-                        padding: 14,
-                        borderRadius: 10,
-                        marginBottom: 20,
+                        backgroundColor: canResend ? '#2563eb' : '#ccc',
+                        padding: 12,
+                        borderRadius: 8,
                     }}
                 >
                     <Text style={{ color: 'white', textAlign: 'center' }}>
-                        Ya he verificado mi cuenta
+                        {cooldown > 0
+                            ? `Reenviar en ${cooldown}s`
+                            : 'Reenviar email'}
                     </Text>
                 </Pressable>
 
-                {/* RESEND */}
-                <Pressable onPress={resendEmail}>
-                    <Text style={{ color: cooldown > 0 ? '#999' : '#0284C7' }}>
-                        {cooldown > 0
-                            ? `Reenviar correo (${cooldown}s)`
-                            : 'Reenviar correo'}
-                    </Text>
-                </Pressable>
+                {loading && <ActivityIndicator />}
+
+                <Text style={{ textAlign: 'center', fontSize: 12 }}>
+                    No cierres esta pantalla hasta verificar tu cuenta
+                </Text>
 
             </View>
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { checkUsernameExists } from '../services/authService';
+import { isUsernameTaken } from '../services/usernameService';
 import { isValidAccountName } from '../utils/validators';
 
 export function useUsernameCheck(accountName: string) {
@@ -16,7 +16,7 @@ export function useUsernameCheck(accountName: string) {
         const timeout = setTimeout(async () => {
             setStatus('checking');
 
-            const exists = await checkUsernameExists(accountName);
+            const exists = await isUsernameTaken(accountName); // ✔ FIX REAL
 
             setStatus(exists ? 'taken' : 'available');
         }, 500);

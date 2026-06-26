@@ -42,10 +42,9 @@ export const useAuthStore = create<AuthState>((set) => ({
         return;
       }
 
-      // 🔄 refrescar email verification
       await user.reload();
 
-      // 🚫 NO verificado
+      // 🚫 NO VERIFICADO
       if (!user.emailVerified) {
         set({
           status: 'unverified',
@@ -55,7 +54,7 @@ export const useAuthStore = create<AuthState>((set) => ({
         return;
       }
 
-      // 🔥 Firestore user
+      // 🔥 Firestore profile
       const ref = doc(db, 'users', user.uid);
       const snap = await getDoc(ref);
 

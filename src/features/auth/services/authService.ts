@@ -1,108 +1,53 @@
 import {
     createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
     sendEmailVerification,
-    deleteUser,
+    getAuth,
+    User,
 } from 'firebase/auth';
 
-import {
-    doc,
-    setDoc,
-    getDoc,
-    serverTimestamp,
-    writeBatch,
-} from 'firebase/firestore';
+const auth = getAuth();
 
-import { auth, db } from '@/core/config/firebase';
-
-// -------------------------
-// EMAIL VERIFICATION
-// -------------------------
-
-export async function sendVerificationEmail() {
-    const user = auth.currentUser;
-    if (!user) throw new Error('NO_USER');
-
-    await sendEmailVerification(user);
+/**
+ * REGISTRO EN FIREBASE AUTH
+ */
+export async function createAuthUser(email: string, password: string) {
+    const cred = await createUserWithEmailAndPassword(auth, email, password);
+    return cred.user;
 }
 
-export async function checkEmailVerified() {
+/**
+ * LOGIN
+ */
+export async function loginUser(email: string, password: string) {
+    const cred = await signInWithEmailAndPassword(auth, email, password);
+    return cred.user;
+}
+
+/**
+ * ENVIAR EMAIL VERIFICACIÓN
+ */
+export async function sendVerificationEmail(user?: User) {
+    const currentUser = user ?? auth.currentUser;
+    if (!currentUser) throw new Error('NO_USER');
+
+    await sendEmailVerification(currentUser);
+}
+
+/**
+ * RELOAD USER (para comprobar emailVerified)
+ */
+export async function refreshAuthUser() {
     const user = auth.currentUser;
-    if (!user) return false;
+    if (!user) return null;
 
     await user.reload();
-    return user.emailVerified;
+    return user;
 }
 
-// -------------------------
-// USERNAME CHECK
-// -------------------------
-
-export async function checkUsernameExists(accountName: string) {
-    const username = accountName.trim().toLowerCase();
-
-    const ref = doc(db, 'usernames', username);
-    const snap = await getDoc(ref);
-
-    return snap.exists();
-}
-
-// -------------------------
-// REGISTER (ATOMIC + CLEAN)
-// -------------------------
-
-export async function registerUser(data: {
-    email: string;
-    password: string;
-    accountName: string;
-    displayName: string;
-    avatar: string;
-}) {
-    let userCredential;
-
-    const normalizedAccountName = data.accountName.trim().toLowerCase();
-
-    try {
-        // 1. AUTH
-        userCredential = await createUserWithEmailAndPassword(
-            auth,
-            data.email,
-            data.password
-        );
-
-        const uid = userCredential.user.uid;
-
-        // 2. FIRESTORE ATOMIC WRITE
-        const batch = writeBatch(db);
-
-        batch.set(doc(db, 'users', uid), {
-            uid,
-            email: data.email,
-            accountName: normalizedAccountName,
-            displayName: data.displayName,
-            avatar: data.avatar,
-            role: 'user',
-            banned: false,
-            deleted: false,
-            createdAt: serverTimestamp(),
-            updatedAt: serverTimestamp(),
-        });
-
-        batch.set(doc(db, 'usernames', normalizedAccountName), {
-            uid,
-        });
-
-        await batch.commit();
-
-        // 3. EMAIL VERIFICATION
-        await sendEmailVerification(userCredential.user);
-
-        return uid;
-    } catch (error) {
-        // 🔥 rollback anti “fantasmas”
-        if (auth.currentUser) {
-            await deleteUser(auth.currentUser);
-        }
-
-        throw error;
-    }
+/**
+ * CURRENT USER
+ */
+export function getCurrentUser() {
+    return auth.currentUser;
 }
