@@ -1,60 +1,92 @@
-// Ejemplo conceptual si usas Zustand (puedes adaptarlo a tu gestor de estado)
-// import { act } from 'react';
 import { create } from 'zustand';
+import { onAuthStateChanged } from 'firebase/auth';
+import { doc, getDoc } from 'firebase/firestore';
+
+import { auth, db } from '@/core/config/firebase';
 
 interface AuthState {
   isLoggedIn: boolean;
-  uid: string;
-  userName: string;
-  accountName: string; // Nuevo campo para el nombre de la cuenta
-  userAvatar: string;
-  userEmail: string;
-  userRole: string;
-  login: () => void;
-  // Preparado para cuando se obtenga de la db
-  //   login: (userData: { 
-  //   uid: string; 
-  //   name: string; 
-  //   accountName: string; 
-  //   avatar: string; 
-  //   email: string; 
-  //   role: string; 
-  // }) => void;
+  loading: boolean;
+
+  uid: string | null;
+  displayName: string;
+  accountName: string;
+  email: string;
+  role: string;
+
+  initAuth: () => void;
   logout: () => void;
 }
 
-export const useAuthStore = create<AuthState>((set) => ({
-  // DATOS MOCK (Para pruebas de diseño de la app)
-  isLoggedIn: false, // 👈 Por defecto arranca deslogueado (false)
-  uid: 'Kpqfm12Qdm',
-  userName: 'Juan el Aleatorio',
-  accountName: 'Cuenta Demo',
-  userAvatar: 'avatar_01',
-  userEmail: 'usuario@demo.com',
-  userRole: 'admin',
+export const useAuthStore = create<AuthState>((set, get) => ({
+  isLoggedIn: false,
+  loading: true,
 
-  // // Al loguearse, guardamos todo lo que nos mande la API
-  // login: (userData) => set({
-  //   isLoggedIn: true,
-  //   uid: userData.uid
-  //   userName: userData.name,
-  //   accountName: userData.accountName, // Aquí podrías mapearlo a un campo específico si tu API lo tiene
-  //   userAvatar: userData.avatar,
-  //   userEmail: userData.email,
-  //   userRole: userData.role
-  // }),
+  uid: null,
+  displayName: '',
+  accountName: '',
+  email: '',
+  role: '',
 
-  // // Al cerrar sesión, limpiamos absolutamente todo por seguridad
-  // logout: () => set({
-  //   isLoggedIn: false,
-  //   uid: '',
-  //   userName: '',
-  //   accountName: '',
-  //   userAvatar: '',
-  //   userEmail: '',
-  //   userRole: ''
-  // }),
-  login: () => set({ isLoggedIn: true }),  // 👈 Solo cambia a true cuando se ejecuta explícitamente
-  logout: () => set({ isLoggedIn: false }), // 👈 Cambia a false al cerrar sesión
+  initAuth: () => {
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        set({
+          isLoggedIn: false,
+          loading: false,
+          uid: null,
+        });
+        return;
+      }
+
+      await user.reload();
+
+      // 🚫 BLOQUEO SI NO VERIFICADO
+      if (!user.emailVerified) {
+        set({
+          isLoggedIn: false,
+          loading: false,
+          uid: user.uid,
+        });
+        return;
+      }
+
+      const ref = doc(db, 'users', user.uid);
+      const snap = await getDoc(ref);
+
+      if (!snap.exists()) {
+        set({
+          isLoggedIn: false,
+          loading: false,
+        });
+        return;
+      }
+
+      const data = snap.data();
+
+      set({
+        isLoggedIn: true,
+        loading: false,
+
+        uid: user.uid,
+        email: data.email ?? '',
+        displayName: data.displayName ?? '',
+        accountName: data.accountName ?? '',
+        role: data.role ?? 'user',
+      });
+    });
+  },
+
+  logout: async () => {
+    await auth.signOut();
+
+    set({
+      isLoggedIn: false,
+      uid: null,
+      displayName: '',
+      accountName: '',
+      email: '',
+      role: '',
+    });
+  },
 }));
-

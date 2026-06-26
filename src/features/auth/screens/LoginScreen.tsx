@@ -30,7 +30,7 @@ export const LoginScreen: React.FC<Props> = ({
   onNavigateToRecovery,
   // onNavigateToRegister,
 }) => {
-  const loginGlobal = useAuthStore((state) => state.login);
+  // const loginGlobal = useAuthStore((state) => state.login);
   const navigation = useNavigation<LoginScreenNavigationProp>();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -44,7 +44,7 @@ export const LoginScreen: React.FC<Props> = ({
     if (onLogin) {
       onLogin(email, password);
     } else {
-      loginGlobal();
+      // loginGlobal();
       navigation.navigate('Dashboard');
     }
   };
