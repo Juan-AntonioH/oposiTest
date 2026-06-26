@@ -1,18 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, View } from 'react-native';
+import { View, ActivityIndicator } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
 
 import { getAuthFlowState } from '@/features/auth/controllers/authFlowController';
 
-export function AuthGate({ children }: { children: React.ReactNode }) {
-    const [state, setState] = useState<'loading' | string>('loading');
+import { Navigation } from './index';
+
+export function AuthGate() {
+    const [state, setState] = useState<
+        'loading' | 'unauthenticated' | 'unverified' | 'authenticated'
+    >('loading');
 
     useEffect(() => {
-        const check = async () => {
+        const init = async () => {
             const result = await getAuthFlowState();
             setState(result);
         };
 
-        check();
+        init();
     }, []);
 
     if (state === 'loading') {
@@ -23,14 +28,10 @@ export function AuthGate({ children }: { children: React.ReactNode }) {
         );
     }
 
-    // 🔥 aquí decides flujo global
-    if (state === 'unauthenticated') {
-        return null; // navega a Login
-    }
-
-    if (state === 'unverified') {
-        return null; // navega a Authenticator
-    }
-
-    return <>{children}</>;
+    // 👇 IMPORTANTE: seguimos usando TU navigation existente
+    return (
+        <NavigationContainer>
+            <Navigation />
+        </NavigationContainer>
+    );
 }

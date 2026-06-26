@@ -11,18 +11,26 @@ export type AuthFlowState =
 export async function getAuthFlowState(): Promise<AuthFlowState> {
     const user = auth.currentUser;
 
-    if (!user) return 'unauthenticated';
+    // 1. No hay usuario
+    if (!user) {
+        return 'unauthenticated';
+    }
 
+    // 2. refrescar estado Firebase
     await user.reload();
 
+    // 3. email no verificado
     if (!user.emailVerified) {
         return 'unverified';
     }
 
+    // 4. comprobar Firestore
     const ref = doc(db, 'users', user.uid);
     const snap = await getDoc(ref);
 
-    if (!snap.exists()) return 'unauthenticated';
+    if (!snap.exists()) {
+        return 'unauthenticated';
+    }
 
     return 'authenticated';
 }

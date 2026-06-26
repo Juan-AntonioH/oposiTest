@@ -1,78 +1,79 @@
 import { create } from 'zustand';
-import { onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged, User } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 
 import { auth, db } from '@/core/config/firebase';
 
+type AuthStatus = 'loading' | 'authenticated' | 'unauthenticated' | 'unverified';
+
 interface AuthState {
-  isLoggedIn: boolean;
-  loading: boolean;
+  status: AuthStatus;
 
   uid: string | null;
+  email: string | null;
   displayName: string;
   accountName: string;
-  email: string;
   role: string;
 
   initAuth: () => void;
-  logout: () => void;
+  logout: () => Promise<void>;
 }
 
-export const useAuthStore = create<AuthState>((set, get) => ({
-  isLoggedIn: false,
-  loading: true,
+export const useAuthStore = create<AuthState>((set) => ({
+  status: 'loading',
 
   uid: null,
+  email: null,
   displayName: '',
   accountName: '',
-  email: '',
   role: '',
 
   initAuth: () => {
-    onAuthStateChanged(auth, async (user) => {
+    onAuthStateChanged(auth, async (user: User | null) => {
       if (!user) {
         set({
-          isLoggedIn: false,
-          loading: false,
+          status: 'unauthenticated',
           uid: null,
+          email: null,
+          displayName: '',
+          accountName: '',
+          role: '',
         });
         return;
       }
 
+      // 🔄 refrescar email verification
       await user.reload();
 
-      // 🚫 BLOQUEO SI NO VERIFICADO
+      // 🚫 NO verificado
       if (!user.emailVerified) {
         set({
-          isLoggedIn: false,
-          loading: false,
+          status: 'unverified',
           uid: user.uid,
+          email: user.email,
         });
         return;
       }
 
+      // 🔥 Firestore user
       const ref = doc(db, 'users', user.uid);
       const snap = await getDoc(ref);
 
       if (!snap.exists()) {
-        set({
-          isLoggedIn: false,
-          loading: false,
-        });
+        set({ status: 'unauthenticated' });
         return;
       }
 
       const data = snap.data();
 
       set({
-        isLoggedIn: true,
-        loading: false,
+        status: 'authenticated',
 
         uid: user.uid,
-        email: data.email ?? '',
-        displayName: data.displayName ?? '',
-        accountName: data.accountName ?? '',
-        role: data.role ?? 'user',
+        email: user.email,
+        displayName: data.displayName,
+        accountName: data.accountName,
+        role: data.role,
       });
     });
   },
@@ -81,11 +82,11 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     await auth.signOut();
 
     set({
-      isLoggedIn: false,
+      status: 'unauthenticated',
       uid: null,
+      email: null,
       displayName: '',
       accountName: '',
-      email: '',
       role: '',
     });
   },
