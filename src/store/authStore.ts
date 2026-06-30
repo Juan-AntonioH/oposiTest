@@ -1,60 +1,207 @@
-// Ejemplo conceptual si usas Zustand (puedes adaptarlo a tu gestor de estado)
-// import { act } from 'react';
 import { create } from 'zustand';
+import { onAuthStateChanged, User } from 'firebase/auth';
+import { doc, getDoc } from 'firebase/firestore';
+
+import { auth, db } from '@/core/config/firebase';
+
+type AuthStatus =
+  | 'loading'
+  | 'authenticated'
+  | 'unauthenticated'
+  | 'unverified';
 
 interface AuthState {
-  isLoggedIn: boolean;
-  uid: string;
-  userName: string;
-  accountName: string; // Nuevo campo para el nombre de la cuenta
-  userAvatar: string;
-  userEmail: string;
-  userRole: string;
-  login: () => void;
-  // Preparado para cuando se obtenga de la db
-  //   login: (userData: { 
-  //   uid: string; 
-  //   name: string; 
-  //   accountName: string; 
-  //   avatar: string; 
-  //   email: string; 
-  //   role: string; 
-  // }) => void;
-  logout: () => void;
+  status: AuthStatus;
+  initialized: boolean;
+
+  uid: string | null;
+  email: string | null;
+  displayName: string;
+  accountName: string;
+  avatar: string;
+  role: string;
+
+  initAuth: () => void;
+  refreshAuth: () => Promise<void>;
+  logout: () => Promise<void>;
 }
 
-export const useAuthStore = create<AuthState>((set) => ({
-  // DATOS MOCK (Para pruebas de diseño de la app)
-  isLoggedIn: false, // 👈 Por defecto arranca deslogueado (false)
-  uid: 'Kpqfm12Qdm',
-  userName: 'Juan el Aleatorio',
-  accountName: 'Cuenta Demo',
-  userAvatar: 'avatar_01',
-  userEmail: 'usuario@demo.com',
-  userRole: 'admin',
+export const useAuthStore = create<AuthState>((set, get) => ({
+  status: 'loading',
+  initialized: false,
 
-  // // Al loguearse, guardamos todo lo que nos mande la API
-  // login: (userData) => set({
-  //   isLoggedIn: true,
-  //   uid: userData.uid
-  //   userName: userData.name,
-  //   accountName: userData.accountName, // Aquí podrías mapearlo a un campo específico si tu API lo tiene
-  //   userAvatar: userData.avatar,
-  //   userEmail: userData.email,
-  //   userRole: userData.role
-  // }),
+  uid: null,
+  email: null,
+  displayName: '',
+  accountName: '',
+  avatar: '',
+  role: '',
 
-  // // Al cerrar sesión, limpiamos absolutamente todo por seguridad
-  // logout: () => set({
-  //   isLoggedIn: false,
-  //   uid: '',
-  //   userName: '',
-  //   accountName: '',
-  //   userAvatar: '',
-  //   userEmail: '',
-  //   userRole: ''
-  // }),
-  login: () => set({ isLoggedIn: true }),  // 👈 Solo cambia a true cuando se ejecuta explícitamente
-  logout: () => set({ isLoggedIn: false }), // 👈 Cambia a false al cerrar sesión
+  initAuth: () => {
+    onAuthStateChanged(auth, async (user: User | null) => {
+      try {
+        // =========================
+        // NO USER
+        // =========================
+        if (!user) {
+          set({
+            status: 'unauthenticated',
+            initialized: true,
+            uid: null,
+            email: null,
+            displayName: '',
+            accountName: '',
+            avatar: '',
+            role: '',
+          });
+          return;
+        }
+
+        // =========================
+        // REFRESH USER
+        // =========================
+        await user.reload();
+
+        // =========================
+        // EMAIL NO VERIFICADO
+        // =========================
+        if (!user.emailVerified) {
+          set({
+            status: 'unverified',
+            initialized: true,
+            uid: user.uid,
+            email: user.email,
+            displayName: '',
+            accountName: '',
+            role: '',
+            avatar: '',
+          });
+          return;
+        }
+
+        // =========================
+        // FIRESTORE PROFILE
+        // =========================
+        const ref = doc(db, 'users', user.uid);
+        const snap = await getDoc(ref);
+
+        if (!snap.exists()) {
+          set({
+            status: 'unauthenticated',
+            initialized: true,
+            uid: null,
+            email: null,
+            displayName: '',
+            accountName: '',
+            role: '',
+            avatar: '',
+          });
+          return;
+        }
+
+        const data = snap.data();
+
+        // =========================
+        // AUTHENTICATED
+        // =========================
+        set({
+          status: 'authenticated',
+          initialized: true,
+
+          uid: user.uid,
+          email: user.email ?? null,
+          displayName: data.displayName ?? '',
+          accountName: data.accountName ?? '',
+          role: data.role ?? 'user',
+          avatar: data.avatar ?? '',
+        });
+      } catch (error) {
+        console.error('🔥 AUTH INIT ERROR:', error);
+
+        set({
+          status: 'unauthenticated',
+          initialized: true,
+          uid: null,
+          email: null,
+          displayName: '',
+          accountName: '',
+          avatar: '',
+          role: '',
+        });
+      }
+    });
+  },
+  refreshAuth: async () => {
+    const user = auth.currentUser;
+
+    if (!user) {
+      set({
+        status: 'unauthenticated',
+        uid: null,
+        email: null,
+        displayName: '',
+        accountName: '',
+        avatar: '',
+        role: '',
+      });
+      return;
+    }
+
+    await user.reload();
+
+    if (!user.emailVerified) {
+      set({
+        status: 'unverified',
+        uid: user.uid,
+        email: user.email,
+        displayName: '',
+        accountName: '',
+        avatar: '',
+        role: '',
+      });
+      return;
+    }
+
+    const snap = await getDoc(doc(db, 'users', user.uid));
+
+    if (!snap.exists()) {
+      set({
+        status: 'unauthenticated',
+        uid: null,
+        email: null,
+        displayName: '',
+        accountName: '',
+        avatar: '',
+        role: '',
+      });
+      return;
+    }
+
+    const data = snap.data();
+
+    set({
+      status: 'authenticated',
+      uid: user.uid,
+      email: user.email,
+      displayName: data.displayName,
+      accountName: data.accountName,
+      avatar: data.avatar ?? '',
+      role: data.role,
+    });
+  },
+
+  logout: async () => {
+    await auth.signOut();
+
+    set({
+      status: 'unauthenticated',
+      initialized: true,
+      uid: null,
+      email: null,
+      displayName: '',
+      accountName: '',
+      avatar: '',
+      role: '',
+    });
+  },
 }));
-
