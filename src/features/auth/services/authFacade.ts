@@ -1,88 +1,107 @@
 import {
-    createAuthUser,
-    loginUser,
-    sendVerificationEmail,
-    refreshAuthUser,
-} from './authService';
+  doc,
+  getDoc,
+  setDoc,
+  serverTimestamp,
+} from 'firebase/firestore';
 
-import {
-    createUserProfile,
-    getUserProfile,
-} from './firestoreUserService';
+import { db } from '@/core/config/firebase';
 
-import {
-    isUsernameTaken,
-    reserveUsername,
-} from './usernameService';
+import { loginAuth, registerAuth } from './authService';
+import { createUserProfile } from './firestoreUserService';
+import { getUidFromAccountName } from './usernameService';
+
+import { LoginResult, UserProfile } from '../types/auth';
+import { normalizeAccountName } from '../types/helpers';
 
 export const authFacade = {
-    // =========================
-    // LOGIN
-    // =========================
-    async login(email: string, password: string) {
-        const user = await loginUser(email, password);
 
-        await refreshAuthUser();
+  // =========================
+  // LOGIN
+  // =========================
+  async login(identifier: string, password: string): Promise<LoginResult> {
 
-        const profile = await getUserProfile(user.uid);
+    let email = identifier;
 
-        if (!profile) throw new Error('NO_PROFILE');
+    // 👉 LOGIN POR ACCOUNTNAME
+    if (!identifier.includes('@')) {
+      const uid = await getUidFromAccountName(
+        normalizeAccountName(identifier)
+      );
 
-        if (profile.deleted) throw new Error('USER_DELETED');
-        if (profile.banned) throw new Error('USER_BANNED');
+      if (!uid) {
+        throw new Error('USER_NOT_FOUND');
+      }
 
-        if (!user.emailVerified) throw new Error('EMAIL_NOT_VERIFIED');
+      const userSnap = await getDoc(doc(db, 'users', uid));
 
-        return profile;
-    },
+      if (!userSnap.exists()) {
+        throw new Error('PROFILE_NOT_FOUND');
+      }
 
-    // =========================
-    // REGISTER
-    // =========================
-    async register(data: {
-        email: string;
-        password: string;
-        accountName: string;
-        displayName: string;
-        avatar: string;
-    }) {
-        // 1. check username
-        const exists = await isUsernameTaken(data.accountName);
-        if (exists) throw new Error('USERNAME_TAKEN');
+      email = userSnap.data().email;
+    }
 
-        // 2. create auth user
-        const user = await createAuthUser(data.email, data.password);
+    // 👉 LOGIN FIREBASE AUTH
+    const authUser = await loginAuth(email, password);
 
-        // 3. firestore profile
-        await createUserProfile({
-            uid: user.uid,
-            email: data.email,
-            displayName: data.displayName,
-            accountName: data.accountName,
-            avatar: data.avatar,
-        });
+    // 👉 PERFIL FIRESTORE
+    const profileSnap = await getDoc(doc(db, 'users', authUser.uid));
 
-        // 4. username mapping
-        await reserveUsername(user.uid, data.accountName);
+    if (!profileSnap.exists()) {
+      throw new Error('PROFILE_NOT_FOUND');
+    }
 
-        // 5. email verification
-        await sendVerificationEmail(user);
+    // Solo modificamos esto para asegurar el tipado correcto del nuevo formato de avatar
+    const data = profileSnap.data();
+    
+    const profile: UserProfile = {
+      ...(data as UserProfile),
+      avatar: data.avatar || 'avatar_01', // 👈 Fallback seguro por si el usuario no tiene la propiedad
+    };
 
-        return user.uid;
-    },
+    return {
+      authUser,
+      profile,
+    };
+  },
 
-    // =========================
-    // EMAIL VERIFY
-    // =========================
-    async sendVerificationEmail() {
-        return sendVerificationEmail();
-    },
+  // =========================
+  // REGISTER
+  // =========================
+  async register(data: {
+    email: string;
+    password: string;
+    accountName: string;
+    displayName: string;
+    avatar: string;
+  }) {
 
-    // =========================
-    // LOGOUT
-    // =========================
-    async logout() {
-        const { getAuth, signOut } = await import('firebase/auth');
-        return signOut(getAuth());
-    },
+    const user = await registerAuth(data.email, data.password);
+
+    const normalizedAccountName = normalizeAccountName(data.accountName);
+
+    await createUserProfile(user.uid, {
+      email: data.email,
+      displayName: data.displayName,
+      accountName: normalizedAccountName,
+      avatar: data.avatar, // 👈 AQUÍ guardas "avatar_01" o "custom:xxx.jpg"
+      role: 'user',
+    });
+
+    await setDoc(doc(db, 'usernames', normalizedAccountName), {
+      uid: user.uid,
+      createdAt: serverTimestamp(),
+    });
+
+    return user.uid;
+  },
+
+  // =========================
+  // LOGOUT
+  // =========================
+  async logout() {
+    const { signOut, getAuth } = await import('firebase/auth');
+    return signOut(getAuth());
+  },
 };

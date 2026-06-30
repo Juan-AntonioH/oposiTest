@@ -8,21 +8,22 @@ import { RootStackParamList } from '@/navigation/types';
 import { auth } from '@/core/config/firebase';
 import { sendEmailVerification } from 'firebase/auth';
 
+import { useAuthStore } from '@/store/authStore';
+
+
 type Nav = NativeStackNavigationProp<RootStackParamList, 'Authenticator'>;
-type Route = RouteProp<RootStackParamList, 'Authenticator'>;
+// type Route = RouteProp<RootStackParamList, 'Authenticator'>;
 
 export function AuthenticatorScreen() {
     const navigation = useNavigation<Nav>();
-    const route = useRoute<Route>();
-
-    const email = route.params?.email;
+    const email = useAuthStore((s) => s.email);
 
     const [loading, setLoading] = useState(false);
     const [cooldown, setCooldown] = useState(0);
     const [checking, setChecking] = useState(false);
 
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
+    const refreshAuth = useAuthStore((s) => s.refreshAuth);
     // =========================
     // ENVIAR EMAIL VERIFICACIÓN
     // =========================
@@ -68,10 +69,9 @@ export function AuthenticatorScreen() {
                     clearInterval(intervalRef.current);
                 }
 
-                navigation.reset({
-                    index: 0,
-                    routes: [{ name: 'Dashboard' }],
-                });
+                setChecking(true);
+
+                await refreshAuth();
             }
         }, 3000);
 
@@ -83,9 +83,23 @@ export function AuthenticatorScreen() {
     }, []);
 
     const canResend = cooldown === 0 && !loading;
-
+    if (checking) {
+        return (
+            <View style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: 'white'
+            }}>
+                <ActivityIndicator size="large" />
+                <Text style={{ marginTop: 10 }}>
+                    Verificando email...
+                </Text>
+            </View>
+        );
+    }
     return (
-        <ScreenLayout title="Verifica tu cuenta">
+        <ScreenLayout title="Verifica tu cuenta" showSidebar={false}>
 
             <View style={{ padding: 20, gap: 20 }}>
 

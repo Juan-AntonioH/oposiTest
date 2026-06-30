@@ -27,7 +27,7 @@ export function useLogin() {
             });
         } catch (err: any) {
             if (err.message === 'EMAIL_NOT_VERIFIED') {
-                navigation.navigate('Authenticator', { email: identifier });
+                // navigation.navigate('Authenticator', { email: identifier });
                 return;
             }
 

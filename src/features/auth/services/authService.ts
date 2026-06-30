@@ -2,52 +2,62 @@ import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     sendEmailVerification,
+    sendPasswordResetEmail,
     getAuth,
-    User,
 } from 'firebase/auth';
 
 const auth = getAuth();
 
-/**
- * REGISTRO EN FIREBASE AUTH
- */
-export async function createAuthUser(email: string, password: string) {
-    const cred = await createUserWithEmailAndPassword(auth, email, password);
-    return cred.user;
+// =========================
+// REGISTER
+// =========================
+export async function registerAuth(email: string, password: string) {
+    const result = await createUserWithEmailAndPassword(auth, email, password);
+
+    await sendEmailVerification(result.user);
+
+    return result.user;
 }
 
-/**
- * LOGIN
- */
-export async function loginUser(email: string, password: string) {
-    const cred = await signInWithEmailAndPassword(auth, email, password);
-    return cred.user;
+// =========================
+// LOGIN
+// =========================
+export async function loginAuth(email: string, password: string) {
+    const result = await signInWithEmailAndPassword(auth, email, password);
+    return result.user;
 }
 
-/**
- * ENVIAR EMAIL VERIFICACIÓN
- */
-export async function sendVerificationEmail(user?: User) {
-    const currentUser = user ?? auth.currentUser;
-    if (!currentUser) throw new Error('NO_USER');
-
-    await sendEmailVerification(currentUser);
-}
-
-/**
- * RELOAD USER (para comprobar emailVerified)
- */
-export async function refreshAuthUser() {
+// =========================
+// REENVIAR EMAIL
+// =========================
+export async function sendVerification() {
     const user = auth.currentUser;
-    if (!user) return null;
+
+    if (!user) {
+        throw new Error('NO_USER');
+    }
+
+    await sendEmailVerification(user);
+}
+
+// =========================
+// COMPROBAR VERIFICACIÓN
+// =========================
+export async function checkEmailVerified() {
+    const user = auth.currentUser;
+
+    if (!user) {
+        return false;
+    }
 
     await user.reload();
-    return user;
+
+    return user.emailVerified;
 }
 
-/**
- * CURRENT USER
- */
-export function getCurrentUser() {
-    return auth.currentUser;
+// =========================
+// RECUPERAR CONTRASEÑA
+// =========================
+export async function sendPasswordReset(email: string) {
+    await sendPasswordResetEmail(auth, email);
 }

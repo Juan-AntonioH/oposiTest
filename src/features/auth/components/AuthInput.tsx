@@ -62,7 +62,7 @@ export function AuthInput({
             style={styles.eyeIcon}
           >
             <MaterialIcons
-              name={showPassword ? 'visibility' : 'visibility-off'}
+              name={showPassword ? 'visibility-off' : 'visibility'}
               size={22}
               color="#64748B"
             />

@@ -8,10 +8,12 @@ import {
   Image,
 } from 'react-native';
 
+import { MaterialIcons } from '@expo/vector-icons';
+
 import { SidebarProps } from './Sidebar.types';
 import { styles } from './Sidebar.styles';
-import { MaterialIcons } from '@expo/vector-icons';
 import { PRESET_AVATARS } from '@/features/auth/constants/avatars';
+import { resolveAvatar } from '@/features/auth/utils/avatarResolver';
 
 export function Sidebar({
   isOpen,
@@ -25,80 +27,96 @@ export function Sidebar({
   onNavigate,
 }: SidebarProps) {
 
-  // Animación simple de entrada (slide from left)
   const translateX = React.useRef(new Animated.Value(-300)).current;
+
   React.useEffect(() => {
-    if (isOpen) {
-      // abre el sidebar
-      Animated.timing(translateX, {
-        toValue: 0,
-        duration: 250,
-        useNativeDriver: true,
-      }).start();
-    } else {
-      // cierra el sidebar
-      Animated.timing(translateX, {
-        toValue: -300,
-        duration: 200,
-        useNativeDriver: true,
-      }).start();
-    }
+    Animated.timing(translateX, {
+      toValue: isOpen ? 0 : -300,
+      duration: 220,
+      useNativeDriver: true,
+    }).start();
   }, [isOpen]);
 
-  // Menú dinámico según login
+  // =========================
+  // AVATAR STATE (CORREGIDO)
+  // =========================
+  const [avatarSource, setAvatarSource] = React.useState<any>(
+    PRESET_AVATARS[0].image
+  );
+
+  React.useEffect(() => {
+    let mounted = true;
+    
+    async function loadAvatar() {
+      // Si no hay avatar, volvemos directamente al predefinido sin esperar promesas
+      if (!userAvatar) {
+        if (mounted) setAvatarSource(PRESET_AVATARS[0].image);
+        return;
+      }
+
+      try {
+        const resolved = await resolveAvatar(userAvatar);
+        if (mounted && resolved) {
+          setAvatarSource(resolved);
+        }
+      } catch (error) {
+        console.error("Error resolviendo el avatar:", error);
+      }
+    }
+
+    loadAvatar();
+
+    return () => {
+      mounted = false;
+    };
+  }, [userAvatar, isOpen]); // 👈 Añadido isOpen para forzar la actualización al abrir el Sidebar
+
+  // =========================
+  // MENU
+  // =========================
   const menuItems = isLoggedIn
     ? [
       { label: 'Inicio', icon: 'home', action: () => onNavigate?.('inicio') },
       { label: 'Oposiciones', icon: 'category', action: () => onNavigate?.('oposiciones') },
-      { label: 'Tests Realizados', icon: 'list', action: () => onNavigate?.('list') },
       { label: 'Configuración', icon: 'settings', action: () => { } },
       {
         label: 'Logout',
         icon: 'logout',
         action: () => {
+          // Limpiamos el avatar local inmediatamente al cerrar sesión para evitar fugas visuales
+          setAvatarSource(PRESET_AVATARS[0].image);
           onLogout?.();
-          onNavigate?.('inicio');
-
         },
       },
     ]
     : [
       { label: 'Inicio', icon: 'home', action: () => onNavigate?.('inicio') },
-      // { label: 'Oposiciones', icon: 'category', action: () => onNavigate?.('oposiciones') },
-
     ];
 
   return (
-    <Modal
-      visible={isOpen}
-      transparent
-      animationType="none"
-    >
-      {/* OVERLAY */}
-      <Pressable
-        style={styles.overlay}
-        onPress={onClose}
-      />
+    <Modal visible={isOpen} transparent animationType="none">
 
-      {/* SIDEBAR */}
+      {/* overlay */}
+      <Pressable style={styles.overlay} onPress={onClose} />
+
+      {/* sidebar */}
       <Animated.View
         style={[
           styles.sidebar,
-          {
-            transform: [{ translateX }],
-          },
+          { transform: [{ translateX }] },
         ]}
       >
-        {/* HEADER */}
+
+        {/* header */}
         <View style={styles.header}>
           <Text style={styles.title}>Menú</Text>
 
           <Pressable onPress={onClose}>
-            <MaterialIcons name="close" size={30} />{/*<Text style={styles.close}>✕</Text>*/}
+            <MaterialIcons name="close" size={28} />
           </Pressable>
         </View>
 
-        {/* AUTH SECTION */}
+        {/* auth */}
         <View style={styles.authSection}>
           {!isLoggedIn ? (
             <Pressable
@@ -111,29 +129,28 @@ export function Sidebar({
               <Text style={styles.loginText}>Login</Text>
             </Pressable>
           ) : (
-            <Pressable style={styles.profileContainer} onPress={onProfileClick}>
-              {/* AVATAR DESDE EL BANCO DE IMÁGENES */}
-              <Image
-                source={
-                  PRESET_AVATARS.find((avatar) => avatar.id === (userAvatar || 'avatar_01'))?.image ||
-                  PRESET_AVATARS[0].image
-                }
-                style={styles.avatar}
+            <Pressable
+              style={styles.profileContainer}
+              onPress={onProfileClick}
+            >
+              {/* Forzamos el re-render de la imagen usando la key cuando cambia el source */}
+              <Image 
+                key={userAvatar} 
+                source={avatarSource} 
+                style={styles.avatar} 
               />
-              {/* DATOS DE USUARIO */}
+
               <View style={styles.userInfo}>
                 <Text style={styles.userName} numberOfLines={1}>
-                  {userName ?? 'Opositor/a'}
+                  {userName ?? 'Usuario'}
                 </Text>
-                <Text style={styles.profileLink}>
-                  Perfil
-                </Text>
+                <Text style={styles.profileLink}>Perfil</Text>
               </View>
             </Pressable>
           )}
         </View>
 
-        {/* MENU */}
+        {/* menu */}
         <View style={styles.menu}>
           {menuItems.map((item, index) => (
             <Pressable
@@ -144,22 +161,13 @@ export function Sidebar({
                 onClose();
               }}
             >
-              {/* 🟢 ICONO MATERIALICON A LA IZQUIERDA */}
-              <MaterialIcons
-                name={item.icon as any}
-                size={24} // O el color de tu tema (ej: colors.white)
-                style={styles.menuIcon}
-              />
-
-              {/* TEXTO DE LA OPCIÓN */}
-              <Text style={styles.menuText}>
-                {item.label}
-              </Text>
+              <MaterialIcons name={item.icon as any} size={22} />
+              <Text style={styles.menuText}>{item.label}</Text>
             </Pressable>
           ))}
         </View>
+
       </Animated.View>
     </Modal>
   );
 }
-

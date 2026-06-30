@@ -61,6 +61,7 @@ export const styles = StyleSheet.create({
 
   menuText: {
     fontSize: 16,
+    paddingLeft: 10,
   },
   menuButton: {
     flexDirection: 'row',    // ⬅️ Clave para poner icono y texto en la misma línea

@@ -1,21 +1,20 @@
+import { doc, getDoc } from 'firebase/firestore';
 import { db } from '@/core/config/firebase';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { normalizeAccountName } from '../types/helpers';
 
-/**
- * COMPROBAR SI USERNAME EXISTE
- */
-export async function isUsernameTaken(username: string) {
-    const ref = doc(db, 'usernames', username.toLowerCase());
-    const snap = await getDoc(ref);
-
-    return snap.exists();
+// comprobar si existe username
+export async function isUsernameTaken(accountName: string): Promise<boolean> {
+  const ref = doc(db, 'usernames', accountName);
+  const snap = await getDoc(ref);
+  return snap.exists();
 }
 
-/**
- * RESERVAR USERNAME (evita duplicados)
- */
-export async function reserveUsername(uid: string, username: string) {
-    await setDoc(doc(db, 'usernames', username.toLowerCase()), {
-        uid,
-    });
+// obtener UID desde username
+export async function getUidFromAccountName(accountName: string): Promise<string | null> {
+  const ref = doc(db, 'usernames', normalizeAccountName(accountName));
+  const snap = await getDoc(ref);
+
+  if (!snap.exists()) return null;
+
+  return snap.data().uid;
 }

@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-import { RootStackParamList } from '@/navigation';
+import { RootStackParamList } from '@/navigation/types';
 
 import {
-    sendVerificationEmail,
+    sendVerification,
     checkEmailVerified,
 } from '../services/authService';
 
@@ -18,9 +18,6 @@ export function useEmailVerification() {
     const [verified, setVerified] = useState(false);
     const [cooldown, setCooldown] = useState(0);
 
-    // -----------------------------
-    // COOLDOWN TIMER
-    // -----------------------------
     useEffect(() => {
         if (cooldown <= 0) return;
 
@@ -31,25 +28,19 @@ export function useEmailVerification() {
         return () => clearInterval(interval);
     }, [cooldown]);
 
-    // -----------------------------
-    // RESEND EMAIL
-    // -----------------------------
     const resendEmail = async () => {
         if (cooldown > 0) return;
 
         setLoading(true);
 
         try {
-            await sendVerificationEmail();
+            await sendVerification();
             setCooldown(60);
         } finally {
             setLoading(false);
         }
     };
 
-    // -----------------------------
-    // VERIFY EMAIL
-    // -----------------------------
     const verifyEmail = async () => {
         setLoading(true);
 
@@ -59,9 +50,6 @@ export function useEmailVerification() {
             setVerified(isVerified);
 
             if (isVerified) {
-                // 🔥 IMPORTANTE:
-                // NO login manual, Firebase + onAuthStateChanged + store lo hace solo
-
                 navigation.reset({
                     index: 0,
                     routes: [{ name: 'Dashboard' }],
