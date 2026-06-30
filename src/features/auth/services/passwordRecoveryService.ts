@@ -1,9 +1,16 @@
-import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
+import { sendPasswordResetEmail } from 'firebase/auth';
 
-const auth = getAuth();
+import { auth } from '@/core/config/firebase';
+
+import { existsEmail } from './firestoreUserService';
 
 export async function sendRecoveryEmail(email: string) {
-    if (!email) throw new Error('EMAIL_REQUIRED');
+
+    const exists = await existsEmail(email);
+
+    if (!exists) {
+        throw new Error('EMAIL_NOT_FOUND');
+    }
 
     await sendPasswordResetEmail(auth, email);
 }

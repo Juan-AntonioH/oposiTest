@@ -1,5 +1,12 @@
 import React from 'react';
-import { View, ScrollView, Pressable, Text } from 'react-native';
+import {
+    View,
+    ScrollView,
+    ActivityIndicator,
+    Text,
+    Pressable,
+} from 'react-native';
+
 import { MaterialIcons } from '@expo/vector-icons';
 
 import { ScreenLayout } from '@/shared/layouts/ScreenLayout';
@@ -7,49 +14,92 @@ import { AuthCard } from '../components/AuthCard';
 import { AuthInput } from '../components/AuthInput';
 import { EmailRequirements } from '../components/EmailRequirements';
 
+import { CustomButton } from '@/shared/components/Button/CustomButton';
+
 import { colors } from '@/core/theme';
 import { styles } from '../styles/Auth.styles';
 
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '@/navigation/types';
-
 import { usePasswordRecovery } from '../hooks/usePasswordRecovery';
-
-type Nav = NativeStackNavigationProp<RootStackParamList, 'Recovery'>;
+import { useNavigation } from '@react-navigation/native';
 
 export function RecoveryScreen() {
-    const navigation = useNavigation<Nav>();
-
     const {
         email,
         setEmail,
+
+        loading,
+
         timeLeft,
+
         isEmailValid,
         isBlocked,
+
         sendRecovery,
     } = usePasswordRecovery();
 
-    const isButtonDisabled = !isEmailValid || isBlocked;
-
+    const isButtonDisabled =
+        !isEmailValid ||
+        isBlocked ||
+        loading;
+    const navigation = useNavigation<any>();
     return (
-        <ScreenLayout title="Recuperar Contraseña">
+        <ScreenLayout
+            title="Recuperar Contraseña"
+            showSidebar={false}
+        >
+            <View style={styles.backButtonContainer}>
+                <Pressable
+                    style={styles.backButton}
+                    onPress={() => navigation.goBack()} // ← Te regresa automáticamente a la pantalla anterior (Login)
+                >
+                    <Text style={styles.backButtonText}>← Volver</Text>
+                </Pressable>
+            </View>
+            {/* OVERLAY */}
+            {loading && (
+                <View
+                    style={{
+                        position: 'absolute',
+                        top: 100,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        backgroundColor: 'rgba(0,0,0,0.4)',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        zIndex: 999,
+                    }}
+                >
+                    <ActivityIndicator
+                        size="large"
+                        color="#fff"
+                    />
+
+                    <Text
+                        style={{
+                            color: '#fff',
+                            marginTop: 12,
+                        }}
+                    >
+                        Enviando correo...
+                    </Text>
+                </View>
+            )}
 
             <ScrollView
-                contentContainerStyle={[styles.scrollContent, styles.localScroll]}
+                contentContainerStyle={[
+                    styles.scrollContent,
+                    styles.localScroll,
+                ]}
                 showsVerticalScrollIndicator={false}
             >
-
-                {/* BOTÓN VOLVER */}
-                <View style={styles.backButtonContainer}>
-                    <Pressable onPress={() => navigation.goBack()}>
-                        <Text style={styles.backButtonText}>← Volver</Text>
-                    </Pressable>
-                </View>
-
                 {/* ICONO */}
                 <View style={styles.iconContainer}>
-                    <MaterialIcons name="key" size={32} color={colors.white} />
+                    <MaterialIcons
+                        name="key"
+                        size={32}
+                        color={colors.white}
+                    />
                 </View>
 
                 <AuthCard title="Recuperar contraseña">
@@ -62,27 +112,24 @@ export function RecoveryScreen() {
                         placeholder="tu@email.com"
                         keyboardType="email-address"
                         autoCapitalize="none"
-                        error={email.length > 0 && !isEmailValid}
+                        error={
+                            email.length > 0 &&
+                            !isEmailValid
+                        }
                     />
 
                     <EmailRequirements email={email} />
 
-                    <Pressable
-                        style={[
-                            styles.submitButton,
-                            isButtonDisabled
-                                ? styles.disabledButton
-                                : { backgroundColor: colors.warning || '#c76e02' },
-                        ]}
+                    <CustomButton
+                        title={
+                            isBlocked
+                                ? `Reenviar en ${timeLeft}s`
+                                : 'Recuperar contraseña'
+                        }
                         onPress={sendRecovery}
                         disabled={isButtonDisabled}
-                    >
-                        <Text style={styles.submitButtonText}>
-                            {isBlocked
-                                ? `Reenviar en ${timeLeft}s`
-                                : 'Recuperar Contraseña'}
-                        </Text>
-                    </Pressable>
+                        variant="warning"
+                    />
 
                 </AuthCard>
             </ScrollView>

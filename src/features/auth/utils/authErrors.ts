@@ -29,6 +29,14 @@ export function handleAuthError(error: any) {
             });
             break;
 
+        case 'EMAIL_NOT_FOUND':
+            Toast.show({
+                type: 'error',
+                text1: 'No encontramos un usuario con ese correo.',
+                text2: 'No existe ninguna cuenta',
+            });
+            break;
+
         default:
             Toast.show({
                 type: 'error',

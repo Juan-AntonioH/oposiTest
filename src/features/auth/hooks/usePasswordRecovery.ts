@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react';
+import Toast from 'react-native-toast-message';
+
 import { sendRecoveryEmail } from '../services/passwordRecoveryService';
+import { handleAuthError } from '../utils/authErrors';
 
 export function usePasswordRecovery() {
     const [email, setEmail] = useState('');
@@ -7,7 +10,9 @@ export function usePasswordRecovery() {
     const [timeLeft, setTimeLeft] = useState(0);
     const [loading, setLoading] = useState(false);
 
-    const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    const isEmailValid =
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
     const isBlocked = timeLeft > 0;
 
     // ======================
@@ -24,17 +29,25 @@ export function usePasswordRecovery() {
     }, [timeLeft]);
 
     // ======================
-    // ACTION
+    // ENVIAR RECUPERACIÓN
     // ======================
     const sendRecovery = async () => {
-        if (!isEmailValid || isBlocked) return;
+        if (!isEmailValid || isBlocked || loading) return;
 
         try {
             setLoading(true);
 
             await sendRecoveryEmail(email);
 
-            setTimeLeft(60); // cooldown PRO
+            Toast.show({
+                type: 'success',
+                text1: 'Correo enviado',
+                text2: 'Revisa tu bandeja de entrada.',
+            });
+
+            setTimeLeft(60);
+        } catch (error) {
+            handleAuthError(error);
         } finally {
             setLoading(false);
         }
