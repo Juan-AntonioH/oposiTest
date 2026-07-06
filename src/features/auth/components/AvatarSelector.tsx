@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { resolveAvatar } from '../utils/avatarResolver';
 import { View, Text, Image, FlatList, Pressable, StyleSheet } from 'react-native';
 import { PRESET_AVATARS } from '../constants/avatars';
 
@@ -15,21 +16,49 @@ export function AvatarSelector({
   onSelectAvatar,
   onPickImage,
 }: Props) {
-  
-  const currentPreset = PRESET_AVATARS.find(avatar => avatar.id === selectedAvatarId);
-  
-  // Si existe una URI física del dispositivo se prioriza, si no, usa el banco estático
-  const imageSource = customAvatarUri 
-    ? { uri: customAvatarUri } 
-    : (currentPreset?.image || PRESET_AVATARS[0].image);
+
+  // const currentPreset = PRESET_AVATARS.find(avatar => avatar.id === selectedAvatarId);
+
+  // // Si existe una URI física del dispositivo se prioriza, si no, usa el banco estático
+  // const imageSource = customAvatarUri
+  //   ? { uri: customAvatarUri }
+  //   : (currentPreset?.image || PRESET_AVATARS[0].image);
+  const [imageSource, setImageSource] = useState<any>(PRESET_AVATARS[0].image);
+
+  useEffect(() => {
+    let mounted = true;
+
+    async function loadAvatar() {
+      // Mientras el usuario está editando una imagen recién elegida,
+      // mostramos esa URI directamente.
+      if (customAvatarUri) {
+        if (mounted) {
+          setImageSource({ uri: customAvatarUri });
+        }
+        return;
+      }
+
+      const source = await resolveAvatar(selectedAvatarId);
+
+      if (mounted) {
+        setImageSource(source);
+      }
+    }
+
+    loadAvatar();
+
+    return () => {
+      mounted = false;
+    };
+  }, [selectedAvatarId, customAvatarUri]);
 
   return (
     <View style={styles.container}>
       <Text style={styles.label}>Foto de perfil</Text>
-      
+
       <View style={styles.headerRow}>
         <Image source={imageSource} style={styles.mainAvatar} />
-        
+
         <Pressable style={styles.uploadButton} onPress={onPickImage}>
           <Text style={styles.uploadIcon}>↑</Text>
           <Text style={styles.uploadText}>Subir imagen</Text>
@@ -45,7 +74,7 @@ export function AvatarSelector({
         renderItem={({ item }) => {
           const isSelected = selectedAvatarId === item.id && !customAvatarUri;
           return (
-            <Pressable 
+            <Pressable
               onPress={() => onSelectAvatar(item.id)}
               style={[styles.thumbnailWrapper, isSelected && styles.selectedThumbnail]}
             >

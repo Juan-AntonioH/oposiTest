@@ -18,3 +18,13 @@ export async function getUidFromAccountName(accountName: string): Promise<string
 
   return snap.data().uid;
 }
+
+export async function usernameExists(accountName: string) {
+  const ref = doc(
+    db,
+    'usernames',
+    normalizeAccountName(accountName),
+  );
+
+  return (await getDoc(ref)).exists();
+}

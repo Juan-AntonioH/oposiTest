@@ -45,7 +45,7 @@ export const LoginScreen = () => {
       });
 
     } catch (e) {
-      handleAuthError(e); // 👈 AQUÍ la magia
+      handleAuthError(e);
     } finally {
       setLoading(false);
     }

@@ -4,12 +4,18 @@ import { auth } from '@/core/config/firebase';
 
 import { existsEmail } from './firestoreUserService';
 
+import { getUserByEmail } from './firestoreUserService';
+
 export async function sendRecoveryEmail(email: string) {
 
-    const exists = await existsEmail(email);
+    const user = await getUserByEmail(email);
 
-    if (!exists) {
+    if (!user) {
         throw new Error('EMAIL_NOT_FOUND');
+    }
+
+    if (user.deleted) {
+        throw new Error('ACCOUNT_DELETED');
     }
 
     await sendPasswordResetEmail(auth, email);
