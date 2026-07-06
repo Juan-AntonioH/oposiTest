@@ -31,3 +31,6 @@ export async function resolveAvatar(avatar?: string | null) {
   // 3️⃣ Fallback final si no se encuentra en ningún sitio
   return PRESET_AVATARS[0].image;
 }
+export function isPresetAvatar(id: string) {
+  return PRESET_AVATARS.some(a => a.id === id);
+}

@@ -4,7 +4,8 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import { isUsernameTaken } from '../services/usernameService';
 import { authFacade } from '../services/authFacade';
-
+import Toast from 'react-native-toast-message';
+import { handleAuthError } from '../utils/authErrors';
 import {
     isValidAccountName,
     isValidEmail,
@@ -106,27 +107,54 @@ export function useRegister() {
         setLoading(true);
 
         try {
-            console.log('🟡 REGISTER CLICK');
 
             let finalAvatarString = selectedAvatarId;
 
-            // 🔥 Si seleccionó una foto de la galería, la copiamos permanentemente
+            // Si seleccionó una foto personalizada
             if (avatarType === 'custom' && customAvatarUri) {
+
                 const { saveAvatarLocally } = require('../utils/avatarStorage');
+
                 finalAvatarString = await saveAvatarLocally(customAvatarUri);
             }
 
-            await authFacade.register({
+            const result = await authFacade.register({
                 email,
                 password,
                 accountName,
                 displayName,
-                avatar: finalAvatarString, // 🔥 Envía el ID del preset o el nombre del archivo local final ("avatar_1719654321.jpg")
+                avatar: finalAvatarString,
             });
+
+            if (result.status === 'created') {
+
+                Toast.show({
+                    type: 'success',
+                    text1: 'Cuenta creada correctamente',
+                });
+
+            } else {
+
+                Toast.show({
+                    type: 'success',
+                    text1: 'Cuenta recuperada',
+                    text2: 'Revisa tu correo para establecer una nueva contraseña.',
+                });
+
+            }
+
+            navigation.goBack();
+
         } catch (e) {
+
             console.error('REGISTER ERROR', e);
+
+            handleAuthError(e);
+
         } finally {
+
             setLoading(false);
+
         }
     };
 

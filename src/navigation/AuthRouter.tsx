@@ -10,6 +10,7 @@ import { AuthenticatorScreen } from '@/features/auth/screens/AuthenticatorScreen
 import { DashboardScreen } from '@/features/dashboard/screens/DashboardScreen';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { ProfileScreen } from '@/features/auth/screens/ProfileScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -51,6 +52,7 @@ export function AuthRouter() {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Dashboard" component={DashboardScreen} />
+            <Stack.Screen name="Profile" component={ProfileScreen} />
         </Stack.Navigator>
     );
 }

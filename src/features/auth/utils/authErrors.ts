@@ -37,12 +37,43 @@ export function handleAuthError(error: any) {
             });
             break;
 
-        default:
+        case 'auth/email-already-in-use':
             Toast.show({
                 type: 'error',
-                text1: 'Error de inicio de sesión',
-                text2: 'Inténtalo más tarde',
+                text1: 'Ese correo ya está registrado',
+                text2: 'Recupera tu contraseña o inicia sesión.',
             });
             break;
+
+        case 'ACCOUNT_DELETED':
+            Toast.show({
+                type: 'error',
+                text1: 'Cuenta eliminada',
+                text2: 'Recupérala creando la cuenta de nuevo.',
+            });
+            break;
+
+        case 'USERNAME_TAKEN':
+            Toast.show({
+                type: 'error',
+                text1: 'Nombre de cuenta ocupado',
+                text2: 'Elige otro nombre de cuenta.',
+            });
+            break;
+        // default:
+        //     Toast.show({
+        //         type: 'error',
+        //         text1: 'Error de inicio de sesión',
+        //         text2: 'Inténtalo más tarde',
+        //     });
+        //     break;
+        default:
+            console.error(error);
+
+            Toast.show({
+                type: 'error',
+                text1: 'Ha ocurrido un error inesperado',
+                text2: 'Inténtalo de nuevo más tarde.',
+            });
     }
 }
