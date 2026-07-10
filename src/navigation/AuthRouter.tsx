@@ -1,5 +1,6 @@
 import React from 'react';
 import { ActivityIndicator, View } from 'react-native';
+import { RootStackParamList } from '@/navigation/types';
 
 import { useAuthStore } from '@/store/authStore';
 
@@ -11,8 +12,11 @@ import { DashboardScreen } from '@/features/dashboard/screens/DashboardScreen';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ProfileScreen } from '@/features/auth/screens/ProfileScreen';
+import { OppositionsScreen } from '@/features/exam/screens/OppositionsScreen';
+import { OppositionScreen } from '@/features/exam/screens/OppositionScreen';
+import { ExamsScreen } from '@/features/exam/screens/ExamsScreen';
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export function AuthRouter() {
     const status = useAuthStore((s) => s.status);
@@ -53,6 +57,9 @@ export function AuthRouter() {
         <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Dashboard" component={DashboardScreen} />
             <Stack.Screen name="Profile" component={ProfileScreen} />
+            <Stack.Screen name="Oppositions" component={OppositionsScreen} />
+            <Stack.Screen name="OppositionScreen" component={OppositionScreen} />
+            <Stack.Screen name="ExamsScreen" component={ExamsScreen} />
         </Stack.Navigator>
     );
 }

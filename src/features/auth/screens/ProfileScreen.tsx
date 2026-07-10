@@ -26,7 +26,14 @@ export function ProfileScreen() {
 
     return (
         <ScreenLayout title="Mi Perfil">
-
+            <View style={styles.backButtonContainer}>
+                <Pressable
+                    style={styles.backButton}
+                    onPress={() => navigation.goBack()} // ← Te regresa automáticamente a la pantalla anterior (Login)
+                >
+                    <Text style={styles.backButtonText}>← Volver</Text>
+                </Pressable>
+            </View>
             {/* LOADING */}
             {state.loading && (
                 <View

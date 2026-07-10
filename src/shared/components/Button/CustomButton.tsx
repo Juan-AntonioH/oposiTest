@@ -14,20 +14,81 @@ import {
   shadows,
 } from '@/core/theme';
 
-interface CustomButtonProps {
-  title: string;
-  onPress: (event: GestureResponderEvent) => void;
-
-  variant?:
+export type ButtonVariant =
   | 'primary'
   | 'secondary'
   | 'outline'
   | 'danger'
   | 'warning';
 
+interface CustomButtonProps {
+  title: string;
+  onPress: (event: GestureResponderEvent) => void;
+  variant?: ButtonVariant;
   disabled?: boolean;
   loading?: boolean;
 }
+
+const VARIANT_STYLES: Record<
+  ButtonVariant,
+  {
+    button: object;
+    text: object;
+    loaderColor: string;
+  }
+> = {
+  primary: {
+    button: {
+      backgroundColor: colors.primary,
+    },
+    text: {
+      color: colors.white,
+    },
+    loaderColor: colors.white,
+  },
+
+  secondary: {
+    button: {
+      backgroundColor: colors.secondary,
+    },
+    text: {
+      color: colors.white,
+    },
+    loaderColor: colors.white,
+  },
+
+  warning: {
+    button: {
+      backgroundColor: colors.warning ?? '#c76e02',
+    },
+    text: {
+      color: colors.white,
+    },
+    loaderColor: colors.white,
+  },
+
+  danger: {
+    button: {
+      backgroundColor: colors.danger,
+    },
+    text: {
+      color: colors.white,
+    },
+    loaderColor: colors.white,
+  },
+
+  outline: {
+    button: {
+      backgroundColor: colors.white,
+      borderWidth: 2,
+      borderColor: colors.secondary,
+    },
+    text: {
+      color: colors.secondary,
+    },
+    loaderColor: colors.secondary,
+  },
+};
 
 export const CustomButton: React.FC<CustomButtonProps> = ({
   title,
@@ -37,49 +98,13 @@ export const CustomButton: React.FC<CustomButtonProps> = ({
   loading = false,
 }) => {
 
-  const getButtonStyle = () => {
-    switch (variant) {
-      case 'secondary':
-        return styles.secondaryBtn;
-
-      case 'outline':
-        return styles.outlineBtn;
-
-      case 'danger':
-        return styles.dangerBtn;
-
-      case 'warning':
-        return styles.warningBtn;
-
-      default:
-        return styles.primaryBtn;
-    }
-  };
-
-  const getTextStyle = () => {
-    switch (variant) {
-      case 'outline':
-        return styles.outlineText;
-
-      case 'danger':
-        return styles.dangerText;
-
-      case 'secondary':
-        return styles.secondaryText;
-
-      case 'warning':
-        return styles.warningText;
-
-      default:
-        return styles.primaryText;
-    }
-  };
+  const currentVariant = VARIANT_STYLES[variant];
 
   return (
     <TouchableOpacity
       style={[
         styles.button,
-        getButtonStyle(),
+        currentVariant.button,
         disabled && styles.disabledButton,
       ]}
       onPress={onPress}
@@ -88,14 +113,15 @@ export const CustomButton: React.FC<CustomButtonProps> = ({
     >
       {loading ? (
         <ActivityIndicator
-          color={
-            variant === 'outline'
-              ? colors.secondary
-              : colors.white
-          }
+          color={currentVariant.loaderColor}
         />
       ) : (
-        <Text style={[styles.text, getTextStyle()]}>
+        <Text
+          style={[
+            styles.text,
+            currentVariant.text,
+          ]}
+        >
           {title}
         </Text>
       )}
@@ -106,39 +132,17 @@ export const CustomButton: React.FC<CustomButtonProps> = ({
 const styles = StyleSheet.create({
 
   button: {
+    width: '100%',
     paddingVertical: spacing.lg,
     borderRadius: radius.md,
-    alignItems: 'center',
     justifyContent: 'center',
-    width: '100%',
+    alignItems: 'center',
 
     ...shadows.sm,
   },
 
-  primaryBtn: {
-    backgroundColor: colors.primary,
-  },
-
-  secondaryBtn: {
-    backgroundColor: colors.secondary,
-  },
-
-  warningBtn: {
-    backgroundColor: colors.warning ?? '#c76e02',
-  },
-
-  outlineBtn: {
-    backgroundColor: colors.white,
-    borderWidth: 2,
-    borderColor: colors.secondary,
-  },
-
-  dangerBtn: {
-    backgroundColor: colors.danger,
-  },
-
   disabledButton: {
-    backgroundColor: '#D1D5DB', // gris
+    backgroundColor: '#D1D5DB',
     borderColor: '#D1D5DB',
   },
 
@@ -147,23 +151,4 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
 
-  primaryText: {
-    color: colors.white,
-  },
-
-  secondaryText: {
-    color: colors.white,
-  },
-
-  warningText: {
-    color: colors.white,
-  },
-
-  outlineText: {
-    color: colors.secondary,
-  },
-
-  dangerText: {
-    color: colors.white,
-  },
 });

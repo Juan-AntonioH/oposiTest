@@ -5,11 +5,14 @@ import { NavigationContainer } from '@react-navigation/native';
 import { AuthRouter } from '@/navigation/AuthRouter';
 import { useAuthStore } from '@/store/authStore';
 
+import { addQuerys } from './agregarDatosDB';
+
 export default function App() {
   const initAuth = useAuthStore((s) => s.initAuth);
 
   useEffect(() => {
     initAuth();
+    // addQuerys(); //agregar datos a firestore
   }, []);
 
   return (

@@ -34,7 +34,7 @@ yarn-error.*
 # local env files
 .env
 .env*.local
-
+agregarDatosDB.js
 # typescript
 *.tsbuildinfo
 

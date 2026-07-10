@@ -4,8 +4,9 @@ import { colors, spacing, radius, shadows } from '@/core/theme';
 export const styles = StyleSheet.create({
     container: {
         paddingHorizontal: 20,
-        paddingTop: 24,
-        paddingBottom: 40,
+        // paddingTop: 24,
+        paddingTop: 5,
+        // paddingBottom: 40,
         backgroundColor: '#F8F9FC',
     },
     listContainer: {

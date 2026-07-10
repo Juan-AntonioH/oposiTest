@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
-
+import { Role } from '@/core/types/roles';
 import { auth, db } from '@/core/config/firebase';
 
 type AuthStatus =
@@ -19,7 +19,7 @@ interface AuthState {
   displayName: string;
   accountName: string;
   avatar: string;
-  role: string;
+  role: Role | null;
 
   initAuth: () => void;
   refreshAuth: () => Promise<void>;
@@ -35,7 +35,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   displayName: '',
   accountName: '',
   avatar: '',
-  role: '',
+  role: null,
 
   initAuth: () => {
     onAuthStateChanged(auth, async (user: User | null) => {
@@ -52,7 +52,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
             displayName: '',
             accountName: '',
             avatar: '',
-            role: '',
+            role: null,
           });
           return;
         }
@@ -73,7 +73,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
             email: user.email,
             displayName: '',
             accountName: '',
-            role: '',
+            role: null,
             avatar: '',
           });
           return;
@@ -93,7 +93,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
             email: null,
             displayName: '',
             accountName: '',
-            role: '',
+            role: null,
             avatar: '',
           });
           return;
@@ -126,7 +126,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
           displayName: '',
           accountName: '',
           avatar: '',
-          role: '',
+          role: null,
         });
       }
     });
@@ -142,7 +142,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         displayName: '',
         accountName: '',
         avatar: '',
-        role: '',
+        role: null,
       });
       return;
     }
@@ -157,7 +157,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         displayName: '',
         accountName: '',
         avatar: '',
-        role: '',
+        role: null,
       });
       return;
     }
@@ -172,7 +172,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         displayName: '',
         accountName: '',
         avatar: '',
-        role: '',
+        role: null,
       });
       return;
     }
@@ -201,7 +201,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       displayName: '',
       accountName: '',
       avatar: '',
-      role: '',
+      role: null,
     });
   },
 }));

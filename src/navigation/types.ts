@@ -1,24 +1,51 @@
+import {
+    OppositionParams,
+    TestScreenParams,
+} from '@/features/exam/types';
+
 export type RootStackParamList = {
+    /// Auth
     Dashboard: undefined;
+
     Login: undefined;
+
     Register: undefined;
+
     Recovery: undefined;
-    Authenticator: { email: string };
-    Oppositions: undefined;
-    OppositionScreen: { idDocument: string; id: string; name: string };
-    ExamsScreen: { opositionId: string; name: string };
-    BlocksScreen: { opositionId: string; name: string };
-    ThemesScreen: { opositionId: string; name: string };
-    CustomTestScreen: { opositionId: string; name: string };
-    TestScreen: {
-        opositionId: string;
-        name: string;
-        setTime: number;
-        examType: string;
-        year: number;
-        immediateSolution: boolean;
-        titleParam: string;
+
+    Authenticator: {
+        email: string;
     };
+
+    Profile: undefined;
+
+    /// Oppositions
+    Oppositions: undefined;
+
+    OppositionScreen: {
+        idDocument: string;
+        code: string;
+        name: string;
+    };
+
+    ///Exams
+    ExamsScreen: OppositionParams;
+
+    BlocksScreen: OppositionParams;
+
+    ThemesScreen: OppositionParams;
+
+    CustomTestScreen: OppositionParams;
+
+    WrongQuestionsScreen: OppositionParams;
+
+    TestScreen: TestScreenParams;
+    /// Exam Summary and Review
+
     ExamSummaryScreen: undefined;
-    ExamReviewScreen: { startIndex?: number };
+
+    ExamReviewScreen: {
+        startIndex?: number;
+    };
+
 };
