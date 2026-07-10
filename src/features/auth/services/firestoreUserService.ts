@@ -11,6 +11,7 @@ import {
     updateDoc,
 } from 'firebase/firestore';
 import { UserProfile } from '../types/auth';
+import { Role } from '@/core/types/roles';
 import { db } from '@/core/config/firebase';
 
 // =========================
@@ -79,7 +80,7 @@ export async function reactivateUserProfile(
         displayName: string;
         accountName: string;
         avatar: string;
-        role: string;
+        role: Role;
     },
 ) {
 
