@@ -1,4 +1,4 @@
 export * from './OppositionCard';
 export * from './OppositionMenuCard';
-export * from './QuestionCard';
+export * from './test';
 export * from './AdminActions';
