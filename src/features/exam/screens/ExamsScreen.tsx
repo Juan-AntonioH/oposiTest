@@ -78,6 +78,8 @@ export function ExamsScreen({
 
             year: exam.year,
 
+            convocatoria: exam.convocatoria,
+
             immediateSolution,
 
             titleParam: `Examen Oficial ${exam.year}`,

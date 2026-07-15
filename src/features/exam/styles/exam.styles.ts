@@ -975,5 +975,53 @@ export const styles = StyleSheet.create({
         color: '#64748B',
         marginTop: 2,
     },
+    progressCard: {
+        backgroundColor: '#FFFFFF',
+        borderRadius: 16,
+        padding: 16,
+        marginBottom: 16,
+        borderWidth: 1,
+        borderColor: '#E5E7EB',
+        elevation: 2, // Android
+        shadowColor: '#000', // iOS
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.08,
+        shadowRadius: 4,
+    },
 
+    progressHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 12,
+    },
+    headerTopRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+    },
+
+    headerTitle: {
+        fontSize: 22,
+        fontWeight: '700',
+        color: '#1F2937',
+    },
+
+    headerSubtitle: {
+        marginTop: 4,
+        fontSize: 14,
+        color: '#6B7280',
+    },
+
+    closeButton: {
+        width: 42,
+        height: 42,
+        borderRadius: 21,
+        backgroundColor: '#2563EB',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
 });

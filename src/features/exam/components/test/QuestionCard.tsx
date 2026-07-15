@@ -1,44 +1,192 @@
-// import React from 'react';
-// import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-// import { Question } from '../types';
-// import { useExamStore } from '../store/useExamStore';
+import React from 'react';
+import {
+    Pressable,
+    Text,
+    View,
+} from 'react-native';
 
-// interface QuestionCardProps {
-//   question: Question;
-// }
+import { TestQuestion } from '../../types';
 
-// export const QuestionCard: React.FC<QuestionCardProps> = ({ question }) => {
-//   const { answers, setAnswer } = useExamStore();
-//   const selectedAnswer = answers[question.id];
+import { styles } from '../../styles/exam.styles';
 
-//   return (
-//     <View style={styles.card}>
-//       <Text style={styles.statement}>{question.statement}</Text>
-      
-//       {question.options.map((option, index) => {
-//         const isSelected = selectedAnswer === index;
-//         return (
-//           <TouchableOpacity
-//             key={index}
-//             style={[styles.optionButton, isSelected && styles.optionSelected]}
-//             onPress={() => setAnswer(question.id, index)}
-//             activeOpacity={0.7}
-//           >
-//             <Text style={[styles.optionText, isSelected && styles.textSelected]}>
-//               {String.fromCharCode(65 + index)} {option} {/* Renderiza A), B), C), D) */}
-//             </Text>
-//           </TouchableOpacity>
-//         );
-//       })}
-//     </View>
-//   );
-// };
+interface QuestionCardProps {
+    question: TestQuestion;
 
-// const styles = StyleSheet.create({
-//   card: { backgroundColor: '#ffffff', padding: 20, borderRadius: 16, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.05, shadowRadius: 8, elevation: 2 },
-//   statement: { fontSize: 18, fontWeight: '600', color: '#111928', marginBottom: 16, lineHeight: 24 },
-//   optionButton: { padding: 14, borderRadius: 10, borderWidth: 1, borderColor: '#E5E7EB', marginVertical: 6, backgroundColor: '#F9FAFB' },
-//   optionSelected: { borderColor: '#1A56DB', backgroundColor: '#EBF5FF' },
-//   optionText: { fontSize: 15, color: '#4B5563' },
-//   textSelected: { color: '#1E429F', fontWeight: '500' }
-// });
+    selectedOption: number | null;
+
+    showCorrection: boolean;
+
+    onSelectOption?: (
+        optionIndex: number,
+    ) => void;
+}
+
+type OptionState =
+    | 'default'
+    | 'selected'
+    | 'correct'
+    | 'incorrect';
+
+export function QuestionCard({
+    question,
+    selectedOption,
+    showCorrection,
+    onSelectOption,
+}: QuestionCardProps) {
+
+    const getOptionState = (
+        index: number,
+    ): OptionState => {
+
+        if (!showCorrection) {
+
+            return selectedOption === index
+                ? 'selected'
+                : 'default';
+
+        }
+
+        if (index === question.correctAnswer) {
+            return 'correct';
+        }
+
+        if (
+            selectedOption === index &&
+            selectedOption !== question.correctAnswer
+        ) {
+            return 'incorrect';
+        }
+
+        return 'default';
+
+    };
+
+    const getOptionCardStyle = (
+        state: OptionState,
+    ) => {
+
+        switch (state) {
+
+            case 'selected':
+                return styles.optionCardSelected;
+
+            case 'correct':
+                return styles.optionCardCorrect;
+
+            case 'incorrect':
+                return styles.optionCardIncorrect;
+
+            default:
+                return styles.optionCard;
+
+        }
+
+    };
+
+    const getOptionCircleStyle = (
+        state: OptionState,
+    ) => {
+
+        switch (state) {
+
+            case 'selected':
+                return styles.optionCircleSelected;
+
+            case 'correct':
+                return styles.optionCircleCorrect;
+
+            case 'incorrect':
+                return styles.optionCircleIncorrect;
+
+            default:
+                return styles.optionCircle;
+
+        }
+
+    };
+
+    const getOptionTextStyle = (
+        state: OptionState,
+    ) => {
+
+        switch (state) {
+
+            case 'selected':
+            case 'correct':
+            case 'incorrect':
+                return styles.optionTextSelected;
+
+            default:
+                return styles.optionText;
+
+        }
+
+    };
+
+    return (
+
+        <View style={styles.questionCard}>
+
+            <Text style={styles.questionText}>
+                {question.question}
+            </Text>
+
+            {question.options.map(
+                (option, index) => {
+
+                    const letter =
+                        String.fromCharCode(
+                            65 + index,
+                        );
+
+                    const optionState =
+                        getOptionState(index);
+
+                    return (
+
+                        <Pressable
+                            key={index}
+                            style={getOptionCardStyle(optionState)}
+                            disabled={showCorrection}
+                            onPress={() =>
+                                onSelectOption?.(index)
+                            }
+                        >
+
+                            <View
+                                style={getOptionCircleStyle(
+                                    optionState,
+                                )}
+                            >
+                                <Text
+                                    style={getOptionTextStyle(
+                                        optionState,
+                                    )}
+                                >
+                                    {letter}
+                                </Text>
+                            </View>
+
+                            <Text
+                                style={[
+                                    styles.optionLabel,
+                                    getOptionTextStyle(
+                                        optionState,
+                                    ),
+                                ]}
+                            >
+                                {option}
+                            </Text>
+
+                        </Pressable>
+
+                    );
+
+                },
+            )}
+
+        </View>
+
+    );
+
+}

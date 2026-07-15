@@ -2,9 +2,34 @@ import {
     OppositionParams,
     TestScreenParams,
 } from '@/features/exam/types';
+import { ExamType } from '@/features/exam/types/examTypes';
+
+export interface ExamSummaryParams {
+
+    oppositionId: string;
+
+    oppositionName: string;
+
+    examType: ExamType;
+
+    timeConfigured: number;
+
+    timeRemaining: number;
+
+    totalConfiguredQuestions: number;
+
+}
+
+export interface ExamReviewParams {
+
+    startIndex?: number;
+
+}
 
 export type RootStackParamList = {
+
     /// Auth
+
     Dashboard: undefined;
 
     Login: undefined;
@@ -20,6 +45,7 @@ export type RootStackParamList = {
     Profile: undefined;
 
     /// Oppositions
+
     Oppositions: undefined;
 
     OppositionScreen: {
@@ -28,7 +54,8 @@ export type RootStackParamList = {
         name: string;
     };
 
-    ///Exams
+    /// Exams
+
     ExamsScreen: OppositionParams;
 
     BlocksScreen: OppositionParams;
@@ -40,12 +67,11 @@ export type RootStackParamList = {
     WrongQuestionsScreen: OppositionParams;
 
     TestScreen: TestScreenParams;
-    /// Exam Summary and Review
 
-    ExamSummaryScreen: undefined;
+    /// Results
 
-    ExamReviewScreen: {
-        startIndex?: number;
-    };
+    ExamSummaryScreen: ExamSummaryParams;
+
+    ExamReviewScreen: ExamReviewParams;
 
 };

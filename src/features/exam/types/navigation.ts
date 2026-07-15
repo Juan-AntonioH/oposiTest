@@ -1,6 +1,7 @@
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import { RootStackParamList } from '@/navigation/types';
+import { ExamType } from './examType';
 
 export interface OppositionParams {
     oppositionId: string;
@@ -9,9 +10,15 @@ export interface OppositionParams {
 
 export interface TestScreenParams extends OppositionParams {
     setTime: number;
-    examType: string;
-    year: number;
+
+    examType: ExamType;
+
+    year?: number;
+
+    convocatoria?: string;
+
     immediateSolution: boolean;
+
     titleParam: string;
 }
 

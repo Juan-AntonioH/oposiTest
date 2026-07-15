@@ -1,18 +1,11 @@
-export * from './opposition';
+export * from './question';
+export * from './testQuestion';
 export * from './officialExam';
+export * from './opposition';
 export * from './navigation';
-
-export interface Question {
-  id: string;
-  statement: string; // Enunciado
-  options: string[];
-  correctIndex: number;
-}
-
-export interface Exam {
-  id: string;
-  title: string;
-  syllabusCategory: string; // Bloques de la oposición (Ej: "Bloque I: Constitución")
-  questions: Question[];
-}
-
+export * from './questionFilters';
+export * from './examType';
+export * from './answer';
+export * from './completedTest';
+export * from './examType';
+export * from './questionSessionResult';
