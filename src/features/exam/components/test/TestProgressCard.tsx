@@ -66,9 +66,13 @@ export function TestProgressCard({
                     Pregunta {currentQuestion} de {totalQuestions}
                 </Text>
 
-                <Text style={styles.timerText}>
-                    {formatTime(elapsedTime)}
-                </Text>
+                <View style={styles.timerBadge}>
+
+                    <Text style={styles.timerText}>
+                        ⏱ {formatTime(elapsedTime)}
+                    </Text>
+
+                </View>
 
             </View>
 

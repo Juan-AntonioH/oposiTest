@@ -70,12 +70,6 @@ async function loadOfficialQuestions(
         convocatoria,
     } = filters;
 
-    console.log({
-        oppositionId,
-        year,
-        convocatoria,
-    });
-
     if (!oppositionId) {
         throw new Error('Opposition id is required.');
     }
@@ -91,11 +85,6 @@ async function loadOfficialQuestions(
     // 👇 AÑADE ESTO
     const allQuestions = await getDocs(
         questionsCollection,
-    );
-
-    console.log(
-        'FIRST QUESTION:',
-        allQuestions.docs[0]?.data(),
     );
 
     const constraints: QueryConstraint[] = [
@@ -114,11 +103,6 @@ async function loadOfficialQuestions(
             questionsCollection,
             ...constraints,
         ),
-    );
-
-    console.log(
-        'QUESTIONS',
-        snapshot.size,
     );
 
     return snapshot.docs.map((doc) => ({

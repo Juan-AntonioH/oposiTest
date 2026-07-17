@@ -47,7 +47,6 @@ export function useTest({
                 year,
                 convocatoria,
             });
-            console.log('QUESTIONS', questions.length);
 
             loadQuestionsStore(questions);
 

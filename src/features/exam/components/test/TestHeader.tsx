@@ -10,13 +10,13 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { styles } from '../../styles/exam.styles';
 
 interface TestHeaderProps {
-    title: string;
+    // title: string;
     subtitle?: string;
     onExit: () => void;
 }
 
 export function TestHeader({
-    title,
+    // title,
     subtitle,
     onExit,
 }: TestHeaderProps) {
@@ -29,9 +29,9 @@ export function TestHeader({
 
                 <View style={{ flex: 1 }}>
 
-                    <Text style={styles.headerTitle}>
+                    {/* <Text style={styles.headerTitle}>
                         {title}
-                    </Text>
+                    </Text> */}
 
                     {subtitle && (
 
@@ -47,12 +47,14 @@ export function TestHeader({
                     style={styles.closeButton}
                     onPress={onExit}
                 >
-
-                    <MaterialCommunityIcons
+                    <Text style={styles.closeButton}>
+                        Finalizar Test
+                    </Text>
+                    {/* <MaterialCommunityIcons
                         name="close"
                         size={24}
                         color="#FFFFFF"
-                    />
+                    /> */}
 
                 </Pressable>
 

@@ -237,7 +237,7 @@ export function TestScreen({
                 showsVerticalScrollIndicator={false}
             >
                 <TestHeader
-                    title={titleParam}
+                    // title={titleParam}
                     subtitle={name}
                     onExit={handleExitExam}
                 />

@@ -122,7 +122,23 @@ export function QuestionCard({
         }
 
     };
+    const getOptionLetterStyle = (
+        state: OptionState,
+    ) => {
 
+        switch (state) {
+
+            case 'selected':
+            case 'correct':
+            case 'incorrect':
+                return styles.optionLetterSelected;
+
+            default:
+                return styles.optionLetter;
+
+        }
+
+    };
     return (
 
         <View style={styles.questionCard}>
@@ -159,7 +175,7 @@ export function QuestionCard({
                                 )}
                             >
                                 <Text
-                                    style={getOptionTextStyle(
+                                    style={getOptionLetterStyle(
                                         optionState,
                                     )}
                                 >
