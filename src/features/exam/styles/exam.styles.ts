@@ -20,8 +20,8 @@ export const styles = StyleSheet.create({
         marginBottom: 32,
     },
     headerContainer: {
-        marginTop: 24,
-        // marginBottom: 20,
+        // marginTop: 24,
+        marginBottom: 10,
     },
     titleRow: {
         flexDirection: 'row',
@@ -220,9 +220,9 @@ export const styles = StyleSheet.create({
     },
     progressBarBackground: {
         flex: 1,
-        height: 6,
+        height: 10,
         backgroundColor: '#F1F5F9',
-        borderRadius: 3,
+        borderRadius: 999,
         marginHorizontal: 12,
     },
     progressBarFill: {
@@ -232,14 +232,21 @@ export const styles = StyleSheet.create({
     },
     timerBadge: {
         backgroundColor: '#F8FAFC',
-        paddingHorizontal: 8,
-        paddingVertical: 4,
-        borderRadius: 6,
         borderWidth: 1,
         borderColor: '#E2E8F0',
+        borderRadius: 999,
+
+        paddingHorizontal: 12,
+        paddingVertical: 6,
+
+        justifyContent: 'center',
+        alignItems: 'center',
+
+        minWidth: 95,
     },
+
     timerText: {
-        fontSize: 13,
+        fontSize: 14,
         fontWeight: '700',
         color: '#334155',
     },
@@ -309,6 +316,7 @@ export const styles = StyleSheet.create({
         marginRight: 12,
     },
     optionCircleSelected: {
+        color: '#FFFFFF',
         width: 32,
         height: 32,
         borderRadius: 16,
@@ -318,6 +326,7 @@ export const styles = StyleSheet.create({
         marginRight: 12,
     },
     optionCircleCorrect: {
+        color: '#FFFFFF',
         width: 32,
         height: 32,
         borderRadius: 16,
@@ -330,6 +339,7 @@ export const styles = StyleSheet.create({
         width: 32,
         height: 32,
         borderRadius: 16,
+        color: '#FFFFFF',
         backgroundColor: '#EF4444',
         justifyContent: 'center',
         alignItems: 'center',
@@ -341,8 +351,8 @@ export const styles = StyleSheet.create({
         fontWeight: '600',
     },
     optionTextSelected: {
-        fontSize: 14,
-        color: '#FFFFFF',
+        // fontSize: 14,
+        // color: '#FFFFFF',
         fontWeight: '700',
     },
     optionLabel: {
@@ -354,7 +364,8 @@ export const styles = StyleSheet.create({
         backgroundColor: '#F0F9FF',
         borderRadius: 12,
         padding: 14,
-        marginTop: 8,
+        marginTop: 6,
+        marginBottom: 10,
         borderWidth: 1,
         borderColor: '#BAE6FD',
     },
@@ -365,6 +376,7 @@ export const styles = StyleSheet.create({
     },
     explanationTitle: {
         fontSize: 14,
+        paddingLeft: 6,
         fontWeight: '700',
         color: '#0369A1',
     },
@@ -377,7 +389,6 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         gap: 12,
-        marginBottom: 20,
     },
     primaryButton: {
         flex: 1,
@@ -905,7 +916,6 @@ export const styles = StyleSheet.create({
         fontWeight: '600',
     },
     //BLOCKSCREEN
-    // Añade esto dentro del StyleSheet.create de tu exam.styles.ts
     toggleCardCheckbox: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -975,5 +985,136 @@ export const styles = StyleSheet.create({
         color: '#64748B',
         marginTop: 2,
     },
+    progressCard: {
+        backgroundColor: '#FFFFFF',
+        borderRadius: 16,
+        padding: 16,
+        marginBottom: 16,
+        borderWidth: 1,
+        borderColor: '#E5E7EB',
+        elevation: 2, // Android
+        shadowColor: '#000', // iOS
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.08,
+        shadowRadius: 4,
+    },
 
+    progressHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 12,
+    },
+    headerTopRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+    },
+
+    headerTitle: {
+        fontSize: 22,
+        fontWeight: '700',
+        color: '#1F2937',
+    },
+
+    headerSubtitle: {
+        marginTop: 4,
+        fontSize: 14,
+        color: '#6B7280',
+    },
+
+    closeButton: {
+        // width: 42,
+        // height: 42,
+        padding: 4,
+        color: '#FFF',
+        fontWeight: 'bold',
+        fontSize: 12,
+        borderRadius: 21,
+        backgroundColor: colors.error,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    optionLetter: {
+        color: '#475569',
+        fontWeight: '700',
+    },
+
+    optionLetterSelected: {
+        color: '#FFFFFF',
+        fontWeight: '700',
+    },
+    examName: {
+        marginTop: 4,
+        fontSize: 14,
+        color: '#64748B',
+        fontWeight: '500',
+    },
+    answersMap: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        gap: 8,
+    },
+
+    answerCircle: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 8,
+    },
+
+    summaryButton: {
+        marginTop: 24,
+        backgroundColor: '#2563EB',
+        borderRadius: 12,
+        paddingVertical: 14,
+        alignItems: 'center',
+    },
+
+    summaryButtonText: {
+        color: '#FFFFFF',
+        fontSize: 16,
+        fontWeight: '700',
+    },
+    answersMapTitle: {
+        fontSize: 18,
+        marginTop: 20,
+        marginBottom: 12,
+    },
+    answerNumber: {
+        fontSize: 12,
+        fontWeight: '700',
+    },
+    answerCircleCorrect: {
+        backgroundColor: '#22C55E',
+    },
+
+    answerCircleIncorrect: {
+        backgroundColor: '#EF4444',
+    },
+
+    answerCircleUnanswered: {
+        backgroundColor: '#E9EBEE',
+        borderWidth: 1,
+        borderColor: '#CBD5E1',
+    },
+
+    answerNumberWhite: {
+        color: '#FFFFFF',
+    },
+
+    answerNumberDark: {
+        color: '#475569',
+    },
+    summaryContainer: {
+        flex: 1,
+    },
+
+    summaryContent: {
+        padding: 16,
+        paddingBottom: 40,
+    },  
 });
+
