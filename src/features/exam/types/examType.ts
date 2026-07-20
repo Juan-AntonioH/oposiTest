@@ -2,7 +2,6 @@ export type ExamType =
     | 'official'
     | 'blocks'
     | 'themes'
-    | 'favorites'
-    | 'wrongQuestions'
+    | 'simulacrum'
     | 'custom'
-    | 'simulacrum';
+    | 'wrongQuestions';

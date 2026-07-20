@@ -2,7 +2,7 @@ import {
     OppositionParams,
     TestScreenParams,
 } from '@/features/exam/types';
-import { ExamType } from '@/features/exam/types/examTypes';
+import { ExamType } from '@/features/exam/types/examType';
 
 export interface ExamSummaryParams {
 
@@ -10,13 +10,15 @@ export interface ExamSummaryParams {
 
     oppositionName: string;
 
+    examName: string;
+
     examType: ExamType;
 
     timeConfigured: number;
 
-    timeRemaining: number;
+    finishedByTime: boolean;
 
-    totalConfiguredQuestions: number;
+    finishedEarly: boolean;
 
 }
 

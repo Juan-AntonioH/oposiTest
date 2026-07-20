@@ -1,5 +1,4 @@
-import { Timestamp } from 'firebase/firestore';
-import { ExamType } from './examTypes';
+import { ExamType } from './examType';
 
 export interface CompletedAnswer {
     numQuestion: number;
@@ -24,6 +23,7 @@ export interface CompletedAnswer {
 }
 
 export interface CompletedTest {
+
     idDocument?: string;
 
     userId: string;
@@ -32,13 +32,19 @@ export interface CompletedTest {
 
     oppositionName: string;
 
+    examName: string;
+
     examType: ExamType;
 
     numberOfConfiguredQuestions: number;
 
     timeConfigured: number;
 
-    date: Timestamp;
+    date: Date;
+
+    finishedByTime: boolean;
+
+    finishedEarly: boolean;
 
     blocksIds: string[];
 
@@ -53,6 +59,8 @@ export interface CompletedTest {
     note: number;
 
     timeSpent: number;
+
+    totalQuestions: number;
 
     answers: CompletedAnswer[];
 }

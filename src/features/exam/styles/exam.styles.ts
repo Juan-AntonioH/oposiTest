@@ -1047,4 +1047,74 @@ export const styles = StyleSheet.create({
         color: '#FFFFFF',
         fontWeight: '700',
     },
+    examName: {
+        marginTop: 4,
+        fontSize: 14,
+        color: '#64748B',
+        fontWeight: '500',
+    },
+    answersMap: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        gap: 8,
+    },
+
+    answerCircle: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 8,
+    },
+
+    summaryButton: {
+        marginTop: 24,
+        backgroundColor: '#2563EB',
+        borderRadius: 12,
+        paddingVertical: 14,
+        alignItems: 'center',
+    },
+
+    summaryButtonText: {
+        color: '#FFFFFF',
+        fontSize: 16,
+        fontWeight: '700',
+    },
+    answersMapTitle: {
+        fontSize: 18,
+        marginTop: 20,
+        marginBottom: 12,
+    },
+    answerNumber: {
+        fontSize: 12,
+        fontWeight: '700',
+    },
+    answerCircleCorrect: {
+        backgroundColor: '#22C55E',
+    },
+
+    answerCircleIncorrect: {
+        backgroundColor: '#EF4444',
+    },
+
+    answerCircleUnanswered: {
+        backgroundColor: '#E9EBEE',
+        borderWidth: 1,
+        borderColor: '#CBD5E1',
+    },
+
+    answerNumberWhite: {
+        color: '#FFFFFF',
+    },
+
+    answerNumberDark: {
+        color: '#475569',
+    },
+    summaryContainer: {
+        flex: 1,
+    },
+
+    summaryContent: {
+        padding: 16,
+        paddingBottom: 40,
+    },  
 });
+

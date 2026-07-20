@@ -7,5 +7,4 @@ export * from './questionFilters';
 export * from './examType';
 export * from './answer';
 export * from './completedTest';
-export * from './examType';
 export * from './questionSessionResult';

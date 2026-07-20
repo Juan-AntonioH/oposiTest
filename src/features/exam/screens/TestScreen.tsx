@@ -93,12 +93,20 @@ export function TestScreen({
             'ExamSummaryScreen',
             {
                 oppositionId,
+
                 oppositionName: name,
+
+                examName: titleParam,
+
                 examType,
+
                 timeConfigured: setTime,
-                timeRemaining: timer.timeLeft,
-                totalConfiguredQuestions:
-                    testQuestions.length,
+
+                finishedByTime:
+                    timer.timeLeft <= 0,
+
+                finishedEarly:
+                    timer.timeLeft > 0,
             },
         );
 
@@ -287,14 +295,22 @@ export function TestScreen({
                     }
                     onAnswer={() => {
 
-                        timer.pause();
+                        if (immediateSolution) {
+
+                            timer.pause();
+
+                        }
 
                         session.confirmAnswer();
 
                     }}
                     onLeaveBlank={() => {
 
-                        timer.pause();
+                        if (immediateSolution) {
+
+                            timer.pause();
+
+                        }
 
                         session.leaveBlank();
 

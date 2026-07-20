@@ -76,15 +76,8 @@ export function useTest({
 
         loadTest();
 
-        return () => {
-
-            resetTest();
-
-        };
-
     }, [
         loadTest,
-        resetTest,
     ]);
 
     return {

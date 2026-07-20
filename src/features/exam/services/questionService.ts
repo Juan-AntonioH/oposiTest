@@ -37,9 +37,6 @@ export async function loadQuestions(
         case 'themes':
             return loadThemeQuestions(filters);
 
-        case 'favorites':
-            return loadFavoriteQuestions(filters);
-
         case 'wrongQuestions':
             return loadWrongQuestions(filters);
 
