@@ -188,8 +188,7 @@ export function ExamReviewScreen() {
 
                 <ReviewAdminActions
                     visible={isAdminOrModerate}
-                    questionId={currentQuestion.idDocument}
-                    onEdit={editQuestion}
+                    onEdit={() => editQuestion(currentQuestion)}
                 />
 
             </ScrollView>

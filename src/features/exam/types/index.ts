@@ -8,3 +8,5 @@ export * from './examType';
 export * from './answer';
 export * from './completedTest';
 export * from './questionSessionResult';
+export * from './block';
+export * from './theme';
