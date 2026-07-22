@@ -1,3 +1,4 @@
+import { Question } from '@/features/admin/types/question';
 import {
     OppositionParams,
     TestScreenParams,
@@ -26,6 +27,10 @@ export interface ExamReviewParams {
 
     startIndex?: number;
 
+}
+
+export interface QuestionFormParams {
+    question?: Question;
 }
 
 export type RootStackParamList = {
@@ -75,5 +80,9 @@ export type RootStackParamList = {
     ExamSummaryScreen: ExamSummaryParams;
 
     ExamReviewScreen: ExamReviewParams;
+
+    /// Questions
+
+    QuestionFormScreen: QuestionFormParams;
 
 };

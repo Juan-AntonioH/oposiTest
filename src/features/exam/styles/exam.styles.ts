@@ -687,6 +687,7 @@ export const styles = StyleSheet.create({
         borderRadius: 8,
         padding: 14,
         marginTop: 8,
+        bottom: 8,
 
     },
     explanationTitleReview: {

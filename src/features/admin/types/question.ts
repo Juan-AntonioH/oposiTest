@@ -1,32 +1,84 @@
-// Estructura oficial almacenada en la colección "preguntas" de Firestore
-export interface FirebaseQuestion {
-    id?: string;
-    questionId?: string; // Soportamos ambos formatos por compatibilidad
+/**
+ * Modelo principal de una pregunta.
+ * Se utiliza para:
+ * - Firestore
+ * - Crear preguntas
+ * - Editar preguntas
+ * - Navegación entre pantallas
+ */
+export interface Question {
+
+    idDocument: string;
+
     oppositionId: string;
+
     blockId: string;
-    temaId: string;
+
+    themeId: string;
+
     question: string;
+
     options: string[];
+
     correctAnswer: number;
+
     explanation: string;
-    randomId: number;
+
     esOficial: boolean;
-    examYear?: number;
-    examConvocatoria?: string;
+
+    examYear?: number | null;
+
+    examConvocatoria?: string | null;
+
+    randomId: number;
+
+    active: boolean;
+
 }
 
-// Estructura que extiende la pregunta con la interacción del usuario en un examen
-export interface Question extends FirebaseQuestion {
+/**
+ * Pregunta utilizada durante la realización de un examen.
+ */
+export interface TestQuestion extends Question {
+
     numQuestion: number;
+
     userResponse: number | null;
+
     questionTimeSpent: number;
+
 }
 
-// Actualización oficial de los parámetros de navegación de tu RootStackParamList
-export type AdminStackParamList = {
-    QuestionForm: {
-        idDocument: string;            // ID de la oposición
-        nombreOposicion: string;       // Nombre legible
-        questionData?: FirebaseQuestion; // Objeto de edición limpio
-    };
-};
+/**
+ * Datos utilizados por el formulario de alta/edición.
+ * Actualmente coincide con Question, pero se mantiene
+ * separado por si en el futuro el formulario necesita
+ * campos adicionales (imágenes, archivos, etiquetas...).
+ */
+export type QuestionFormData = Question;
+
+export interface DropdownItem {
+
+    label: string;
+
+    value: string;
+
+}
+
+export interface BuildQuestionParams {
+
+    question?: Question;
+
+    blockId: string;
+
+    themeId: string;
+
+    questionText: string;
+
+    options: string[];
+
+    correctAnswer: number;
+
+    explanation: string;
+
+}

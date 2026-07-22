@@ -17,19 +17,13 @@ interface ReviewAdminActionsProps {
 
     visible: boolean;
 
-    questionId: string;
-
-    onEdit: (
-        questionId: string,
-    ) => void;
+    onEdit: () => void;
 
 }
 
 export function ReviewAdminActions({
 
     visible,
-
-    questionId,
 
     onEdit,
 
@@ -48,9 +42,7 @@ export function ReviewAdminActions({
             android_ripple={{
                 color: '#1C54C4',
             }}
-            onPress={() =>
-                onEdit(questionId)
-            }
+            onPress={onEdit}
         >
 
             <MaterialCommunityIcons

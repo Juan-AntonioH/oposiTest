@@ -5,6 +5,7 @@ import {
 import {
     useNavigation,
 } from '@react-navigation/native';
+import { Question } from '../types';
 
 export function useReviewActions() {
 
@@ -22,19 +23,19 @@ export function useReviewActions() {
 
     const editQuestion =
         useCallback((
-            questionId: string,
+            question: Question,
         ) => {
 
-            console.log(
-                'TODO: Editar pregunta:',
-                questionId,
+            navigation.navigate(
+                'QuestionFormScreen',
+                {
+                    question,
+                },
             );
 
-            // TODO:
-            // Recuperar la pregunta completa desde Firestore
-            // mediante questionId y navegar a QuestionForm.
-
-        }, []);
+        }, [
+            navigation,
+        ]);
 
     return {
 
