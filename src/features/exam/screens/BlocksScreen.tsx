@@ -36,10 +36,10 @@ export function BlocksScreen({ route }: BlocksScreenProps) {
     useEffect(() => {
         const timer = setTimeout(() => {
             const mockBlocks: BlockItem[] = [
-                { id: 'bloque_01', name: 'Bloque 1', questionCount: 25 },
-                { id: 'bloque_02', name: 'Bloque 2', questionCount: 25 },
-                { id: 'bloque_03', name: 'Bloque 3', questionCount: 25 },
-                { id: 'bloque_04', name: 'Bloque 4', questionCount: 25 },
+                { id: 'bloque_01', name: 'Bloque 1', questionCount: 50 },
+                { id: 'bloque_02', name: 'Bloque 2', questionCount: 50 },
+                { id: 'bloque_03', name: 'Bloque 3', questionCount: 50 },
+                { id: 'bloque_04', name: 'Bloque 4', questionCount: 50 },
             ];
             setBlocks(mockBlocks);
             setLoadingBlocks(false);

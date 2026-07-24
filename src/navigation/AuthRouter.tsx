@@ -19,6 +19,9 @@ import { TestScreen } from '@/features/exam/screens/TestScreen';
 import { ExamSummaryScreen } from '@/features/exam/screens/ExamSummaryScreen';
 import { ExamReviewScreen } from '@/features/exam/screens/ExamReviewScreen';
 import { QuestionFormScreen } from '@/features/admin/screens/QuestionFormScreen';
+import { BlocksScreen } from '@/features/exam/screens/BlocksScreen';
+import { ThemesScreen } from '@/features/exam/screens/ThemesScreen';
+import { CustomTestScreen } from '@/features/exam/screens/CustomTestScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -68,6 +71,9 @@ export function AuthRouter() {
             <Stack.Screen name="ExamSummaryScreen" component={ExamSummaryScreen} />
             <Stack.Screen name='ExamReviewScreen' component={ExamReviewScreen} />
             <Stack.Screen name='QuestionFormScreen' component={QuestionFormScreen} />
+            <Stack.Screen name='BlocksScreen' component={BlocksScreen} />
+            <Stack.Screen name='ThemesScreen' component={ThemesScreen} />
+            <Stack.Screen name='CustomTestScreen' component={CustomTestScreen} />
         </Stack.Navigator>
     );
 }

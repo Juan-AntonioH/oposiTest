@@ -48,7 +48,8 @@ export function QuestionFormScreen() {
 
     const {
         question,
-    } = route.params ?? {};
+        idDocument,
+    } = route.params;
 
     const {
         actions,
@@ -70,6 +71,10 @@ export function QuestionFormScreen() {
 
             <QuestionForm
                 question={question}
+                oppositionId={
+                    question?.oppositionId ??
+                    idDocument
+                }
                 actions={actions}
             />
 

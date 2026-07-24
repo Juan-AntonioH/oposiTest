@@ -42,10 +42,7 @@ export async function getBlock(
     oppositionId: string,
     blockId: string,
 ): Promise<Block | null> {
-console.log({
-    oppositionId,
-    blockId,
-});
+
     return getBlockFromFirestore(
 
         oppositionId,

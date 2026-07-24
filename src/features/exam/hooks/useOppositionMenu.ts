@@ -54,7 +54,7 @@ export function useOppositionMenu({
                         name,
                         setTime: 100,
                         examType: 'simulacrum',
-                        year: new Date().getFullYear(),
+                        // year: new Date().getFullYear(),
                         immediateSolution: false,
                         titleParam: 'Simulacro',
                     });

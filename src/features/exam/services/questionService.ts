@@ -37,8 +37,8 @@ export async function loadQuestions(
         case 'themes':
             return loadThemeQuestions(filters);
 
-        case 'wrongQuestions':
-            return loadWrongQuestions(filters);
+        // case 'wrongQuestions':
+        //     return loadWrongQuestions(filters);
 
         case 'custom':
             return loadCustomQuestions(filters);
@@ -56,6 +56,7 @@ export async function loadQuestions(
 /* -------------------------------------------------------------------------- */
 /*                              PRIVATE FUNCTIONS                             */
 /* -------------------------------------------------------------------------- */
+export const SIMULACRUM_LIMIT = 80;
 
 async function loadOfficialQuestions(
     filters: QuestionFilters,
@@ -89,10 +90,10 @@ async function loadOfficialQuestions(
         where('esOficial', '==', true),
         where('examYear', '==', year),
         where(
-    'examConvocatoria',
-    '==',
-    'Libre',
-),
+            'examConvocatoria',
+            '==',
+            'Libre',
+        ),
     ];
 
     const snapshot = await getDocs(
@@ -127,21 +128,21 @@ async function loadThemeQuestions(
 
 }
 
-async function loadFavoriteQuestions(
-    filters: QuestionFilters,
-): Promise<Question[]> {
+// async function loadFavoriteQuestions(
+//     filters: QuestionFilters,
+// ): Promise<Question[]> {
 
-    throw new Error('Not implemented.');
+//     throw new Error('Not implemented.');
 
-}
+// }
 
-async function loadWrongQuestions(
-    filters: QuestionFilters,
-): Promise<Question[]> {
+// async function loadWrongQuestions(
+//     filters: QuestionFilters,
+// ): Promise<Question[]> {
 
-    throw new Error('Not implemented.');
+//     throw new Error('Not implemented.');
 
-}
+// }
 
 async function loadCustomQuestions(
     filters: QuestionFilters,
@@ -155,6 +156,97 @@ async function loadSimulacrumQuestions(
     filters: QuestionFilters,
 ): Promise<Question[]> {
 
-    throw new Error('Not implemented.');
+    const {
+        oppositionId,
+    } = filters;
+
+    if (!oppositionId) {
+
+        throw new Error(
+            'Opposition id is required.',
+        );
+
+    }
+
+    const constraints: QueryConstraint[] = [
+
+        where(
+            'oppositionId',
+            '==',
+            oppositionId,
+        ),
+
+    ];
+
+    const snapshot =
+        await getDocs(
+
+            query(
+
+                questionsCollection,
+
+                ...constraints,
+
+            ),
+
+        );
+
+    const questions =
+        snapshot.docs
+            .map(document => ({
+
+                idDocument:
+                    document.id,
+
+                ...(document.data() as Omit<Question, 'idDocument'>),
+
+            }))
+            .filter(
+                question =>
+                    question.active !== false,
+            );
+
+    /* ---------------------------------------------------------------------- */
+    /* TEMPORAL                                                               */
+    /* ---------------------------------------------------------------------- */
+    /*
+     * Actualmente la colección contiene pocas preguntas, por lo que se
+     * descargan todas las preguntas de la oposición, se mezclan en memoria
+     * y se seleccionan las primeras.
+     *
+     * FUTURO:
+     * Cuando la colección tenga miles de preguntas, esta parte deberá
+     * sustituirse por consultas utilizando el campo "randomId".
+     *
+     * Idea:
+     *
+     *  const seed = Math.random();
+     *
+     *  Primera consulta:
+     *      where('randomId', '>=', seed)
+     *      limit(SIMULACRUM_LIMIT)
+     *
+     *  Si no devuelve suficientes preguntas:
+     *
+     *      Segunda consulta:
+     *      where('randomId', '<', seed)
+     *      limit(restantes)
+     *
+     * De esta forma solo se descargan las preguntas necesarias sin recorrer
+     * toda la colección.
+     */
+
+    const shuffled =
+        [...questions].sort(
+            () => Math.random() - 0.5,
+        );
+
+    return shuffled.slice(
+        0,
+        Math.min(
+            SIMULACRUM_LIMIT,
+            shuffled.length,
+        ),
+    );
 
 }

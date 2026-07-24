@@ -34,7 +34,7 @@ export function AdminActions({
     }
     function handleAddQuestion() {
 
-        navigation.navigate('QuestionForm', {
+        navigation.navigate('QuestionFormScreen', {
             idDocument,
             nombreOposicion: name,
         });

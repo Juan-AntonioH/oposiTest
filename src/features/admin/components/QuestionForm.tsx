@@ -47,6 +47,8 @@ interface QuestionFormProps {
 
     question?: Question;
 
+    oppositionId: string;
+
     actions: {
 
         isEditing: boolean;
@@ -66,6 +68,8 @@ interface QuestionFormProps {
 export function QuestionForm({
 
     question,
+
+    oppositionId,
 
     actions,
 
@@ -138,7 +142,7 @@ export function QuestionForm({
 
     } = useOppositionStructure(
 
-        question?.oppositionId ?? '',
+        oppositionId,
 
         blockId,
 
@@ -186,6 +190,8 @@ export function QuestionForm({
                 buildQuestion({
 
                     question,
+
+                    oppositionId,
 
                     blockId,
 
