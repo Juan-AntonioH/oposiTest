@@ -39,101 +39,200 @@ export function TestScreen({
     route,
 }: TestScreenProps) {
 
-    const navigation = useNavigation<any>();
+    const navigation =
+        useNavigation<any>();
 
     const {
+
         oppositionId,
+
         name,
+
         setTime,
+
         examType,
+
         year,
+
         convocatoria,
+
         immediateSolution,
+
         titleParam,
+
+        selectedBlocks,
+
+        selectedThemes,
+
     } = route.params;
 
     const {
+
         currentQuestion,
+
         currentQuestionIndex,
+
         testQuestions,
+
         loading,
+
     } = useTest({
-        oppositionId,
+
         examType,
+
+        oppositionId,
+
         year,
+
         convocatoria,
+
+        selectedBlocks,
+
+        selectedThemes,
+
     });
 
-    const finishExamEarly = useTestStore(
-        state => state.finishExamEarly,
-    );
+    const realTime =
 
-    const timer = useExamTimer({
-        initialMinutes: setTime,
-    });
+        examType === 'blocks' ||
 
-    const finishExam = useFinishExam({
-        finishExamEarly,
-        stopTimer: timer.stop,
-    });
+            examType === 'themes'
 
-    const navigateToSummary = useCallback((
-        finishedByTime: boolean,
-        questionTimeSpent: number,
-    ) => {
+            ? Math.max(
+                1,
+                testQuestions.length,
+            )
 
-        finishExam.finish(
-            questionTimeSpent,
-            {
-                finishedByTime,
-            },
+            : setTime;
+
+    const finishExamEarly =
+        useTestStore(
+            state => state.finishExamEarly,
         );
 
-        navigation.replace(
-            'ExamSummaryScreen',
-            {
-                oppositionId,
+    const timer =
+        useExamTimer({
 
-                oppositionName: name,
+            initialMinutes: realTime,
 
-                examName: titleParam,
+        });
+    useEffect(() => {
 
-                examType,
-
-                timeConfigured: setTime,
-
-                finishedByTime:
-                    timer.timeLeft <= 0,
-
-                finishedEarly:
-                    timer.timeLeft > 0,
-            },
-        );
+        console.log('loading:', loading);
+        console.log('questions:', testQuestions.length);
+        console.log('realTime:', realTime);
+        console.log('isRunning:', timer.isRunning);
+        console.log('timeLeft:', timer.timeLeft);
 
     }, [
-        finishExam,
-        navigation,
-        oppositionId,
-        name,
-        examType,
-        setTime,
-        timer.timeLeft,
+
+        loading,
+
         testQuestions.length,
+
+        realTime,
+
+        timer.isRunning,
+
+        timer.timeLeft,
+
     ]);
+    /* -------------------------------------------------------------------------- */
+    /*                      AJUSTAR TIEMPO CUANDO CARGA EL TEST                    */
+    /* -------------------------------------------------------------------------- */
 
-    const session = useQuestionSession({
 
-        immediateSolution,
 
-        onFinishExam: (
-            questionTimeSpent,
-        ) =>
-            navigateToSummary(
-                false,
+    const finishExam =
+        useFinishExam({
+
+            finishExamEarly,
+
+            stopTimer: timer.stop,
+
+        });
+
+    const navigateToSummary =
+        useCallback((
+
+            finishedByTime: boolean,
+
+            questionTimeSpent: number,
+
+        ) => {
+
+            finishExam.finish(
+
                 questionTimeSpent,
-            ),
 
-    });
+                {
+
+                    finishedByTime,
+
+                },
+
+            );
+
+            navigation.replace(
+
+                'ExamSummaryScreen',
+
+                {
+
+                    oppositionId,
+
+                    oppositionName: name,
+
+                    examName: titleParam,
+
+                    examType,
+
+                    timeConfigured: realTime,
+
+                    finishedByTime:
+
+                        timer.timeLeft <= 0,
+
+                    finishedEarly:
+
+                        timer.timeLeft > 0,
+
+                },
+
+            );
+
+        }, [
+
+            finishExam,
+
+            navigation,
+
+            oppositionId,
+
+            name,
+
+            examType,
+
+            realTime,
+
+            timer.timeLeft,
+
+        ]);
+
+    const session =
+        useQuestionSession({
+
+            immediateSolution,
+
+            onFinishExam: (
+                questionTimeSpent,
+            ) =>
+                navigateToSummary(
+                    false,
+                    questionTimeSpent,
+                ),
+
+        });
 
     useEffect(() => {
 
@@ -148,9 +247,13 @@ export function TestScreen({
         session.incrementQuestionTime();
 
     }, [
+
         timer.timeLeft,
+
         timer.isRunning,
+
         session.incrementQuestionTime,
+
     ]);
 
     useEffect(() => {
@@ -160,14 +263,21 @@ export function TestScreen({
         }
 
         navigateToSummary(
+
             true,
+
             session.getQuestionTime(),
+
         );
 
     }, [
+
         timer.timeLeft,
+
         navigateToSummary,
+
         session,
+
     ]);
 
     const handleExitExam = useCallback(() => {

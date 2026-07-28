@@ -1,5 +1,6 @@
 import {
     Block,
+    Theme,
     Opposition,
 } from '../types';
 
@@ -7,6 +8,8 @@ import {
     getOppositionFromFirestore,
     getOppositionsFromFirestore,
     getBlockFromFirestore,
+    getBlocksFromFirestore,
+    // getThemesFromFirestore,
 } from './firestoreOppositionService';
 
 /* -------------------------------------------------------------------------- */
@@ -52,3 +55,28 @@ export async function getBlock(
     );
 
 }
+
+export async function getBlocks(
+    oppositionId: string,
+): Promise<Block[]> {
+
+    return getBlocksFromFirestore(
+        oppositionId,
+    );
+
+}
+
+// export async function getThemes(
+//     oppositionId: string,
+//     blockId: string,
+// ): Promise<Theme[]> {
+
+//     return getThemesFromFirestore(
+
+//         oppositionId,
+
+//         blockId,
+
+//     );
+
+// }

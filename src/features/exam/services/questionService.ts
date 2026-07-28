@@ -4,6 +4,7 @@ import {
     query,
     QueryConstraint,
     where,
+    orderBy,
 } from 'firebase/firestore';
 
 import { db } from '@/core/config/firebase';
@@ -110,13 +111,165 @@ async function loadOfficialQuestions(
 
 }
 
-/* ----------------------------- FUTURE FEATURES ---------------------------- */
-
 async function loadBlockQuestions(
     filters: QuestionFilters,
 ): Promise<Question[]> {
 
-    throw new Error('Not implemented.');
+    const {
+
+        oppositionId,
+
+        selectedBlocks,
+
+    } = filters;
+
+    if (!oppositionId) {
+
+        throw new Error(
+            'Opposition id is required.',
+        );
+
+    }
+
+    if (
+
+        !selectedBlocks ||
+
+        selectedBlocks.length === 0
+
+    ) {
+
+        throw new Error(
+            'At least one block must be selected.',
+        );
+
+    }
+
+    const result: Question[] = [];
+
+    for (const blockId of selectedBlocks) {
+
+        const snapshot =
+            await getDocs(
+
+                query(
+
+                    questionsCollection,
+
+                    where(
+                        'oppositionId',
+                        '==',
+                        oppositionId,
+                    ),
+
+                    where(
+                        'blockId',
+                        '==',
+                        blockId,
+                    ),
+
+                ),
+
+            );
+
+        const questions =
+            snapshot.docs
+
+                .map(document => ({
+
+                    idDocument:
+                        document.id,
+
+                    ...(document.data() as Omit<Question, 'idDocument'>),
+
+                }))
+
+                .filter(
+                    question =>
+                        question.active !== false,
+                )
+
+                .sort(
+                    (a, b) =>
+                        a.randomId - b.randomId,
+                );
+
+        if (questions.length === 0) {
+
+            continue;
+
+        }
+
+        /*
+        ------------------------------------------------------------------------
+
+        TEMPORAL
+
+        Cuando el número de preguntas sea muy elevado,
+        esta selección deberá hacerse directamente desde Firestore
+        utilizando consultas sobre randomId.
+
+        Ahora mismo se ordenan por randomId y se comienza desde
+        una posición aleatoria.
+
+        ------------------------------------------------------------------------
+        */
+
+        const start =
+            Math.floor(
+                Math.random() *
+                questions.length,
+            );
+
+        const rotated = [
+
+            ...questions.slice(start),
+
+            ...questions.slice(0, start),
+
+        ];
+
+        result.push(
+
+            ...rotated.slice(
+                0,
+                40,
+            ),
+
+        );
+
+    }
+
+    if (result.length <= 100) {
+
+        return result;
+
+    }
+
+    const ordered =
+        [...result].sort(
+            (a, b) =>
+                a.randomId - b.randomId,
+        );
+
+    const start =
+        Math.floor(
+            Math.random() *
+            ordered.length,
+        );
+
+    const rotated = [
+
+        ...ordered.slice(start),
+
+        ...ordered.slice(0, start),
+
+    ];
+
+    return rotated.slice(
+        0,
+        100,
+    );
 
 }
 
@@ -124,7 +277,207 @@ async function loadThemeQuestions(
     filters: QuestionFilters,
 ): Promise<Question[]> {
 
-    throw new Error('Not implemented.');
+    const {
+
+        oppositionId,
+
+        selectedThemes,
+
+    } = filters;
+
+    if (!oppositionId) {
+
+        throw new Error(
+            'Opposition id is required.',
+        );
+
+    }
+
+    if (
+
+        !selectedThemes ||
+
+        selectedThemes.length === 0
+
+    ) {
+
+        throw new Error(
+            'At least one theme must be selected.',
+        );
+
+    }
+
+    const result: Question[] = [];
+
+    for (const selectedTheme of selectedThemes) {
+
+        const snapshot =
+            await getDocs(
+
+                query(
+
+                    questionsCollection,
+
+                    where(
+                        'oppositionId',
+                        '==',
+                        oppositionId,
+                    ),
+
+                    where(
+                        'blockId',
+                        '==',
+                        selectedTheme.blockId,
+                    ),
+
+                    where(
+                        'themeId',
+                        '==',
+                        selectedTheme.themeId,
+                    ),
+
+                ),
+
+            );
+
+        const questions =
+            snapshot.docs
+
+                .map(document => ({
+
+                    idDocument:
+                        document.id,
+
+                    ...(document.data() as Omit<Question, 'idDocument'>),
+
+                }))
+
+                .filter(
+                    question =>
+                        question.active !== false,
+                )
+
+                .sort(
+                    (a, b) =>
+                        a.randomId - b.randomId,
+                );
+
+        if (questions.length === 0) {
+
+            continue;
+
+        }
+
+        /*
+        ------------------------------------------------------------------------
+
+        TEMPORAL
+
+        Cuando el número de preguntas sea muy elevado,
+        esta selección deberá hacerse directamente desde Firestore
+        utilizando consultas sobre randomId.
+
+        Ahora mismo se ordenan por randomId y se comienza desde
+        una posición aleatoria.
+
+        ------------------------------------------------------------------------
+        */
+
+        const start =
+            Math.floor(
+                Math.random() *
+                questions.length,
+            );
+
+        const rotated = [
+
+            ...questions.slice(start),
+
+            ...questions.slice(0, start),
+
+        ];
+
+        result.push(
+
+            ...rotated.slice(
+                0,
+                20,
+            ),
+
+        );
+
+    }
+
+    if (result.length <= 100) {
+
+        return result;
+
+    }
+
+    const ordered =
+        [...result].sort(
+            (a, b) =>
+                a.randomId - b.randomId,
+        );
+
+    const start =
+        Math.floor(
+            Math.random() *
+            ordered.length,
+        );
+
+    const rotated = [
+
+        ...ordered.slice(start),
+
+        ...ordered.slice(0, start),
+
+    ];
+
+    return rotated.slice(
+        0,
+        100,
+    );
+
+}
+
+export async function getThemeQuestionCount(
+    oppositionId: string,
+    blockId: string,
+    themeId: string,
+): Promise<number> {
+
+    const snapshot = await getDocs(
+
+        query(
+
+            questionsCollection,
+
+            where(
+                'oppositionId',
+                '==',
+                oppositionId,
+            ),
+
+            where(
+                'blockId',
+                '==',
+                blockId,
+            ),
+
+            where(
+                'themeId',
+                '==',
+                themeId,
+            ),
+
+        ),
+
+    );
+
+    return snapshot.docs.filter(
+        document => document.data().active !== false,
+    ).length;
 
 }
 

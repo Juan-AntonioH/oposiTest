@@ -308,24 +308,6 @@ export function CustomTestScreen({ route }: CustomTestScreenProps) {
                             Iniciar Test ({questionCount} preg. {timeLimit} min)
                         </Text>
                     </Pressable>
-
-                    {/* <Pressable
-                        style={{
-                            flex: 1,
-                            height: 52,
-                            borderRadius: 10,
-                            backgroundColor: '#FFFFFF',
-                            borderWidth: 1,
-                            borderColor: '#CBD5E1',
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }}
-                        onPress={() => navigation.goBack()}
-                    >
-                        <Text style={{ color: '#475569', fontSize: 15, fontWeight: '600' }}>
-                            Cancelar
-                        </Text> */}
-                    {/* </Pressable> */}
                 </View>
 
             </ScrollView>
