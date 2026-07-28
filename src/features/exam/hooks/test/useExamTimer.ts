@@ -64,15 +64,30 @@ export function useExamTimer({
 
     }, []);
 
-    const reset = useCallback(() => {
+    const reset = useCallback((
+        minutes?: number,
+    ) => {
 
         stop();
 
-        setTimeLeft(initialSeconds);
+        setTimeLeft(
+            (minutes ?? initialMinutes) * 60,
+        );
+
+        setIsRunning(true);
 
     }, [
-        initialSeconds,
+        initialMinutes,
         stop,
+    ]);
+
+    useEffect(() => {
+
+        reset(initialMinutes);
+
+    }, [
+        initialMinutes,
+        reset,
     ]);
 
     useEffect(() => {

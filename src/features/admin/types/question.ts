@@ -69,6 +69,8 @@ export interface BuildQuestionParams {
 
     question?: Question;
 
+    oppositionId: string;
+
     blockId: string;
 
     themeId: string;

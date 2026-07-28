@@ -30,7 +30,11 @@ export interface ExamReviewParams {
 }
 
 export interface QuestionFormParams {
+
+    idDocument: string;
+
     question?: Question;
+
 }
 
 export type RootStackParamList = {

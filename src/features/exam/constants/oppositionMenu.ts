@@ -44,11 +44,11 @@ export const OPPOSITION_MENU: OppositionMenuItem[] = [
         icon: 'cog-outline',
         color: '#EF4444',
     },
-    {
-        id: 'wrong',
-        title: 'Preguntas erróneas',
-        subtitle: 'Revisa las preguntas contestadas incorrectamente',
-        icon: 'alert-circle-outline',
-        color: '#7A0303',
-    },
+    // {
+    //     id: 'wrong',
+    //     title: 'Preguntas erróneas',
+    //     subtitle: 'Revisa las preguntas contestadas incorrectamente',
+    //     icon: 'alert-circle-outline',
+    //     color: '#7A0303',
+    // },
 ];

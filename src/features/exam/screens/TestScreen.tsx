@@ -39,101 +39,153 @@ export function TestScreen({
     route,
 }: TestScreenProps) {
 
-    const navigation = useNavigation<any>();
+    const navigation =
+        useNavigation<any>();
 
     const {
+
         oppositionId,
+
         name,
+
         setTime,
+
         examType,
+
         year,
+
         convocatoria,
+
         immediateSolution,
+
         titleParam,
+
+        selectedBlocks,
+
+        selectedThemes,
+
     } = route.params;
 
     const {
+
         currentQuestion,
+
         currentQuestionIndex,
+
         testQuestions,
+
         loading,
-    } = useTest({
-        oppositionId,
-        examType,
-        year,
-        convocatoria,
-    });
 
-    const finishExamEarly = useTestStore(
-        state => state.finishExamEarly,
-    );
+    } = useTest();
 
-    const timer = useExamTimer({
-        initialMinutes: setTime,
-    });
-
-    const finishExam = useFinishExam({
-        finishExamEarly,
-        stopTimer: timer.stop,
-    });
-
-    const navigateToSummary = useCallback((
-        finishedByTime: boolean,
-        questionTimeSpent: number,
-    ) => {
-
-        finishExam.finish(
-            questionTimeSpent,
-            {
-                finishedByTime,
-            },
+    const finishExamEarly =
+        useTestStore(
+            state => state.finishExamEarly,
         );
 
-        navigation.replace(
-            'ExamSummaryScreen',
-            {
-                oppositionId,
+    const timer =
+        useExamTimer({
 
-                oppositionName: name,
+            initialMinutes: setTime,
 
-                examName: titleParam,
+        });
 
-                examType,
+    /* -------------------------------------------------------------------------- */
+    /*                      AJUSTAR TIEMPO CUANDO CARGA EL TEST                    */
+    /* -------------------------------------------------------------------------- */
 
-                timeConfigured: setTime,
 
-                finishedByTime:
-                    timer.timeLeft <= 0,
 
-                finishedEarly:
-                    timer.timeLeft > 0,
-            },
-        );
+    const finishExam =
+        useFinishExam({
 
-    }, [
-        finishExam,
-        navigation,
-        oppositionId,
-        name,
-        examType,
-        setTime,
-        timer.timeLeft,
-        testQuestions.length,
-    ]);
+            finishExamEarly,
 
-    const session = useQuestionSession({
+            stopTimer: timer.stop,
 
-        immediateSolution,
+        });
 
-        onFinishExam: (
-            questionTimeSpent,
-        ) =>
-            navigateToSummary(
-                false,
+    const navigateToSummary =
+        useCallback((
+
+            finishedByTime: boolean,
+
+            questionTimeSpent: number,
+
+        ) => {
+
+            finishExam.finish(
+
                 questionTimeSpent,
-            ),
 
-    });
+                {
+
+                    finishedByTime,
+
+                },
+
+            );
+
+            navigation.replace(
+
+                'ExamSummaryScreen',
+
+                {
+
+                    oppositionId,
+
+                    oppositionName: name,
+
+                    examName: titleParam,
+
+                    examType,
+
+                    timeConfigured: setTime,
+
+                    finishedByTime:
+
+                        timer.timeLeft <= 0,
+
+                    finishedEarly:
+
+                        timer.timeLeft > 0,
+
+                },
+
+            );
+
+        }, [
+
+            finishExam,
+
+            navigation,
+
+            oppositionId,
+
+            name,
+
+            examType,
+
+            setTime,
+
+            timer.timeLeft,
+
+        ]);
+
+    const session =
+        useQuestionSession({
+
+            immediateSolution,
+
+            onFinishExam: (
+                questionTimeSpent,
+            ) =>
+                navigateToSummary(
+                    false,
+                    questionTimeSpent,
+                ),
+
+        });
 
     useEffect(() => {
 
@@ -148,9 +200,13 @@ export function TestScreen({
         session.incrementQuestionTime();
 
     }, [
+
         timer.timeLeft,
+
         timer.isRunning,
+
         session.incrementQuestionTime,
+
     ]);
 
     useEffect(() => {
@@ -160,14 +216,21 @@ export function TestScreen({
         }
 
         navigateToSummary(
+
             true,
+
             session.getQuestionTime(),
+
         );
 
     }, [
+
         timer.timeLeft,
+
         navigateToSummary,
+
         session,
+
     ]);
 
     const handleExitExam = useCallback(() => {

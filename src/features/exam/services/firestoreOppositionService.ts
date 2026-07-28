@@ -13,11 +13,13 @@ import {
 
 import {
     Block,
+    Theme,
     Opposition,
 } from '../types';
 
 const OPPOSITIONS_COLLECTION = 'oppositions';
 const BLOCKS_COLLECTION = 'blocks';
+const THEMES_COLLECTION = 'themes';
 
 /* -------------------------------------------------------------------------- */
 /*                                OPPOSITIONS                                 */
@@ -127,3 +129,60 @@ export async function getBlockFromFirestore(
     };
 
 }
+
+export async function getBlocksFromFirestore(
+    oppositionId: string,
+): Promise<Block[]> {
+
+    const q =
+        query(
+
+            collection(
+                db,
+                BLOCKS_COLLECTION,
+            ),
+
+            where(
+                'oppositionId',
+                '==',
+                oppositionId,
+            ),
+
+        );
+
+    const snapshot =
+        await getDocs(q);
+
+    return snapshot.docs.map(document => ({
+
+        idDocument:
+            document.id,
+
+        ...(document.data() as Omit<Block, 'idDocument'>),
+
+    }));
+
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                   THEMES                                   */
+/* -------------------------------------------------------------------------- */
+
+// export async function getThemesFromFirestore(
+//     oppositionId: string,
+//     blockId: string,
+// ): Promise<Theme[]> {
+
+//     const q = query(
+//         collection(db, THEMES_COLLECTION),
+//         where('oppositionId', '==', oppositionId),
+//         where('blockId', '==', blockId),
+//     );
+
+//     const snapshot = await getDocs(q);
+
+//     return snapshot.docs.map(document => ({
+//         idDocument: document.id,
+//         ...(document.data() as Omit<Theme, 'idDocument'>),
+//     }));
+// }

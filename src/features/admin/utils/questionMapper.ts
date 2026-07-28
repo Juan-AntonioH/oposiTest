@@ -11,6 +11,8 @@ export function buildQuestion(
 
         question,
 
+        oppositionId,
+
         blockId,
 
         themeId,
@@ -31,7 +33,8 @@ export function buildQuestion(
             question?.idDocument ?? '',
 
         oppositionId:
-            question?.oppositionId ?? '',
+            question?.oppositionId ??
+            oppositionId,
 
         blockId,
 

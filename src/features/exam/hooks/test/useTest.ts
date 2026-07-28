@@ -1,84 +1,41 @@
 import {
-    useCallback,
-    useEffect,
+    useMemo,
 } from 'react';
 
-import { useTestStore } from '../../store/useTestStore';
+import {
+    useTestStore,
+} from '../../store/useTestStore';
 
-import { loadQuestions } from '../../services/questionService';
-
-import { ExamType } from '../../types';
-
-interface UseTestParams {
-    oppositionId: string;
-    examType: ExamType;
-    year?: number;
-    convocatoria?: string;
-}
-
-export function useTest({
-    oppositionId,
-    examType,
-    year,
-    convocatoria,
-}: UseTestParams) {
+export function useTest() {
 
     const {
+
         testQuestions,
+
         currentQuestionIndex,
+
         loading,
+
         error,
 
-        initializeTestQuestions: loadQuestionsStore,
-        setLoading,
-        setError,
-        resetTest,
     } = useTestStore();
 
-    const loadTest = useCallback(async () => {
+    const currentQuestion =
+        useMemo(() => {
 
-        try {
-
-            setLoading(true);
-
-            const questions = await loadQuestions({
-                examType,
-                oppositionId,
-                year,
-                convocatoria,
-            });
-
-            loadQuestionsStore(questions);
-
-        } catch (error) {
-            console.error('LOAD TEST ERROR', error);
-            console.error(error);
-
-            setError(
-                error instanceof Error
-                    ? error.message
-                    : 'Unable to load questions.',
+            return (
+                testQuestions[
+                currentQuestionIndex
+                ] ?? null
             );
 
-        }
+        }, [
 
-    }, [
-        examType,
-        oppositionId,
-        year,
-        convocatoria,
-        loadQuestionsStore,
-        setLoading,
-        setError,
-    ]);
+            testQuestions,
 
-    useEffect(() => {
+            currentQuestionIndex,
 
-        loadTest();
-
-    }, [
-        loadTest,
-    ]);
+        ]);
 
     return {
 
@@ -86,14 +43,11 @@ export function useTest({
 
         currentQuestionIndex,
 
-        currentQuestion:
-            testQuestions[currentQuestionIndex] ?? null,
+        currentQuestion,
 
         loading,
 
         error,
-
-        reload: loadTest,
 
     };
 

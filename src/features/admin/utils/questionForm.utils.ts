@@ -50,126 +50,126 @@ export function mapLetterToIndex(
 /*                                 DROPDOWNS                                  */
 /* -------------------------------------------------------------------------- */
 
-export function buildBlockItems(
-    selectedBlock?: string,
-    totalBlocks = 8,
-): DropdownItem[] {
+// export function buildBlockItems(
+//     selectedBlock?: string,
+//     totalBlocks = 8,
+// ): DropdownItem[] {
 
-    const items =
-        Array.from(
-            { length: totalBlocks },
-            (_, index) => {
+//     const items =
+//         Array.from(
+//             { length: totalBlocks },
+//             (_, index) => {
 
-                const number =
-                    index + 1;
+//                 const number =
+//                     index + 1;
 
-                const id =
-                    number
-                        .toString()
-                        .padStart(2, '0');
+//                 const id =
+//                     number
+//                         .toString()
+//                         .padStart(2, '0');
 
-                return {
+//                 return {
 
-                    label: `Bloque ${number}`,
+//                     label: `Bloque ${number}`,
 
-                    value: `bloque_${id}`,
+//                     value: `bloque_${id}`,
 
-                };
+//                 };
 
-            },
-        );
+//             },
+//         );
 
-    if (
+//     if (
 
-        selectedBlock &&
+//         selectedBlock &&
 
-        !items.some(
-            item =>
-                item.value === selectedBlock,
-        )
+//         !items.some(
+//             item =>
+//                 item.value === selectedBlock,
+//         )
 
-    ) {
+//     ) {
 
-        const number =
-            selectedBlock.match(/\d+/)?.[0] ??
-            selectedBlock;
+//         const number =
+//             selectedBlock.match(/\d+/)?.[0] ??
+//             selectedBlock;
 
-        items.push({
+//         items.push({
 
-            label: `Bloque ${number}`,
+//             label: `Bloque ${number}`,
 
-            value: selectedBlock,
+//             value: selectedBlock,
 
-        });
+//         });
 
-    }
+//     }
 
-    return items;
+//     return items;
 
-}
+// }
 
-export function buildThemeItems(
-    selectedTheme?: string,
-    totalThemes = 15,
-): DropdownItem[] {
+// export function buildThemeItems(
+//     selectedTheme?: string,
+//     totalThemes = 15,
+// ): DropdownItem[] {
 
-    const items =
-        Array.from(
-            { length: totalThemes },
-            (_, index) => {
+//     const items =
+//         Array.from(
+//             { length: totalThemes },
+//             (_, index) => {
 
-                const number =
-                    index + 1;
+//                 const number =
+//                     index + 1;
 
-                const id =
-                    number
-                        .toString()
-                        .padStart(2, '0');
+//                 const id =
+//                     number
+//                         .toString()
+//                         .padStart(2, '0');
 
-                return {
+//                 return {
 
-                    label: `Tema ${number}`,
+//                     label: `Tema ${number}`,
 
-                    value: `tema_${id}`,
+//                     value: `tema_${id}`,
 
-                };
+//                 };
 
-            },
-        );
+//             },
+//         );
 
-    if (
+//     if (
 
-        selectedTheme &&
+//         selectedTheme &&
 
-        !items.some(
-            item =>
-                item.value === selectedTheme,
-        )
+//         !items.some(
+//             item =>
+//                 item.value === selectedTheme,
+//         )
 
-    ) {
+//     ) {
 
-        const number =
-            selectedTheme.match(/\d+/)?.[0] ??
-            selectedTheme;
+//         const number =
+//             selectedTheme.match(/\d+/)?.[0] ??
+//             selectedTheme;
 
-        items.push({
+//         items.push({
 
-            label: `Tema ${number}`,
+//             label: `Tema ${number}`,
 
-            value: selectedTheme,
+//             value: selectedTheme,
 
-        });
+//         });
 
-    }
+//     }
 
-    return items.sort((a, b) =>
-        a.label.localeCompare(
-            b.label,
-            undefined,
-            {
-                numeric: true,
-            },
-        ),
-    );
+//     return items.sort((a, b) =>
+//         a.label.localeCompare(
+//             b.label,
+//             undefined,
+//             {
+//                 numeric: true,
+//             },
+//         ),
+//     );
 
-}
+// }

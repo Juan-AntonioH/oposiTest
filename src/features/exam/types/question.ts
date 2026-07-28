@@ -18,4 +18,6 @@ export interface Question {
     examConvocatoria?: string;
 
     randomId: number;
+
+    active: boolean;
 }
