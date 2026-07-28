@@ -173,11 +173,6 @@ export async function getBlocksFromFirestore(
 //     blockId: string,
 // ): Promise<Theme[]> {
 
-//     console.log('Searching themes', {
-//         oppositionId,
-//         blockId,
-//     });
-
 //     const q = query(
 //         collection(db, THEMES_COLLECTION),
 //         where('oppositionId', '==', oppositionId),
@@ -185,8 +180,6 @@ export async function getBlocksFromFirestore(
 //     );
 
 //     const snapshot = await getDocs(q);
-
-//     console.log('Themes found:', snapshot.size);
 
 //     return snapshot.docs.map(document => ({
 //         idDocument: document.id,

@@ -501,7 +501,179 @@ async function loadCustomQuestions(
     filters: QuestionFilters,
 ): Promise<Question[]> {
 
-    throw new Error('Not implemented.');
+    const {
+
+        oppositionId,
+
+        selectedBlocks,
+
+        selectedThemes,
+
+        limit = 20,
+
+    } = filters;
+
+    if (!oppositionId) {
+
+        throw new Error(
+            'Opposition id is required.',
+        );
+
+    }
+
+    if (
+
+        !selectedBlocks ||
+
+        selectedBlocks.length === 0
+
+    ) {
+
+        throw new Error(
+            'Select at least one block.',
+        );
+
+    }
+
+    const result: Question[] = [];
+
+    for (const blockId of selectedBlocks) {
+
+        const blockThemes =
+            selectedThemes?.filter(
+
+                theme =>
+                    theme.blockId === blockId,
+
+            ) ?? [];
+
+        // Si hay temas seleccionados del bloque,
+        // usamos únicamente esos temas.
+
+        if (blockThemes.length > 0) {
+
+            for (const selectedTheme of blockThemes) {
+
+                const snapshot =
+                    await getDocs(
+
+                        query(
+
+                            questionsCollection,
+
+                            where(
+                                'oppositionId',
+                                '==',
+                                oppositionId,
+                            ),
+
+                            where(
+                                'blockId',
+                                '==',
+                                blockId,
+                            ),
+
+                            where(
+                                'themeId',
+                                '==',
+                                selectedTheme.themeId,
+                            ),
+
+                        ),
+
+                    );
+
+                result.push(
+
+                    ...snapshot.docs
+
+                        .map(document => ({
+
+                            idDocument:
+                                document.id,
+
+                            ...(document.data() as Omit<Question, 'idDocument'>),
+
+                        }))
+
+                        .filter(
+                            question =>
+                                question.active !== false,
+                        ),
+
+                );
+
+            }
+
+        }
+
+        // Si no se han seleccionado temas,
+        // cogemos todo el bloque.
+
+        else {
+
+            const snapshot =
+                await getDocs(
+
+                    query(
+
+                        questionsCollection,
+
+                        where(
+                            'oppositionId',
+                            '==',
+                            oppositionId,
+                        ),
+
+                        where(
+                            'blockId',
+                            '==',
+                            blockId,
+                        ),
+
+                    ),
+
+                );
+
+            result.push(
+
+                ...snapshot.docs
+
+                    .map(document => ({
+
+                        idDocument:
+                            document.id,
+
+                        ...(document.data() as Omit<Question, 'idDocument'>),
+
+                    }))
+
+                    .filter(
+                        question =>
+                            question.active !== false,
+                    ),
+
+            );
+
+        }
+
+    }
+
+    const shuffled =
+        [...result].sort(
+            () => Math.random() - 0.5,
+        );
+
+    return shuffled.slice(
+
+        0,
+
+        Math.min(
+            limit,
+            shuffled.length,
+        ),
+
+    );
 
 }
 
