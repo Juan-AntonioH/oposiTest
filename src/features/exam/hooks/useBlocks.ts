@@ -3,7 +3,9 @@ import {
     useEffect,
     useState,
 } from 'react';
-
+import {
+    prepareExam,
+} from '../services/examPreparationService';
 import {
     getBlocks,
 } from '../services/oppositionService';
@@ -109,34 +111,49 @@ export function useBlocks({
         }, []);
 
     const handleStartTest =
-        useCallback(() => {
+        useCallback(async () => {
 
             if (
                 selectedBlocks.length === 0
             ) {
+
                 return;
+
             }
 
+            const totalQuestions =
+                await prepareExam({
+
+                    examType: 'blocks',
+
+                    oppositionId,
+
+                    selectedBlocks,
+
+                });
+
             navigation.navigate(
+
                 'TestScreen',
+
                 {
 
                     oppositionId,
 
                     name,
 
-                    setTime: 1,
+                    setTime: totalQuestions,
 
                     examType: 'blocks',
 
                     immediateSolution,
 
-                    titleParam:
-                        'Test por Bloques',
+                    titleParam: 'Test por Bloques',
 
                     selectedBlocks,
 
                 },
+
             );
 
         }, [

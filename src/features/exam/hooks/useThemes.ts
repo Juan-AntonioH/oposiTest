@@ -18,6 +18,9 @@ import {
     SelectedTheme,
     ThemeWithCount,
 } from '../types';
+import {
+    prepareExam,
+} from '../services/examPreparationService';
 
 export interface ThemeGroup {
 
@@ -222,50 +225,24 @@ export function useThemes({
         }, []);
 
     const handleStartTest =
-        useCallback(() => {
+        useCallback(async () => {
 
-            if (
-                selectedThemes.length === 0
-            ) {
+            if (selectedThemes.length === 0) {
 
                 return;
 
             }
 
             const totalQuestions =
-                groups.reduce(
+                await prepareExam({
 
-                    (total, group) =>
+                    examType: 'themes',
 
-                        total +
+                    oppositionId,
 
-                        group.themes
+                    selectedThemes,
 
-                            .filter(theme =>
-
-                                selectedThemes.some(selected =>
-
-                                    selected.blockId === theme.blockId &&
-
-                                    selected.themeId === theme.themeId,
-
-                                ),
-
-                            )
-
-                            .reduce(
-
-                                (subtotal, theme) =>
-
-                                    subtotal + theme.questionCount,
-
-                                0,
-
-                            ),
-
-                    0,
-
-                );
+                });
 
             navigation.navigate(
 
@@ -302,8 +279,6 @@ export function useThemes({
             immediateSolution,
 
             selectedThemes,
-
-            groups,
 
         ]);
     return {

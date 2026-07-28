@@ -92,8 +92,6 @@ export function useExamTimer({
 
     useEffect(() => {
 
-        console.log('TIMER EFFECT', isRunning);
-
         if (!isRunning) {
             return;
         }

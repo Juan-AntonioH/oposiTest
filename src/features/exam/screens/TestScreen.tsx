@@ -76,34 +76,7 @@ export function TestScreen({
 
         loading,
 
-    } = useTest({
-
-        examType,
-
-        oppositionId,
-
-        year,
-
-        convocatoria,
-
-        selectedBlocks,
-
-        selectedThemes,
-
-    });
-
-    const realTime =
-
-        examType === 'blocks' ||
-
-            examType === 'themes'
-
-            ? Math.max(
-                1,
-                testQuestions.length,
-            )
-
-            : setTime;
+    } = useTest();
 
     const finishExamEarly =
         useTestStore(
@@ -113,30 +86,10 @@ export function TestScreen({
     const timer =
         useExamTimer({
 
-            initialMinutes: realTime,
+            initialMinutes: setTime,
 
         });
-    useEffect(() => {
 
-        console.log('loading:', loading);
-        console.log('questions:', testQuestions.length);
-        console.log('realTime:', realTime);
-        console.log('isRunning:', timer.isRunning);
-        console.log('timeLeft:', timer.timeLeft);
-
-    }, [
-
-        loading,
-
-        testQuestions.length,
-
-        realTime,
-
-        timer.isRunning,
-
-        timer.timeLeft,
-
-    ]);
     /* -------------------------------------------------------------------------- */
     /*                      AJUSTAR TIEMPO CUANDO CARGA EL TEST                    */
     /* -------------------------------------------------------------------------- */
@@ -187,7 +140,7 @@ export function TestScreen({
 
                     examType,
 
-                    timeConfigured: realTime,
+                    timeConfigured: setTime,
 
                     finishedByTime:
 
@@ -213,7 +166,7 @@ export function TestScreen({
 
             examType,
 
-            realTime,
+            setTime,
 
             timer.timeLeft,
 

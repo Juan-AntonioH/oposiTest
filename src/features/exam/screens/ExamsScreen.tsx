@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 
 import {
+    prepareExam,
+} from '../services/examPreparationService';
+
+import {
     ScrollView,
     Switch,
     Text,
@@ -62,29 +66,48 @@ export function ExamsScreen({
         reload,
     } = useOfficialExams(oppositionId);
 
-    function handleExamPress(
+    async function handleExamPress(
         exam: OfficialExam,
     ) {
 
-        navigation.navigate('TestScreen', {
+        const totalQuestions =
+            await prepareExam({
 
-            oppositionId,
+                examType: 'official',
 
-            name,
+                oppositionId,
 
-            setTime: exam.setTime,
+                year: exam.year,
 
-            examType: 'official',
+                convocatoria: exam.convocatoria,
 
-            year: exam.year,
+            });
 
-            convocatoria: exam.convocatoria,
+        navigation.navigate(
 
-            immediateSolution,
+            'TestScreen',
 
-            titleParam: `Examen Oficial ${exam.year}`,
+            {
 
-        });
+                oppositionId,
+
+                name,
+
+                setTime: exam.setTime,
+
+                examType: 'official',
+
+                year: exam.year,
+
+                convocatoria: exam.convocatoria,
+
+                immediateSolution,
+
+                titleParam: `Examen Oficial ${exam.year}`,
+
+            },
+
+        );
 
     }
 

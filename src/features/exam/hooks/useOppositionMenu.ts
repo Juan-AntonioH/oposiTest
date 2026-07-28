@@ -2,7 +2,9 @@ import { useCallback } from 'react';
 
 import { OppositionMenuItem } from '../constants/oppositionMenu';
 import { OppositionNavigationProp } from '../types/navigation';
-
+import {
+    prepareExam,
+} from '../services/examPreparationService';
 interface UseOppositionMenuProps {
     navigation: OppositionNavigationProp;
     oppositionId: string;
@@ -16,7 +18,7 @@ export function useOppositionMenu({
 }: UseOppositionMenuProps) {
 
     const handleMenuPress = useCallback(
-        (item: OppositionMenuItem) => {
+        async (item: OppositionMenuItem) => {
 
             switch (item.id) {
 
@@ -48,17 +50,42 @@ export function useOppositionMenu({
                     });
                     break;
 
-                case 'simulacrum':
-                    navigation.navigate('TestScreen', {
-                        oppositionId,
-                        name,
-                        setTime: 100,
-                        examType: 'simulacrum',
-                        // year: new Date().getFullYear(),
-                        immediateSolution: false,
-                        titleParam: 'Simulacro',
-                    });
+                case 'simulacrum': {
+
+                    const totalQuestions =
+                        await prepareExam({
+
+                            examType: 'simulacrum',
+
+                            oppositionId,
+
+                        });
+
+                    navigation.navigate(
+
+                        'TestScreen',
+
+                        {
+
+                            oppositionId,
+
+                            name,
+
+                            setTime: 100, // el simulacro sigue teniendo tiempo fijo
+
+                            examType: 'simulacrum',
+
+                            immediateSolution: false,
+
+                            titleParam: 'Simulacro',
+
+                        },
+
+                    );
+
                     break;
+
+                }
 
                 case 'wrong':
                     navigation.navigate('WrongQuestionsScreen', {
