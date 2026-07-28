@@ -1,0 +1,323 @@
+import React from 'react';
+
+import {
+    ActivityIndicator,
+    Pressable,
+    ScrollView,
+    Switch,
+    Text,
+    View,
+} from 'react-native';
+
+import {
+    Ionicons,
+    MaterialCommunityIcons,
+} from '@expo/vector-icons';
+
+import {
+    styles,
+} from '@/features/exam/styles/exam.styles';
+
+import {
+    Block,
+} from '../types';
+
+interface BlockListProps {
+
+    loading: boolean;
+
+    oppositionName: string;
+
+    immediateSolution: boolean;
+
+    setImmediateSolution: (
+        value: boolean,
+    ) => void;
+
+    blocks: Block[];
+
+    selectedBlocks: string[];
+
+    onToggleBlock: (
+        blockId: string,
+    ) => void;
+
+    onStartTest: () => void;
+
+}
+
+export function BlockList({
+
+    loading,
+
+    oppositionName,
+
+    immediateSolution,
+
+    setImmediateSolution,
+
+    blocks,
+
+    selectedBlocks,
+
+    onToggleBlock,
+
+    onStartTest,
+
+}: BlockListProps) {
+
+    if (loading) {
+
+        return (
+
+            <View
+                style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}
+            >
+
+                <ActivityIndicator
+                    size="large"
+                    color="#2F70F2"
+                />
+
+            </View>
+
+        );
+
+    }
+
+    return (
+
+        <>
+            <ScrollView
+                contentContainerStyle={
+                    styles.scrollContainer
+                }
+                showsVerticalScrollIndicator={false}
+            >
+
+                <Text style={styles.mainTitle}>
+                    {oppositionName}
+                </Text>
+
+                <View style={styles.toggleCard}>
+
+                    <View style={styles.toggleHeader}>
+
+                        <Ionicons
+                            name={
+                                immediateSolution
+                                    ? 'eye-outline'
+                                    : 'eye-off-outline'
+                            }
+                            size={20}
+                            color={
+                                immediateSolution
+                                    ? '#2F70F2'
+                                    : '#64748B'
+                            }
+                            style={{
+                                marginRight: 8,
+                            }}
+                        />
+
+                        <Text style={styles.toggleTitle}>
+                            Mostrar solución inmediata
+                        </Text>
+
+                        <Switch
+                            value={immediateSolution}
+                            onValueChange={
+                                setImmediateSolution
+                            }
+                            trackColor={{
+                                false: '#CBD5E1',
+                                true: '#2F70F2',
+                            }}
+                            thumbColor="#FFFFFF"
+                        />
+
+                    </View>
+
+                    <Text style={styles.toggleSubtitle}>
+
+                        Si está activado,
+                        verás la respuesta correcta
+                        después de cada pregunta.
+
+                    </Text>
+
+                </View>
+
+                <View
+                    style={
+                        styles.blocksContainerCard
+                    }
+                >
+
+                    <Text
+                        style={
+                            styles.blocksContainerSubtitle
+                        }
+                    >
+
+                        Selecciona uno o varios bloques
+
+                    </Text>
+
+                    {
+
+                        blocks.map(block => {
+
+                            const selected =
+                                selectedBlocks.includes(
+                                    block.id,
+                                );
+
+                            return (
+
+                                <Pressable
+
+                                    key={block.idDocument}
+
+                                    style={[
+
+                                        styles.blockRowCard,
+
+                                        selected &&
+                                        styles.blockRowCardSelected,
+
+                                    ]}
+
+                                    onPress={() =>
+                                        onToggleBlock(
+                                            block.id,
+                                        )
+                                    }
+
+                                >
+
+                                    <MaterialCommunityIcons
+                                        name={
+                                            selected
+                                                ? 'checkbox-marked'
+                                                : 'checkbox-blank-outline'
+                                        }
+                                        size={24}
+                                        color={
+                                            selected
+                                                ? '#2F70F2'
+                                                : '#CBD5E1'
+                                        }
+                                        style={{
+                                            marginRight: 12,
+                                        }}
+                                    />
+
+                                    <View
+                                        style={
+                                            styles.blockGridIconBox
+                                        }
+                                    >
+
+                                        <MaterialCommunityIcons
+                                            name="grid"
+                                            size={22}
+                                            color="#64748B"
+                                        />
+
+                                    </View>
+
+                                    <View
+                                        style={{
+                                            flex: 1,
+                                        }}
+                                    >
+
+                                        <Text
+                                            style={
+                                                styles.blockRowTitle
+                                            }
+                                        >
+
+                                            {block.name}
+
+                                        </Text>
+
+                                        <Text
+                                            style={
+                                                styles.blockRowSub
+                                            }
+                                        >
+
+                                            {block.numThemes} temas
+
+                                        </Text>
+
+                                    </View>
+
+                                </Pressable>
+
+                            );
+
+                        })
+
+                    }
+
+                </View>
+
+                <View
+                    style={{
+                        marginTop: 20,
+                        marginBottom: 30,
+                    }}
+                >
+
+                    <Pressable
+
+                        style={
+                            selectedBlocks.length
+                                ? styles.primaryButton
+                                : styles.primaryButtonDisabled
+                        }
+
+                        disabled={
+                            selectedBlocks.length === 0
+                        }
+
+                        onPress={onStartTest}
+
+                    >
+
+                        <Text
+                            style={
+                                styles.primaryButtonText
+                            }
+                        >
+
+                            Iniciar Test (
+                            {selectedBlocks.length}
+                            {' '}
+                            {
+                                selectedBlocks.length === 1
+                                    ? 'bloque'
+                                    : 'bloques'
+                            }
+                            )
+
+                        </Text>
+
+                    </Pressable>
+
+                </View>
+
+            </ScrollView>
+
+        </>
+
+    );
+
+}
