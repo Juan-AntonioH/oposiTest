@@ -85,6 +85,8 @@ export type RootStackParamList = {
 
     ExamReviewScreen: ExamReviewParams;
 
+    ExamHistoryScreen: undefined;
+
     /// Questions
 
     QuestionFormScreen: QuestionFormParams;
