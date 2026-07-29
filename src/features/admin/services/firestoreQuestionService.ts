@@ -151,10 +151,21 @@ export async function getQuestionsFromFirestore(
     const snapshot =
         await getDocs(q);
 
-    return snapshot.docs.map(document =>
+    return snapshot.docs.map(
+        document => ({
 
-        document.data() as Question,
+            idDocument:
+                document.id,
 
+            ...(
+                document.data() as
+                Omit<
+                    Question,
+                    'idDocument'
+                >
+            ),
+
+        }),
     );
 
 }

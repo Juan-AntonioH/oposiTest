@@ -89,4 +89,10 @@ export type RootStackParamList = {
 
     QuestionFormScreen: QuestionFormParams;
 
+    QuestionsListScreen: {
+        idDocument: string;
+        code: string;
+        name: string;
+    };
+
 };

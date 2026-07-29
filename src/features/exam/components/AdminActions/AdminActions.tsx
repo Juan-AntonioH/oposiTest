@@ -43,10 +43,10 @@ export function AdminActions({
 
     function handleEditQuestions() {
 
-        navigation.navigate('QuestionsList', {
+        navigation.navigate('QuestionsListScreen', {
             idDocument,
-            nombreOposicion: name,
-            siglas: code,
+            name: name,
+            code: code,
         });
 
     }
