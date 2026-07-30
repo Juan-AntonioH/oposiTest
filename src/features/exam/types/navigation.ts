@@ -35,3 +35,9 @@ export type OppositionNavigationProp =
         RootStackParamList,
         'OppositionScreen'
     >;
+
+export type ExamHistoryNavigationProp =
+    NativeStackNavigationProp<
+        RootStackParamList,
+        'ExamHistoryScreen'
+    >;

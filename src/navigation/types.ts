@@ -5,23 +5,51 @@ import {
 } from '@/features/exam/types';
 import { ExamType } from '@/features/exam/types/examType';
 
+import {
+    CompletedTest,
+} from '@/features/exam/types';
+
 export interface ExamSummaryParams {
 
-    oppositionId: string;
+    oppositionId:
+    string;
 
-    oppositionName: string;
+    oppositionName:
+    string;
 
-    examName: string;
+    examName:
+    string;
 
-    examType: ExamType;
+    examType:
+    ExamType;
 
-    timeConfigured: number;
+    timeConfigured:
+    number;
 
-    finishedByTime: boolean;
+    finishedByTime:
+    boolean;
 
-    finishedEarly: boolean;
+    finishedEarly:
+    boolean;
+
+    completedTest?:
+    CompletedTestNavigationData;
 
 }
+
+export type CompletedTestNavigationData =
+
+    Omit<
+        CompletedTest,
+        'date'
+    >
+
+    & {
+
+        date:
+        string;
+
+    };
 
 export interface ExamReviewParams {
 
