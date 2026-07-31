@@ -73,35 +73,72 @@ export const styles = StyleSheet.create({
     marginRight: 15,         // ⬅️ Espaciado horizontal entre el icono y el texto
   },
   authSection: {
-  paddingHorizontal: 20,
-  paddingVertical: 15,
-  borderBottomWidth: 1,
-  borderBottomColor: '#f0f0f0', // Línea divisoria suave inferior opcional
-},
-profileContainer: {
-  flexDirection: 'row',
-  alignItems: 'center',
-},
-avatar: {
-  width: 55,
-  height: 55,
-  borderRadius: 27.5, // Hace la imagen completamente redonda
-  marginRight: 15,
-  backgroundColor: '#e1e1e1', // Fondo gris de respaldo mientras carga
-},
-userInfo: {
-  flex: 1,
-  justifyContent: 'center',
-},
-userName: {
-  fontSize: 16,
-  fontWeight: '600',
-  color: '#000000',
-  marginBottom: 2,
-},
-profileLink: {
-  fontSize: 14,
-  color: '#0066cc', // Color azul igual al de tu captura
-  fontWeight: '500',
-},
+    paddingHorizontal: 20,
+    paddingVertical: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f0f0f0', // Línea divisoria suave inferior opcional
+  },
+  profileContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  avatar: {
+    width: 55,
+    height: 55,
+    borderRadius: 27.5, // Hace la imagen completamente redonda
+    marginRight: 15,
+    backgroundColor: '#e1e1e1', // Fondo gris de respaldo mientras carga
+  },
+  userInfo: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  userName: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#000000',
+    marginBottom: 2,
+  },
+  profileLink: {
+    fontSize: 14,
+    color: '#0066cc', // Color azul igual al de tu captura
+    fontWeight: '500',
+  },
+  logoContainer: {
+
+    marginTop:
+      'auto',
+
+    alignItems:
+      'center',
+
+    justifyContent:
+      'center',
+
+    paddingTop:
+      20,
+
+    paddingBottom:
+      18,
+
+    borderTopWidth:
+      1,
+
+    borderTopColor:
+      '#E5E7EB',
+
+  },
+
+  sidebarLogo: {
+
+    width:
+      58,
+
+    height:
+      58,
+
+    opacity:
+      0.9,
+
+  },
 });

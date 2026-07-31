@@ -45,6 +45,7 @@ import {
 import {
     styles,
 } from '../styles/exam.styles';
+import { BackButton } from '@/shared/components/Button/BackButton';
 
 export function ExamHistoryScreen() {
 
@@ -246,7 +247,8 @@ export function ExamHistoryScreen() {
                 'Historial de Exámenes'
             }
         >
-
+            <BackButton />
+            
             <ScrollView
 
                 contentContainerStyle={
