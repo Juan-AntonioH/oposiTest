@@ -34,11 +34,13 @@ type NavigationProp =
 interface UseSummaryActionsProps {
 
     summary: CompletedTest;
+    isHistoryExam: boolean;
 
 }
 
 export function useSummaryActions({
     summary,
+    isHistoryExam,
 }: UseSummaryActionsProps) {
 
     const navigation =
@@ -72,28 +74,47 @@ export function useSummaryActions({
     const finish =
         useCallback(() => {
 
+            if (
+                isHistoryExam
+            ) {
+
+                navigation.goBack();
+
+                return;
+
+            }
+
             Alert.alert(
                 'Finalizar examen',
                 '¿Qué deseas hacer con este examen?',
                 [
                     {
-                        text: 'Cancelar',
-                        style: 'cancel',
+                        text:
+                            'Cancelar',
+
+                        style:
+                            'cancel',
                     },
                     {
-                        text: 'No guardar',
-                        style: 'destructive',
+                        text:
+                            'No guardar',
+
+                        style:
+                            'destructive',
+
                         onPress: () => {
 
                             resetTest();
 
                             navigation.reset({
 
-                                index: 0,
+                                index:
+                                    0,
 
                                 routes: [
                                     {
-                                        name: 'Dashboard',
+                                        name:
+                                            'Dashboard',
                                     },
                                 ],
 
@@ -102,7 +123,9 @@ export function useSummaryActions({
                         },
                     },
                     {
-                        text: 'Guardar',
+                        text:
+                            'Guardar',
+
                         onPress: async () => {
 
                             try {
@@ -115,21 +138,28 @@ export function useSummaryActions({
 
                                 navigation.reset({
 
-                                    index: 0,
+                                    index:
+                                        0,
 
                                     routes: [
                                         {
-                                            name: 'Dashboard',
+                                            name:
+                                                'Dashboard',
                                         },
                                     ],
 
                                 });
 
-                            } catch (error) {
+                            } catch (
+                            error
+                            ) {
 
                                 Alert.alert(
+
                                     'Error',
+
                                     'No se pudo guardar el examen. Inténtalo de nuevo.',
+
                                 );
 
                             }
@@ -140,10 +170,17 @@ export function useSummaryActions({
             );
 
         }, [
+
+            isHistoryExam,
+
             navigation,
+
             resetTest,
+
             save,
+
             summary,
+
         ]);
 
     return {

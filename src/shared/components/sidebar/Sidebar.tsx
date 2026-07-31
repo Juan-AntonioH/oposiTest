@@ -38,7 +38,7 @@ export function Sidebar({
   }, [isOpen]);
 
   // =========================
-  // AVATAR STATE (CORREGIDO)
+  // AVATAR STATE
   // =========================
   const [avatarSource, setAvatarSource] = React.useState<any>(
     PRESET_AVATARS[0].image
@@ -78,7 +78,8 @@ export function Sidebar({
     ? [
       { label: 'Inicio', icon: 'home', action: () => onNavigate?.('inicio') },
       { label: 'Oposiciones', icon: 'category', action: () => onNavigate?.('oposiciones') },
-      { label: 'Configuración', icon: 'settings', action: () => { } },
+      { label: 'Historial Exámenes', icon: 'history-edu', action: () => onNavigate?.('historial')},
+      // { label: 'Configuración', icon: 'settings', action: () => { } },
       {
         label: 'Logout',
         icon: 'logout',

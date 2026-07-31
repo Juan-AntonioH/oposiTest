@@ -49,6 +49,10 @@ export function ScreenLayout({
       case 'oposiciones':
         navigation.navigate('Oppositions');
         break;
+
+      case 'historial':
+        navigation.navigate('ExamHistoryScreen');
+        break;
     }
   };
 
@@ -74,9 +78,9 @@ export function ScreenLayout({
           onClose={() => setSidebarOpen(false)}
           isLoggedIn={isLoggedIn}
           userName={displayName}
-          userAvatar={avatar}   // 👈 ESTE ES EL CAMBIO REAL
+          userAvatar={avatar}
           userEmail={email ?? undefined}
-          userRole={role}
+          userRole={role ?? undefined}
           onNavigate={handleNavigate}
           onLogout={logout}
           onLoginClick={handleLoginClick}

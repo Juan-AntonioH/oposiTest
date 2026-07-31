@@ -18,6 +18,10 @@ interface TestState {
         questions: Question[],
     ) => void;
 
+    loadCompletedTestQuestions: (
+        questions: TestQuestion[],
+    ) => void;
+
     setLoading: (
         loading: boolean,
     ) => void;
@@ -79,6 +83,28 @@ export const useTestStore = create<TestState>((set, get) => ({
             currentQuestionIndex: 0,
             loading: false,
             error: null,
+        });
+
+    },
+
+    loadCompletedTestQuestions: (
+        questions,
+    ) => {
+
+        set({
+
+            testQuestions:
+                questions,
+
+            currentQuestionIndex:
+                0,
+
+            loading:
+                false,
+
+            error:
+                null,
+
         });
 
     },

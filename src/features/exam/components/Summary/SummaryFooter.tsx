@@ -6,7 +6,9 @@ import {
     View,
 } from 'react-native';
 
-import { styles } from '../../styles/exam.styles';
+import {
+    styles,
+} from '../../styles/exam.styles';
 
 import {
     CompletedTest,
@@ -14,37 +16,58 @@ import {
 
 interface SummaryFooterProps {
 
-    summary: CompletedTest;
+    summary:
+    CompletedTest;
 
-    onFinish: () => void;
+    onFinish:
+    () => void;
+
+    isHistoryExam?:
+    boolean;
 
 }
 
 export function SummaryFooter({
+
     onFinish,
+
+    isHistoryExam =
+    false,
+
 }: SummaryFooterProps) {
 
     return (
 
         <View
-            style={styles.footerContainer}
+            style={
+                styles.footerContainer
+            }
         >
 
             <View
-                style={styles.legendContainer}
+                style={
+                    styles.legendContainer
+                }
             >
 
                 <View
-                    style={styles.legendItem}
+                    style={
+                        styles.legendItem
+                    }
                 >
 
                     <View
                         style={[
+
                             styles.legendDot,
+
                             {
+
                                 backgroundColor:
                                     '#22C55E',
+
                             },
+
                         ]}
                     />
 
@@ -59,16 +82,23 @@ export function SummaryFooter({
                 </View>
 
                 <View
-                    style={styles.legendItem}
+                    style={
+                        styles.legendItem
+                    }
                 >
 
                     <View
                         style={[
+
                             styles.legendDot,
+
                             {
+
                                 backgroundColor:
                                     '#EF4444',
+
                             },
+
                         ]}
                     />
 
@@ -83,19 +113,29 @@ export function SummaryFooter({
                 </View>
 
                 <View
-                    style={styles.legendItem}
+                    style={
+                        styles.legendItem
+                    }
                 >
 
                     <View
                         style={[
+
                             styles.legendDot,
+
                             {
+
                                 backgroundColor:
                                     '#E9EBEE',
-                                borderWidth: 1,
+
+                                borderWidth:
+                                    1,
+
                                 borderColor:
                                     '#CBD5E1',
+
                             },
+
                         ]}
                     />
 
@@ -112,10 +152,15 @@ export function SummaryFooter({
             </View>
 
             <Pressable
+
                 style={
                     styles.summaryButton
                 }
-                onPress={onFinish}
+
+                onPress={
+                    onFinish
+                }
+
             >
 
                 <Text
@@ -123,7 +168,17 @@ export function SummaryFooter({
                         styles.summaryButtonText
                     }
                 >
-                    Volver al inicio
+
+                    {
+
+                        isHistoryExam
+
+                            ? 'Volver al historial'
+
+                            : 'Volver al inicio'
+
+                    }
+
                 </Text>
 
             </Pressable>

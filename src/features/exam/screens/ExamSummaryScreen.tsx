@@ -64,6 +64,8 @@ export function ExamSummaryScreen({
 
         finishedEarly,
 
+        completedTest,
+
     } = route.params;
 
     const {
@@ -84,14 +86,26 @@ export function ExamSummaryScreen({
 
         finishedEarly,
 
+        completedTest,
+
     });
 
+    const isHistoryExam =
+
+        completedTest !==
+        undefined;
+
     const {
+
         openQuestion,
+
         finish,
+
     } = useSummaryActions({
 
         summary,
+
+        isHistoryExam,
 
     });
 
@@ -103,29 +117,59 @@ export function ExamSummaryScreen({
         >
 
             <ScrollView
-                style={styles.summaryContainer}
+
+                style={
+                    styles.summaryContainer
+                }
+
                 contentContainerStyle={
                     styles.summaryContent
                 }
-                showsVerticalScrollIndicator={false}
+
+                showsVerticalScrollIndicator={
+                    false
+                }
+
             >
 
                 <SummaryHeader
-                    summary={summary}
+                    summary={
+                        summary
+                    }
                 />
 
                 <SummaryMetrics
-                    summary={summary}
+                    summary={
+                        summary
+                    }
                 />
 
                 <AnswersMap
-                    summary={summary}
-                    onPressQuestion={openQuestion}
+
+                    summary={
+                        summary
+                    }
+
+                    onPressQuestion={
+                        openQuestion
+                    }
+
                 />
 
                 <SummaryFooter
-                    summary={summary}
-                    onFinish={finish}
+
+                    summary={
+                        summary
+                    }
+
+                    onFinish={
+                        finish
+                    }
+
+                    isHistoryExam={
+                        isHistoryExam
+                    }
+
                 />
 
             </ScrollView>

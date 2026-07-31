@@ -26,12 +26,20 @@ import {
 export function useExamSummary({
 
     oppositionId,
+
     oppositionName,
+
     examName,
+
     examType,
+
     timeConfigured,
+
     finishedByTime,
+
     finishedEarly,
+
+    completedTest,
 
 }: ExamSummaryParams) {
 
@@ -48,6 +56,37 @@ export function useExamSummary({
     const summary =
         useMemo(() => {
 
+            /*
+             * EXAMEN ABIERTO DESDE EL HISTORIAL
+             *
+             * Los resultados ya están calculados
+             * y guardados en Firestore.
+             */
+
+            if (
+                completedTest
+            ) {
+
+                return {
+
+                    ...completedTest,
+
+                    date:
+                        new Date(
+                            completedTest.date,
+                        ),
+
+                };
+
+            }
+
+            /*
+             * EXAMEN RECIÉN FINALIZADO
+             *
+             * Se mantiene exactamente la lógica
+             * que ya existía.
+             */
+
             if (!userId) {
 
                 throw new Error(
@@ -56,41 +95,45 @@ export function useExamSummary({
 
             }
 
-            const answers: CompletedAnswer[] =
-                testQuestions.map(question => ({
+            const answers:
+                CompletedAnswer[] =
 
-                    numQuestion:
-                        question.numQuestion,
+                testQuestions.map(
+                    question => ({
 
-                    questionId:
-                        question.idDocument,
+                        numQuestion:
+                            question.numQuestion,
 
-                    blockId:
-                        question.blockId,
+                        questionId:
+                            question.idDocument,
 
-                    themeId:
-                        question.themeId,
+                        blockId:
+                            question.blockId,
 
-                    question:
-                        question.question,
+                        themeId:
+                            question.themeId,
 
-                    options:
-                        question.options,
+                        question:
+                            question.question,
 
-                    userResponse:
-                        question.userResponse,
+                        options:
+                            question.options,
 
-                    correctAnswer:
-                        question.correctAnswer,
+                        userResponse:
+                            question.userResponse,
 
-                    explanation:
-                        question.explanation,
+                        correctAnswer:
+                            question.correctAnswer,
 
-                    questionTimeSpent:
-                        question.questionTimeSpent,
+                        explanation:
+                            question.explanation,
 
-                }));
-                
+                        questionTimeSpent:
+                            question.questionTimeSpent,
+
+                    }),
+                );
+
             return buildExamSummary({
 
                 userId,
@@ -109,7 +152,8 @@ export function useExamSummary({
 
                 finishedEarly,
 
-                questions: answers,
+                questions:
+                    answers,
 
             });
 
@@ -130,6 +174,8 @@ export function useExamSummary({
             finishedByTime,
 
             finishedEarly,
+
+            completedTest,
 
             testQuestions,
 
