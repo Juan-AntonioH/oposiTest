@@ -1,13 +1,13 @@
-export interface Question {
-  id: string;
-  statement: string; // Enfoque profesional: enunciado
-  options: string[];
-  correctIndex: number;
-}
-
-export interface Exam {
-  id: string;
-  title: string;
-  syllabusCategory: string; // Bloques de la oposición (Ej: "Bloque I: Constitución")
-  questions: Question[];
-}
+export * from './question';
+export * from './testQuestion';
+export * from './officialExam';
+export * from './opposition';
+export * from './navigation';
+export * from './questionFilters';
+export * from './examType';
+export * from './answer';
+export * from './completedTest';
+export * from './questionSessionResult';
+export * from './block';
+export * from './theme';
+export * from './ExamHistory';

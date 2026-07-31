@@ -1,8 +1,9 @@
 // Define los tipos de navegación disponibles en la app
 export type SidebarRoute =
   | 'inicio'
-  | 'list'
+  | 'historial'
   | 'oposiciones'
+  // | 'configuracion'
   | 'login';
 
 export interface SidebarProps {

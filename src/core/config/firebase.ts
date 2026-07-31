@@ -25,11 +25,14 @@
 // export { app, auth, db };
 import { initializeApp, getApps, getApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
-// 1. Cambiamos getAuth por initializeAuth y añadimos el gestor de persistencia nativa
-import { initializeAuth, getAuth } from 'firebase/auth';
-import * as firebaseAuth from 'firebase/auth'; // Importamos todo el módulo
-// import { getReactNativePersistence } from 'firebase/auth/react-native';
-import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
+
+import {
+  initializeAuth,
+  getAuth,
+  getReactNativePersistence,
+} from 'firebase/auth';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const firebaseConfig = {
   apiKey: process.env.EXPO_PUBLIC_FIREBASE_API_KEY,
@@ -40,15 +43,22 @@ const firebaseConfig = {
   appId: process.env.EXPO_PUBLIC_FIREBASE_APP_ID,
 };
 
-// Validamos si la app ya está inicializada para evitar duplicados en desarrollo
-const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
+// ¿Es la primera inicialización?
+const isFirstApp = getApps().length === 0;
 
-// 2. Inicializamos la autenticación con persistencia solo si es la primera vez
-const auth = getApps().length === 0 
+// Firebase App
+const app = isFirstApp
+  ? initializeApp(firebaseConfig)
+  : getApp();
+
+// Firebase Auth con persistencia
+const auth = isFirstApp
   ? initializeAuth(app, {
-      persistence: (firebaseAuth as any).getReactNativePersistence(ReactNativeAsyncStorage),    })
-  : getAuth(app); // Si ya existía la app, recuperamos la instancia activa
-
+    persistence: getReactNativePersistence(AsyncStorage),
+  })
+  : getAuth(app);
+// const auth = getAuth(app);
+// Firestore
 const db = getFirestore(app);
 
 export { app, auth, db };

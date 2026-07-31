@@ -4,101 +4,145 @@ import {
   Text,
   TouchableOpacity,
   GestureResponderEvent,
+  ActivityIndicator,
 } from 'react-native';
 
-import { colors, spacing, radius, shadows} from '@/core/theme';
+import {
+  colors,
+  spacing,
+  radius,
+  shadows,
+} from '@/core/theme';
+
+export type ButtonVariant =
+  | 'primary'
+  | 'secondary'
+  | 'outline'
+  | 'danger'
+  | 'warning';
 
 interface CustomButtonProps {
   title: string;
   onPress: (event: GestureResponderEvent) => void;
-  variant?: 'primary' | 'secondary' | 'outline' | 'danger';
+  variant?: ButtonVariant;
+  disabled?: boolean;
+  loading?: boolean;
 }
+
+const VARIANT_STYLES: Record<
+  ButtonVariant,
+  {
+    button: object;
+    text: object;
+    loaderColor: string;
+  }
+> = {
+  primary: {
+    button: {
+      backgroundColor: colors.primary,
+    },
+    text: {
+      color: colors.white,
+    },
+    loaderColor: colors.white,
+  },
+
+  secondary: {
+    button: {
+      backgroundColor: colors.secondary,
+    },
+    text: {
+      color: colors.white,
+    },
+    loaderColor: colors.white,
+  },
+
+  warning: {
+    button: {
+      backgroundColor: colors.warning ?? '#c76e02',
+    },
+    text: {
+      color: colors.white,
+    },
+    loaderColor: colors.white,
+  },
+
+  danger: {
+    button: {
+      backgroundColor: colors.danger,
+    },
+    text: {
+      color: colors.white,
+    },
+    loaderColor: colors.white,
+  },
+
+  outline: {
+    button: {
+      backgroundColor: colors.white,
+      borderWidth: 2,
+      borderColor: colors.secondary,
+    },
+    text: {
+      color: colors.secondary,
+    },
+    loaderColor: colors.secondary,
+  },
+};
 
 export const CustomButton: React.FC<CustomButtonProps> = ({
   title,
   onPress,
   variant = 'primary',
+  disabled = false,
+  loading = false,
 }) => {
 
-  const getButtonStyle = () => {
-    switch (variant) {
-
-      case 'secondary':
-        return styles.secondaryBtn;
-
-      case 'outline':
-        return styles.outlineBtn;
-
-      case 'danger':
-        return styles.dangerBtn;
-
-      default:
-        return styles.primaryBtn;
-    }
-  };
-
-  const getTextStyle = () => {
-    switch (variant) {
-
-      case 'outline':
-        return styles.outlineText;
-
-      case 'danger':
-        return styles.dangerText;
-
-      case 'secondary':
-        return styles.secondaryText;
-
-      default:
-        return styles.primaryText;
-    }
-  };
+  const currentVariant = VARIANT_STYLES[variant];
 
   return (
     <TouchableOpacity
-      style={[styles.button, getButtonStyle()]}
+      style={[
+        styles.button,
+        currentVariant.button,
+        disabled && styles.disabledButton,
+      ]}
       onPress={onPress}
       activeOpacity={0.8}
+      disabled={disabled || loading}
     >
-      <Text style={[styles.text, getTextStyle()]}>
-        {title}
-      </Text>
+      {loading ? (
+        <ActivityIndicator
+          color={currentVariant.loaderColor}
+        />
+      ) : (
+        <Text
+          style={[
+            styles.text,
+            currentVariant.text,
+          ]}
+        >
+          {title}
+        </Text>
+      )}
     </TouchableOpacity>
   );
 };
 const styles = StyleSheet.create({
 
   button: {
+    width: '100%',
     paddingVertical: spacing.lg,
     borderRadius: radius.md,
-    alignItems: 'center',
     justifyContent: 'center',
-    width: '100%',
-    
+    alignItems: 'center',
+
     ...shadows.sm,
-    // shadowColor: '#000',
-    // shadowOffset: { width: 0, height: 1 },
-    // shadowOpacity: 0.1,
-    // shadowRadius: 2,
-    // elevation: 2,
   },
 
-  primaryBtn: {
-    backgroundColor: colors.primary,
-  },
-
-  secondaryBtn: {
-    backgroundColor: colors.secondary,
-  },
-
-  outlineBtn: {
-    backgroundColor: colors.white,
-    borderWidth: 2,
-    borderColor: colors.secondary,
-  },
-
-  dangerBtn: {
-    backgroundColor: colors.danger,
+  disabledButton: {
+    backgroundColor: '#D1D5DB',
+    borderColor: '#D1D5DB',
   },
 
   text: {
@@ -106,19 +150,4 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
 
-  primaryText: {
-    color: colors.white,
-  },
-
-  secondaryText: {
-    color: colors.white,
-  },
-
-  outlineText: {
-    color: colors.secondary,
-  },
-
-  dangerText: {
-    color: colors.white,
-  },
 });

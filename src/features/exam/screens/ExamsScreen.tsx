@@ -1,120 +1,216 @@
 import React, { useState } from 'react';
-import { RootStackParamList } from "@/navigation";
-import { RouteProp, useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { ScreenLayout } from '@/shared/layouts/ScreenLayout';
-import { ScrollView, Text, View, Switch, TouchableOpacity, StyleSheet, Pressable } from 'react-native';
-import { styles } from '../styles/exam.styles';
+
+import {
+    prepareExam,
+} from '../services/examPreparationService';
+
+import {
+    ScrollView,
+    Switch,
+    Text,
+    View,
+} from 'react-native';
+
+import {
+    RouteProp,
+    useNavigation,
+} from '@react-navigation/native';
+
+import {
+    NativeStackNavigationProp,
+} from '@react-navigation/native-stack';
+
 import { Ionicons } from '@expo/vector-icons';
 
+import { RootStackParamList } from '@/navigation/types';
+
+import { ScreenLayout } from '@/shared/layouts/ScreenLayout';
+import { ScreenState } from '@/shared/components/ScreenState/ScreenState';
+import { BackButton } from '@/shared/components/Button/BackButton';
+
+import { useOfficialExams } from '../hooks/useOfficialExams';
+import { ExamCard } from '../components/ExamCard';
+import { OfficialExam } from '../types';
+
+import { styles } from '../styles/exam.styles';
+
 interface ExamsScreenProps {
-    route: RouteProp<RootStackParamList, 'ExamsScreen'>;
+    route: RouteProp<
+        RootStackParamList,
+        'ExamsScreen'
+    >;
 }
 
-// Definimos el tipo del examen para el tipado seguro del mapeo
-interface ExamItem {
-    opositionId: string;
-    year: number;
-    convocatoria: string;
-    nombreVisibilidad: string;
-    numeroPreguntasTotales: number;
-    tiempoExamen: number;
-}
+type NavigationProp =
+    NativeStackNavigationProp<RootStackParamList>;
 
-export function ExamsScreen({ route }: ExamsScreenProps) {
-    const { opositionId, name } = route.params || { opositionId: '', name: 'Detalle' };
+export function ExamsScreen({
+    route,
+}: ExamsScreenProps) {
 
-    // Hook de navegación con tipado estricto de tu RootStackParamList
-    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+    const {
+        oppositionId,
+        name,
+    } = route.params;
 
-    // Estado booleano para la solución inmediata
-    const [immediateSolution, setImmediateSolution] = useState(false);
+    const navigation =
+        useNavigation<NavigationProp>();
 
-    const exams: ExamItem[] = [
-        { opositionId: 'opo_01', year: 2025, convocatoria: 'Libre', nombreVisibilidad: 'Examen Oficial 2025 (Turno Libre)', numeroPreguntasTotales: 100, tiempoExamen: 0.1 },
-        { opositionId: 'opo_01', year: 2024, convocatoria: 'Libre', nombreVisibilidad: 'Examen Oficial 2024 (Turno Libre)', numeroPreguntasTotales: 100, tiempoExamen: 90 },
-        { opositionId: 'opo_01', year: 2023, convocatoria: 'Interna', nombreVisibilidad: 'Examen Oficial 2023 (Turno Interno)', numeroPreguntasTotales: 100, tiempoExamen: 90 }
-    ];
+    const [immediateSolution, setImmediateSolution] =
+        useState(false);
 
-    // Manejador del clic que empaqueta y envía todos los parámetros requeridos
-    const handleExamPress = (exam: ExamItem) => {
-        navigation.navigate('TestScreen', {
-            opositionId: opositionId || exam.opositionId,
-            name: name,
-            setTime: exam.tiempoExamen,
-            examType: 'oficial',
-            year: exam.year,
-            immediateSolution: immediateSolution, // Pasamos el booleano del interruptor
-            titleParam: `Examen Oficial ${exam.year}` // 🚀 Añadido: Así cada pantalla controla su propio título
-        });
-    };
+    const {
+        exams,
+        loading,
+        error,
+        reload,
+    } = useOfficialExams(oppositionId);
+
+    async function handleExamPress(
+        exam: OfficialExam,
+    ) {
+
+        const totalQuestions =
+            await prepareExam({
+
+                examType: 'official',
+
+                oppositionId,
+
+                year: exam.year,
+
+                convocatoria: exam.convocatoria,
+
+            });
+
+        navigation.navigate(
+
+            'TestScreen',
+
+            {
+
+                oppositionId,
+
+                name,
+
+                setTime: exam.setTime,
+
+                examType: 'official',
+
+                year: exam.year,
+
+                convocatoria: exam.convocatoria,
+
+                immediateSolution,
+
+                titleParam: `Examen Oficial ${exam.year}`,
+
+            },
+
+        );
+
+    }
 
     return (
-        <ScreenLayout title="Seleccionar Examen">
-            <View style={styles.backButtonContainer}>
-                <Pressable
-                    style={styles.backButton}
-                    onPress={() => navigation.goBack()} // ← Te regresa automáticamente a la pantalla anterior (Login)
-                >
-                    <Text style={styles.backButtonText}>← Volver</Text>
-                </Pressable>
-            </View>
-            <ScrollView
-                style={styles.listContainer}
-                showsVerticalScrollIndicator={false}
+
+        <ScreenLayout title="Seleccionar examen">
+
+            <BackButton />
+
+            <ScreenState
+                loading={loading}
+                error={error}
+                onRetry={reload}
+                isEmpty={!loading && exams.length === 0}
+                emptyText="No hay exámenes disponibles."
             >
-                <Text style={styles.mainTitle}>Exámenes de Años Anteriores</Text>
 
-                {/* Bloque del Interruptor Superior */}
-                <View style={styles.toggleCard}>
-                    <View style={styles.toggleHeader}>
-                        {/* El icono cambia dinámicamente según el estado del booleano */}
-                        <Ionicons
-                            name={immediateSolution ? "eye-outline" : "eye-off-outline"}
-                            size={20}
-                            color={immediateSolution ? "#2F70F2" : "#64748B"}
-                            style={{ marginRight: 8 }}
-                        />
-                        <Text style={styles.toggleTitle}>Mostrar solución inmediata</Text>
-                        <Switch
-                            value={immediateSolution}
-                            onValueChange={setImmediateSolution}
-                            trackColor={{ false: '#CBD5E1', true: '#2F70F2' }}
-                            thumbColor="#FFFFFF"
-                        />
-                    </View>
-                    <Text style={styles.toggleSubtitle}>
-                        Si está activado, verás la respuesta correcta después de cada pregunta
+                <ScrollView
+                    style={styles.listContainer}
+                    showsVerticalScrollIndicator={false}
+                >
+
+                    <Text style={styles.mainTitle}>
+                        Exámenes oficiales
                     </Text>
-                </View>
 
-                {/* Listado de Tarjetas de Exámenes */}
-                <View style={{ gap: 4, paddingBottom: 32 }}>
-                    {exams.map((exam, index) => (
-                        <TouchableOpacity
-                            key={index}
-                            style={styles.card}
-                            onPress={() => handleExamPress(exam)}
-                            activeOpacity={0.7}
+                    <View style={styles.toggleCard}>
+
+                        <View style={styles.toggleHeader}>
+
+                            <Ionicons
+                                name={
+                                    immediateSolution
+                                        ? 'eye-outline'
+                                        : 'eye-off-outline'
+                                }
+                                size={20}
+                                color={
+                                    immediateSolution
+                                        ? '#2F70F2'
+                                        : '#64748B'
+                                }
+                                style={{
+                                    marginRight: 8,
+                                }}
+                            />
+
+                            <Text style={styles.toggleTitle}>
+                                Mostrar solución inmediata
+                            </Text>
+
+                            <Switch
+                                value={immediateSolution}
+                                onValueChange={
+                                    setImmediateSolution
+                                }
+                                trackColor={{
+                                    false: '#CBD5E1',
+                                    true: '#2F70F2',
+                                }}
+                                thumbColor="#FFFFFF"
+                            />
+
+                        </View>
+
+                        <Text
+                            style={
+                                styles.toggleSubtitle
+                            }
                         >
-                            <View style={[styles.iconContainer, { backgroundColor: '#EBF2FF' }]}>
-                                <Ionicons name="calendar-outline" size={24} color="#2F70F2" />
-                            </View>
+                            Si está activado,
+                            verás la respuesta
+                            correcta después
+                            de cada pregunta.
+                        </Text>
 
-                            <View style={styles.textContainer}>
-                                <Text style={styles.customCardTitle}>
-                                    Examen <Text style={styles.yearTextBold}>{exam.year}</Text>
-                                </Text>
-                                <Text style={styles.cardSubtitle}>
-                                    {exam.numeroPreguntasTotales} preguntas • tiempo de examen: {exam.tiempoExamen} minutos
-                                </Text>
-                                <Text style={styles.cardSubtitle}>Tipo de convocatoria: {exam.convocatoria}</Text>
-                            </View>
-                        </TouchableOpacity>
-                    ))}
-                </View>
-            </ScrollView>
+                    </View>
+
+                    <View
+                        style={{
+                            gap: 4,
+                            paddingBottom: 32,
+                        }}
+                    >
+
+                        {exams.map((exam) => (
+
+                            <ExamCard
+                                key={exam.idDocument}
+                                exam={exam}
+                                onPress={() => handleExamPress(exam)}
+                            />
+
+                        ))}
+
+                    </View>
+
+                </ScrollView>
+
+            </ScreenState>
+
         </ScreenLayout>
-    );
-}
 
+    );
+
+}

@@ -1,0 +1,107 @@
+import { useCallback } from 'react';
+
+import { OppositionMenuItem } from '../constants/oppositionMenu';
+import { OppositionNavigationProp } from '../types/navigation';
+import {
+    prepareExam,
+} from '../services/examPreparationService';
+interface UseOppositionMenuProps {
+    navigation: OppositionNavigationProp;
+    oppositionId: string;
+    name: string;
+}
+
+export function useOppositionMenu({
+    navigation,
+    oppositionId,
+    name,
+}: UseOppositionMenuProps) {
+
+    const handleMenuPress = useCallback(
+        async (item: OppositionMenuItem) => {
+
+            switch (item.id) {
+
+                case 'exams':
+                    navigation.navigate('ExamsScreen', {
+                        oppositionId,
+                        name,
+                    });
+                    break;
+
+                case 'blocks':
+                    navigation.navigate('BlocksScreen', {
+                        oppositionId,
+                        name,
+                    });
+                    break;
+
+                case 'themes':
+                    navigation.navigate('ThemesScreen', {
+                        oppositionId,
+                        name,
+                    });
+                    break;
+
+                case 'custom':
+                    navigation.navigate('CustomTestScreen', {
+                        oppositionId,
+                        name,
+                    });
+                    break;
+
+                case 'simulacrum': {
+
+                    const totalQuestions =
+                        await prepareExam({
+
+                            examType: 'simulacrum',
+
+                            oppositionId,
+
+                        });
+
+                    navigation.navigate(
+
+                        'TestScreen',
+
+                        {
+
+                            oppositionId,
+
+                            name,
+
+                            setTime: 100, // el simulacro sigue teniendo tiempo fijo
+
+                            examType: 'simulacrum',
+
+                            immediateSolution: false,
+
+                            titleParam: 'Simulacro',
+
+                        },
+
+                    );
+
+                    break;
+
+                }
+
+                case 'wrong':
+                    navigation.navigate('WrongQuestionsScreen', {
+                        oppositionId,
+                        name,
+                    });
+                    break;
+
+            }
+
+        },
+        [navigation, oppositionId, name],
+    );
+
+    return {
+        handleMenuPress,
+    };
+
+}
