@@ -46,7 +46,7 @@ export function Sidebar({
 
   React.useEffect(() => {
     let mounted = true;
-    
+
     async function loadAvatar() {
       // Si no hay avatar, volvemos directamente al predefinido sin esperar promesas
       if (!userAvatar) {
@@ -78,7 +78,7 @@ export function Sidebar({
     ? [
       { label: 'Inicio', icon: 'home', action: () => onNavigate?.('inicio') },
       { label: 'Oposiciones', icon: 'category', action: () => onNavigate?.('oposiciones') },
-      { label: 'Historial Exámenes', icon: 'history-edu', action: () => onNavigate?.('historial')},
+      { label: 'Historial Exámenes', icon: 'history-edu', action: () => onNavigate?.('historial') },
       // { label: 'Configuración', icon: 'settings', action: () => { } },
       {
         label: 'Logout',
@@ -135,10 +135,10 @@ export function Sidebar({
               onPress={onProfileClick}
             >
               {/* Forzamos el re-render de la imagen usando la key cuando cambia el source */}
-              <Image 
-                key={userAvatar} 
-                source={avatarSource} 
-                style={styles.avatar} 
+              <Image
+                key={userAvatar}
+                source={avatarSource}
+                style={styles.avatar}
               />
 
               <View style={styles.userInfo}>
@@ -166,6 +166,33 @@ export function Sidebar({
               <Text style={styles.menuText}>{item.label}</Text>
             </Pressable>
           ))}
+        </View>
+        
+        {/* Logo de OposiTest */}
+        <View
+          style={
+            styles.logoContainer
+          }
+        >
+
+          <Image
+
+            source={
+              require(
+                '@assets/images/app_logo.webp'
+              )
+            }
+
+            style={
+              styles.sidebarLogo
+            }
+
+            resizeMode={
+              'contain'
+            }
+
+          />
+
         </View>
 
       </Animated.View>

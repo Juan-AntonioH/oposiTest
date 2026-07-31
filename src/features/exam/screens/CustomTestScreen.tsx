@@ -119,9 +119,10 @@ export function CustomTestScreen({ route }: CustomTestScreenProps) {
 
     return (
         <ScreenLayout title="Test Personalizado" showSidebar={true}>
-            <ScrollView contentContainerStyle={{ padding: 16, backgroundColor: '#F8FAFC' }} showsVerticalScrollIndicator={false}>
 
-                <BackButton />
+            <BackButton />
+
+            <ScrollView contentContainerStyle={{ padding: 16, backgroundColor: '#F8FAFC' }} showsVerticalScrollIndicator={false}>
 
                 <CustomHeader
 
