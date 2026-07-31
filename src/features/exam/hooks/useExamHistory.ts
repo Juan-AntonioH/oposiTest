@@ -110,6 +110,8 @@ export function useExamHistory({
 
                 setLoading(false);
 
+                setError(null);
+
                 return;
 
             }
@@ -167,6 +169,15 @@ export function useExamHistory({
         loadTests,
 
     ]);
+
+    /*
+     * Opciones del selector
+     * de oposiciones.
+     *
+     * Solo se muestran las
+     * oposiciones que tienen
+     * exámenes en el historial.
+     */
 
     const oppositionOptions =
         useMemo<
@@ -240,6 +251,15 @@ export function useExamHistory({
 
         ]);
 
+    /*
+     * Exámenes filtrados.
+     *
+     * Si no hay fechas
+     * seleccionadas, se muestran
+     * todos los exámenes que
+     * coincidan con la oposición.
+     */
+
     const tests =
         useMemo<
             CompletedTest[]
@@ -300,14 +320,40 @@ export function useExamHistory({
 
         ]);
 
+    /*
+     * Días que pueden seleccionarse
+     * en el calendario.
+     *
+     * Si se ha elegido una oposición,
+     * solo se muestran los días que
+     * contienen exámenes de esa
+     * oposición.
+     */
+
     const availableDateKeys =
-        useMemo(() => {
+        useMemo<
+            string[]
+        >(() => {
+
+            const testsForCalendar =
+
+                selectedOppositionId ===
+                    'all'
+
+                    ? allTests
+
+                    : allTests.filter(
+                        test =>
+
+                            test.oppositionId ===
+                            selectedOppositionId,
+                    );
 
             return [
 
                 ...new Set(
 
-                    allTests.map(
+                    testsForCalendar.map(
                         test =>
 
                             getDateKey(
@@ -317,13 +363,93 @@ export function useExamHistory({
 
                 ),
 
-            ];
+            ].sort();
 
         }, [
 
             allTests,
 
+            selectedOppositionId,
+
         ]);
+
+    /*
+     * Cambiar de oposición también
+     * elimina las fechas anteriores.
+     *
+     * Así no quedan seleccionados
+     * días que pertenecen a otra
+     * oposición.
+     */
+
+    const handleOppositionChange =
+        useCallback((
+
+            oppositionId: string,
+
+        ) => {
+
+            setSelectedOppositionId(
+                oppositionId,
+            );
+
+            setSelectedDates(
+                [],
+            );
+
+        }, []);
+
+    /*
+     * Añade o elimina una fecha
+     * del filtro.
+     */
+
+    const toggleDate =
+        useCallback((
+
+            dateKey: string,
+
+        ) => {
+
+            setSelectedDates(
+                currentDates => {
+
+                    const isSelected =
+
+                        currentDates.includes(
+                            dateKey,
+                        );
+
+                    if (
+                        isSelected
+                    ) {
+
+                        return currentDates.filter(
+                            currentDate =>
+
+                                currentDate !==
+                                dateKey,
+                        );
+
+                    }
+
+                    return [
+
+                        ...currentDates,
+
+                        dateKey,
+
+                    ];
+
+                },
+            );
+
+        }, []);
+
+    /*
+     * Elimina únicamente el
+     * filtro de fechas.
+     */
 
     const clearDates =
         useCallback(() => {
@@ -333,6 +459,10 @@ export function useExamHistory({
             );
 
         }, []);
+
+    /*
+     * Restablece todos los filtros.
+     */
 
     const clearFilters =
         useCallback(() => {
@@ -361,7 +491,7 @@ export function useExamHistory({
 
         error,
 
-        // Opciones del selector
+        // Opciones
 
         oppositionOptions,
 
@@ -375,9 +505,9 @@ export function useExamHistory({
 
         // Acciones
 
-        setSelectedOppositionId,
+        handleOppositionChange,
 
-        setSelectedDates,
+        toggleDate,
 
         clearDates,
 

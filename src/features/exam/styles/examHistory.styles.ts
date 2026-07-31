@@ -866,4 +866,585 @@ export const styles =
                 1.25,
 
         },
+        /*
+ * =================================
+ * EXAM HISTORY CALENDAR
+ * =================================
+ */
+
+        calendarOverlay: {
+
+            flex:
+                1,
+
+            justifyContent:
+                'center',
+
+            alignItems:
+                'center',
+
+            paddingHorizontal:
+                16,
+
+            backgroundColor:
+                'rgba(15, 23, 42, 0.45)',
+
+        },
+
+        calendarBackdrop: {
+
+            position:
+                'absolute',
+
+            top:
+                0,
+
+            right:
+                0,
+
+            bottom:
+                0,
+
+            left:
+                0,
+
+        },
+
+        calendarModal: {
+
+            width:
+                '100%',
+
+            maxWidth:
+                460,
+
+            maxHeight:
+                '90%',
+
+            backgroundColor:
+                '#FFFFFF',
+
+            borderRadius:
+                20,
+
+            overflow:
+                'hidden',
+
+            shadowColor:
+                '#0F172A',
+
+            shadowOffset: {
+
+                width:
+                    0,
+
+                height:
+                    10,
+
+            },
+
+            shadowOpacity:
+                0.22,
+
+            shadowRadius:
+                24,
+
+            elevation:
+                12,
+
+        },
+
+        /*
+         * Cabecera
+         */
+
+        calendarTopBar: {
+
+            flexDirection:
+                'row',
+
+            alignItems:
+                'center',
+
+            justifyContent:
+                'space-between',
+
+            paddingHorizontal:
+                20,
+
+            paddingTop:
+                20,
+
+            paddingBottom:
+                16,
+
+            borderBottomWidth:
+                1,
+
+            borderBottomColor:
+                '#E2E8F0',
+
+        },
+
+        calendarTitle: {
+
+            fontSize:
+                20,
+
+            fontWeight:
+                '700',
+
+            color:
+                '#1E293B',
+
+        },
+
+        calendarSubtitle: {
+
+            marginTop:
+                4,
+
+            fontSize:
+                13,
+
+            fontWeight:
+                '500',
+
+            color:
+                '#64748B',
+
+        },
+
+        calendarCloseButton: {
+
+            width:
+                40,
+
+            height:
+                40,
+
+            justifyContent:
+                'center',
+
+            alignItems:
+                'center',
+
+            borderRadius:
+                20,
+
+            backgroundColor:
+                '#F1F5F9',
+
+        },
+
+        /*
+         * Navegación entre meses
+         */
+
+        calendarMonthHeader: {
+
+            flexDirection:
+                'row',
+
+            alignItems:
+                'center',
+
+            justifyContent:
+                'space-between',
+
+            paddingHorizontal:
+                16,
+
+            paddingTop:
+                18,
+
+            paddingBottom:
+                14,
+
+        },
+
+        calendarArrowButton: {
+
+            width:
+                40,
+
+            height:
+                40,
+
+            justifyContent:
+                'center',
+
+            alignItems:
+                'center',
+
+            borderRadius:
+                20,
+
+            backgroundColor:
+                '#EFF6FF',
+
+        },
+
+        calendarMonthText: {
+
+            fontSize:
+                17,
+
+            fontWeight:
+                '700',
+
+            color:
+                '#1E3A5F',
+
+            textTransform:
+                'capitalize',
+
+        },
+
+        /*
+         * Días de la semana
+         */
+
+        calendarWeekRow: {
+
+            flexDirection:
+                'row',
+
+            paddingHorizontal:
+                12,
+
+            paddingBottom:
+                8,
+
+        },
+
+        calendarWeekDay: {
+
+            width:
+                '14.2857%',
+
+            alignItems:
+                'center',
+
+            justifyContent:
+                'center',
+
+            paddingVertical:
+                7,
+
+        },
+
+        calendarWeekDayText: {
+
+            fontSize:
+                12,
+
+            fontWeight:
+                '700',
+
+            color:
+                '#94A3B8',
+
+        },
+
+        /*
+         * Cuadrícula de días
+         */
+
+        calendarDays: {
+
+            flexDirection:
+                'row',
+
+            flexWrap:
+                'wrap',
+
+            paddingHorizontal:
+                12,
+
+            paddingBottom:
+                16,
+
+        },
+
+        calendarDayCell: {
+
+            width:
+                '14.2857%',
+
+            alignItems:
+                'center',
+
+            justifyContent:
+                'center',
+
+            paddingVertical:
+                4,
+
+        },
+
+        calendarDay: {
+
+            width:
+                42,
+
+            height:
+                42,
+
+            justifyContent:
+                'center',
+
+            alignItems:
+                'center',
+
+            borderRadius:
+                12,
+
+            position:
+                'relative',
+
+        },
+
+        /*
+         * Día que tiene uno o más
+         * exámenes disponibles.
+         */
+
+        calendarDayAvailable: {
+
+            backgroundColor:
+                '#DDF3FA',
+
+            borderWidth:
+                1,
+
+            borderColor:
+                '#B8E3F0',
+
+        },
+
+        /*
+         * Día seleccionado.
+         */
+
+        calendarDaySelected: {
+
+            backgroundColor:
+                '#2563EB',
+
+            borderColor:
+                '#2563EB',
+
+        },
+
+        calendarDayText: {
+
+            fontSize:
+                14,
+
+            fontWeight:
+                '600',
+
+            color:
+                '#334155',
+
+        },
+
+        calendarDayDisabledText: {
+
+            color:
+                '#CBD5E1',
+
+            fontWeight:
+                '400',
+
+        },
+
+        calendarDaySelectedText: {
+
+            color:
+                '#FFFFFF',
+
+            fontWeight:
+                '700',
+
+        },
+
+        /*
+         * Número de exámenes cuando
+         * hay más de uno en un día.
+         */
+
+        calendarExamCount: {
+
+            position:
+                'absolute',
+
+            top:
+                -5,
+
+            right:
+                -5,
+
+            minWidth:
+                17,
+
+            height:
+                17,
+
+            paddingHorizontal:
+                3,
+
+            justifyContent:
+                'center',
+
+            alignItems:
+                'center',
+
+            borderRadius:
+                9,
+
+            backgroundColor:
+                '#0F766E',
+
+            borderWidth:
+                2,
+
+            borderColor:
+                '#FFFFFF',
+
+        },
+
+        calendarExamCountText: {
+
+            fontSize:
+                9,
+
+            fontWeight:
+                '700',
+
+            color:
+                '#FFFFFF',
+
+        },
+
+        /*
+         * Pie del calendario
+         */
+
+        calendarFooter: {
+
+            flexDirection:
+                'row',
+
+            alignItems:
+                'center',
+
+            justifyContent:
+                'flex-end',
+
+            gap:
+                12,
+
+            paddingHorizontal:
+                20,
+
+            paddingTop:
+                16,
+
+            paddingBottom:
+                20,
+
+            borderTopWidth:
+                1,
+
+            borderTopColor:
+                '#E2E8F0',
+
+            backgroundColor:
+                '#F8FAFC',
+
+        },
+
+        calendarClearButton: {
+
+            minWidth:
+                125,
+
+            height:
+                44,
+
+            justifyContent:
+                'center',
+
+            alignItems:
+                'center',
+
+            paddingHorizontal:
+                18,
+
+            borderRadius:
+                10,
+
+            borderWidth:
+                1,
+
+            borderColor:
+                '#CBD5E1',
+
+            backgroundColor:
+                '#FFFFFF',
+
+        },
+
+        calendarClearButtonText: {
+
+            fontSize:
+                14,
+
+            fontWeight:
+                '600',
+
+            color:
+                '#475569',
+
+        },
+
+        calendarApplyButton: {
+
+            minWidth:
+                105,
+
+            height:
+                44,
+
+            justifyContent:
+                'center',
+
+            alignItems:
+                'center',
+
+            paddingHorizontal:
+                20,
+
+            borderRadius:
+                10,
+
+            backgroundColor:
+                '#2563EB',
+
+        },
+
+        calendarApplyButtonText: {
+
+            fontSize:
+                14,
+
+            fontWeight:
+                '700',
+
+            color:
+                '#FFFFFF',
+
+        },
     });

@@ -25,6 +25,7 @@ import {
 
 import {
     ExamHistoryBody,
+    ExamHistoryCalendar,
     ExamHistoryHeader,
 } from '../components/ExamHistory';
 
@@ -78,9 +79,9 @@ export function ExamHistoryScreen() {
 
         allTests,
 
-        loading,
+        // loading,
 
-        error,
+        // error,
 
         oppositionOptions,
 
@@ -88,7 +89,13 @@ export function ExamHistoryScreen() {
 
         selectedDates,
 
-        setSelectedOppositionId,
+        availableDateKeys,
+
+        handleOppositionChange,
+
+        toggleDate,
+
+        clearDates,
 
         reload,
 
@@ -275,7 +282,7 @@ export function ExamHistoryScreen() {
                     }
 
                     onOppositionChange={
-                        setSelectedOppositionId
+                        handleOppositionChange
                     }
 
                     onOpenDatePicker={() => {
@@ -302,6 +309,41 @@ export function ExamHistoryScreen() {
 
             </ScrollView>
 
+            <ExamHistoryCalendar
+
+                visible={
+                    datePickerVisible
+                }
+
+                tests={
+                    allTests
+                }
+
+                selectedDates={
+                    selectedDates
+                }
+
+                availableDateKeys={
+                    availableDateKeys
+                }
+
+                onToggleDate={
+                    toggleDate
+                }
+
+                onClearDates={
+                    clearDates
+                }
+
+                onClose={() => {
+
+                    setDatePickerVisible(
+                        false,
+                    );
+
+                }}
+
+            />
         </ScreenLayout>
 
     );
