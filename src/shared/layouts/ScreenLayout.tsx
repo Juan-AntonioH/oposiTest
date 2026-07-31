@@ -1,7 +1,20 @@
-import React, { useState } from 'react';
-import { View } from 'react-native';
+import React, {
+  useCallback,
+  useState,
+} from 'react';
+
+import {
+  Alert,
+  BackHandler,
+  Platform,
+  View,
+} from 'react-native';
+
+import {
+  useFocusEffect,
+  useNavigation,
+} from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useNavigation } from '@react-navigation/native';
 import { resolveAvatar } from '@/features/auth/utils/avatarResolver';
 import { Toolbar } from '@/shared/components/toolbar/ToolBar';
 import { Sidebar } from '@/shared/components/sidebar/Sidebar';
@@ -34,7 +47,65 @@ export function ScreenLayout({
   const isLoggedIn = status === 'authenticated';
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  useFocusEffect(
 
+    useCallback(() => {
+
+      if (Platform.OS !== 'android') {
+        return;
+      }
+
+      const subscription =
+        BackHandler.addEventListener(
+
+          'hardwareBackPress',
+
+          () => {
+
+            Alert.alert(
+
+              'Salir de OposiTest',
+
+              '¿Quieres salir de la aplicación?',
+
+              [
+
+                {
+                  text: 'Cancelar',
+                  style: 'cancel',
+                },
+
+                {
+                  text: 'Salir',
+                  style: 'destructive',
+
+                  onPress: () => {
+
+                    BackHandler.exitApp();
+
+                  },
+
+                },
+
+              ],
+
+            );
+
+            return true;
+
+          },
+
+        );
+
+      return () => {
+
+        subscription.remove();
+
+      };
+
+    }, []),
+
+  );
   // =========================
   // NAVIGATION
   // =========================

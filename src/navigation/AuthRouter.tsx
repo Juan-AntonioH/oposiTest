@@ -1,14 +1,5 @@
 import React from 'react';
-import {
-    useEffect,
-} from 'react';
-import { ActivityIndicator, View } from 'react-native';
 import { RootStackParamList } from '@/navigation/types';
-import {
-    Alert,
-    BackHandler,
-    Platform,
-} from 'react-native';
 import { useAuthStore } from '@/store/authStore';
 
 import { LoginScreen } from '@/features/auth/screens/LoginScreen';
@@ -36,84 +27,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export function AuthRouter() {
     const status = useAuthStore((s) => s.status);
-    useEffect(() => {
-
-        if (
-            Platform.OS !==
-            'android'
-        ) {
-
-            return;
-
-        }
-
-        const subscription =
-
-            BackHandler.addEventListener(
-
-                'hardwareBackPress',
-
-                () => {
-
-                    Alert.alert(
-
-                        'Salir de OposiTest',
-
-                        '¿Quieres salir de la aplicación?',
-
-                        [
-
-                            {
-
-                                text:
-                                    'Cancelar',
-
-                                style:
-                                    'cancel',
-
-                            },
-
-                            {
-
-                                text:
-                                    'Salir',
-
-                                style:
-                                    'destructive',
-
-                                onPress: () => {
-
-                                    BackHandler.exitApp();
-
-                                },
-
-                            },
-
-                        ],
-
-                    );
-
-                    return true;
-
-                },
-
-            );
-
-        return () => {
-
-            subscription.remove();
-
-        };
-
-    }, []);
-    if (status === 'loading') {
-        return (
-            <View style={{ flex: 1, justifyContent: 'center' }}>
-                <ActivityIndicator />
-            </View>
-        );
-    }
-
+    
     // 🔓 NO LOGEADO
     if (status === 'unauthenticated') {
         return (
