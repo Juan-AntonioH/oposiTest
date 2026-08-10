@@ -345,7 +345,7 @@ export function AnimatedSplash({
 
                         source={
                             require(
-                                '@assets/images/app_logo.webp'
+                                '@assets/images/app_logo.png'
                             )
                         }
 

@@ -1085,7 +1085,7 @@ export const styles = StyleSheet.create({
         marginBottom: 12,
     },
     answerNumber: {
-        fontSize: 12,
+        fontSize: 10,
         fontWeight: '700',
     },
     answerCircleCorrect: {

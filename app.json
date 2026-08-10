@@ -4,8 +4,13 @@
     "slug": "opositest",
     "version": "1.0.23",
     "orientation": "portrait",
-    "icon": "./assets/images/app_logo.webp",
+    "icon": "./assets/images/app_logo.png",
     "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/images/app_logo.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FFFFFF"
+    },
     "ios": {
       "supportsTablet": true
     },
@@ -15,15 +20,25 @@
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/images/app_logo.webp"
+        "foregroundImage": "./assets/images/app_logo.png"
       },
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.opositest.app"
     },
     "web": {
-      "favicon": "./assets/images/app_logo.webp"
+      "favicon": "./assets/images/app_logo.png"
     },
     "plugins": [
-      "expo-router"
-    ]
+      "expo-router",
+      "expo-font",
+      "expo-splash-screen"
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "967886a0-3b45-4ebf-a3ea-abe17c8076e6"
+      }
+    },
+    "owner": "juan_antoni"
   }
 }
