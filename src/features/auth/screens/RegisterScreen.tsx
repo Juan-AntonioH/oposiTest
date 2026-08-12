@@ -8,7 +8,7 @@ import { PasswordRequirements } from '../components/PasswordRequirements';
 import { EmailRequirements } from '../components/EmailRequirements';
 import { styles } from '../styles/Auth.styles';
 import { useRegister } from '../hooks/useRegister';
-import { colors } from '@/core/theme';
+import { colors, commonStyles } from '@/core/theme';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@/navigation/types';
@@ -27,20 +27,9 @@ export function RegisterScreen() {
           <Text style={styles.backButtonText}>← Volver</Text>
         </Pressable>
       </View>
-      {/* 🔥 OVERLAY LOADING (CORRECTO) */}
       {state.loading && (
         <View
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: 'rgba(0,0,0,0.45)',
-            justifyContent: 'center',
-            alignItems: 'center',
-            zIndex: 999,
-          }}
+          style={commonStyles.overlay}
         >
           <ActivityIndicator size="large" color="#fff" />
           <Text style={{ color: '#fff', marginTop: 15 }}>
@@ -53,19 +42,12 @@ export function RegisterScreen() {
 
         <AuthCard title="Registro">
 
-          {/* AVATAR ✔ CORRECTO */}
           <AvatarSelector
             selectedAvatarId={state.selectedAvatarId}
             customAvatarUri={state.customAvatarUri} // 
             onSelectAvatar={actions.setSelectedAvatarId}
             onPickImage={actions.handlePickImage} // 🔥 Ahora ejecuta la apertura de la galería
           />
-          {/* <AvatarSelector
-            selectedAvatarId={state.selectedAvatarId}
-            customAvatarUri={null}
-            onSelectAvatar={actions.setSelectedAvatarId}
-            onPickImage={() => { }}
-          /> */}
 
           <AuthInput
             label="Nombre visible"

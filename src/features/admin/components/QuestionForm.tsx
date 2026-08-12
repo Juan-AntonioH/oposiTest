@@ -17,7 +17,6 @@ import {
 
 import {
     Alert,
-    Pressable,
     ScrollView,
     Text,
     TextInput,
@@ -30,10 +29,6 @@ import {
 } from 'react-native-element-dropdown';
 
 import {
-    MaterialCommunityIcons,
-} from '@expo/vector-icons';
-
-import {
     Question,
 } from '../types/question';
 
@@ -42,6 +37,7 @@ import {
 } from '@/features/exam/styles/exam.styles';
 import { buildQuestion } from '../utils/questionMapper';
 import { useOppositionStructure } from '@/features/exam/hooks/useOppositionStructure';
+import { QuestionOptions } from './QuestionOptions';
 
 interface QuestionFormProps {
 
@@ -147,13 +143,7 @@ export function QuestionForm({
         blockId,
 
     );
-
-    // const blockItems =
-    //     buildBlockItems(blockId);
-
-    // const themeItems =
-    //     buildThemeItems(themeId);
-
+    
     /* -------------------------------------------------------------------------- */
     /*                                  HANDLERS                                  */
     /* -------------------------------------------------------------------------- */
@@ -309,39 +299,10 @@ export function QuestionForm({
 
                     {/* ----------------------------- OPCIONES ----------------------------- */}
 
-                    <Text style={styles.label}>
-                        Opciones de respuesta *
-                    </Text>
-
-                    {options.map((option, index) => (
-
-                        <View
-                            key={index}
-                            style={styles.optionContainer}
-                        >
-
-                            <View style={styles.optionBadge}>
-
-                                <Text style={styles.optionBadgeText}>
-                                    {String.fromCharCode(65 + index)}
-                                </Text>
-
-                            </View>
-
-                            <TextInput
-                                style={styles.optionInput}
-                                value={option}
-                                onChangeText={(text) =>
-                                    updateOption(index, text)
-                                }
-                                placeholder={`Texto respuesta ${String.fromCharCode(65 + index)}`}
-                                multiline
-                                numberOfLines={3}
-                            />
-
-                        </View>
-
-                    ))}
+                    <QuestionOptions
+                        options={options}
+                        updateOption={updateOption}
+                    />
 
                     {/* ---------------------- RESPUESTA CORRECTA ----------------------- */}
 

@@ -16,13 +16,6 @@ export function AvatarSelector({
   onSelectAvatar,
   onPickImage,
 }: Props) {
-
-  // const currentPreset = PRESET_AVATARS.find(avatar => avatar.id === selectedAvatarId);
-
-  // // Si existe una URI física del dispositivo se prioriza, si no, usa el banco estático
-  // const imageSource = customAvatarUri
-  //   ? { uri: customAvatarUri }
-  //   : (currentPreset?.image || PRESET_AVATARS[0].image);
   const [imageSource, setImageSource] = useState<any>(PRESET_AVATARS[0].image);
 
   useEffect(() => {

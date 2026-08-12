@@ -18,16 +18,14 @@ export function useLogin() {
         setError(null);
 
         try {
-            const user = await authFacade.login(identifier, password);
+            await authFacade.login(identifier, password);
 
-            // 👉 SOLO navegar (Firebase Store ya se encarga del estado global)
             navigation.reset({
                 index: 0,
                 routes: [{ name: 'Dashboard' }],
             });
         } catch (err: any) {
             if (err.message === 'EMAIL_NOT_VERIFIED') {
-                // navigation.navigate('Authenticator', { email: identifier });
                 return;
             }
 

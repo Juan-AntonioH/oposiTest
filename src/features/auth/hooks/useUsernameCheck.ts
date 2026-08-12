@@ -16,7 +16,7 @@ export function useUsernameCheck(accountName: string) {
         const timeout = setTimeout(async () => {
             setStatus('checking');
 
-            const exists = await isUsernameTaken(accountName); // ✔ FIX REAL
+            const exists = await isUsernameTaken(accountName);
 
             setStatus(exists ? 'taken' : 'available');
         }, 500);

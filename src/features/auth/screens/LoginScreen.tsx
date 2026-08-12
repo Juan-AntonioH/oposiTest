@@ -12,12 +12,11 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 import { ScreenLayout } from '@/shared/layouts/ScreenLayout';
 import { CustomButton } from '@/shared/components/Button/CustomButton';
-import { colors } from '@/core/theme';
+import { colors, commonStyles } from '@/core/theme';
 import { styles } from '../styles/Auth.styles';
 import { authFacade } from '../services/authFacade';
 import { handleAuthError } from '../utils/authErrors';
 import Toast from 'react-native-toast-message';
-import { auth } from '@/core/config/firebase';
 
 export const LoginScreen = () => {
   const navigation = useNavigation<any>();
@@ -57,17 +56,7 @@ export const LoginScreen = () => {
       {/* 🔥 OVERLAY DE CARGA */}
       {loading && (
         <View
-          style={{
-            position: 'absolute',
-            top: 100,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: 'rgba(0,0,0,0.4)',
-            justifyContent: 'center',
-            alignItems: 'center',
-            zIndex: 999,
-          }}
+          style={commonStyles.overlay}
         >
           <ActivityIndicator size="large" color="#fff" />
           <Text style={{ color: 'white', marginTop: 10 }}>
@@ -143,7 +132,7 @@ export const LoginScreen = () => {
             <TouchableOpacity
               onPress={() => navigation.navigate('Recovery')}
             >
-              <Text style={[styles.forgot, { color: colors.danger }]}>
+              <Text style={[styles.forgot, { color: colors.errorDark }]}>
                 ¿Olvidaste tu contraseña?
               </Text>
             </TouchableOpacity>

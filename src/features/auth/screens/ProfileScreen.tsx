@@ -15,9 +15,9 @@ import { AuthInput } from '@/features/auth/components/AuthInput';
 import { AvatarSelector } from '@/features/auth/components/AvatarSelector';
 
 import { styles } from '@/features/auth/styles/Auth.styles';
-import { colors } from '@/core/theme';
+import { colors, commonStyles } from '@/core/theme';
 
-import { useProfile } from '../hooks/useProfile';
+import { useProfile } from '../hooks/useProfile/useProfile';
 
 export function ProfileScreen() {
     const navigation = useNavigation<any>();
@@ -37,17 +37,7 @@ export function ProfileScreen() {
             {/* LOADING */}
             {state.loading && (
                 <View
-                    style={{
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
-                        backgroundColor: 'rgba(0,0,0,0.45)',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        zIndex: 999,
-                    }}
+                    style={commonStyles.overlay}
                 >
                     <ActivityIndicator size="large" color="#fff" />
 
@@ -144,7 +134,7 @@ export function ProfileScreen() {
 
                     <Pressable
                         style={{
-                            backgroundColor: colors.warning,
+                            backgroundColor: colors.errorDark,
                             padding: 14,
                             borderRadius: 8,
                             marginTop: 15,
@@ -164,7 +154,7 @@ export function ProfileScreen() {
 
                     <Pressable
                         style={{
-                            backgroundColor: colors.danger,
+                            backgroundColor: colors.warning,
                             padding: 14,
                             borderRadius: 8,
                             marginTop: 15,
