@@ -18,11 +18,11 @@ import {
 
 import {
     useExamSummary,
-} from '../hooks/useExamSummary';
+} from '../hooks/summary/useExamSummary';
 
 import {
     useSummaryActions,
-} from '../hooks/useSummaryActions';
+} from '../hooks/summary/useSummaryActions';
 
 import {
     SummaryHeader,
@@ -30,10 +30,7 @@ import {
     AnswersMap,
     SummaryFooter,
 } from '../components';
-
-import {
-    styles,
-} from '../styles/exam.styles';
+import { summaryStyles } from '../styles/examSummary.styles';
 
 interface ExamSummaryScreenProps {
 
@@ -119,11 +116,11 @@ export function ExamSummaryScreen({
             <ScrollView
 
                 style={
-                    styles.summaryContainer
+                    summaryStyles.summaryContainer
                 }
 
                 contentContainerStyle={
-                    styles.summaryContent
+                    summaryStyles.summaryContent
                 }
 
                 showsVerticalScrollIndicator={

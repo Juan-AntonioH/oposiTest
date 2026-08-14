@@ -6,17 +6,17 @@ import {
 
 import {
     getBlocks,
-} from '../services/oppositionService';
+} from '../../services/oppositionService';
 
 import {
     getThemeQuestionCount,
-} from '../services/questionService';
+} from '../../services/questionService';
 
 import {
     Block,
     ThemeWithCount,
     SelectedTheme,
-} from '../types';
+} from '../../types';
 
 export interface ThemeGroup {
 

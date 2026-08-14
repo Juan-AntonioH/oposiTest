@@ -6,7 +6,7 @@ import {
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { styles } from '../../styles/exam.styles';
+import { testStyles } from '../../styles';
 
 interface ExplanationCardProps {
     explanation?: string;
@@ -22,9 +22,9 @@ export function ExplanationCard({
 
     return (
 
-        <View style={styles.explanationCard}>
+        <View style={testStyles.explanationCard}>
 
-            <View style={styles.explanationHeader}>
+            <View style={testStyles.explanationHeader}>
 
                 <MaterialCommunityIcons
                     name="lightbulb-on-outline"
@@ -32,13 +32,13 @@ export function ExplanationCard({
                     color="#2563EB"
                 />
 
-                <Text style={styles.explanationTitle}>
+                <Text style={testStyles.explanationTitle}>
                     Explicación
                 </Text>
 
             </View>
 
-            <Text style={styles.explanationText}>
+            <Text style={testStyles.explanationText}>
                 {explanation}
             </Text>
 

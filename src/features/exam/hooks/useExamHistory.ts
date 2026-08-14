@@ -479,31 +479,21 @@ export function useExamHistory({
 
     return {
 
-        // Datos
-
         tests,
 
         allTests,
-
-        // Estados
 
         loading,
 
         error,
 
-        // Opciones
-
         oppositionOptions,
-
-        // Filtros
 
         selectedOppositionId,
 
         selectedDates,
 
         availableDateKeys,
-
-        // Acciones
 
         handleOppositionChange,
 

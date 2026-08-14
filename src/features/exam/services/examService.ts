@@ -9,7 +9,6 @@ export const examService = {
   getOposicionesActivas: async (): Promise<Oposicion[]> => {
     try {
       const oposicionesRef = collection(db, 'oppositions');
-      // Filtramos directamente en la consulta de Firestore por rendimiento
       const q = query(oposicionesRef, where('activo', '==', true));
       const querySnapshot = await getDocs(q);
       
@@ -18,7 +17,7 @@ export const examService = {
       querySnapshot.forEach((doc) => {
         const data = doc.data();
         oposiciones.push({
-          idDocumento: doc.id, // Capturamos el ID del documento de Firestore
+          idDocumento: doc.id,
           id: data.id,
           nombre: data.nombre,
           descripcion: data.descripcion,

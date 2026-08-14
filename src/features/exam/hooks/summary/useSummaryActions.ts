@@ -18,15 +18,15 @@ import { RootStackParamList } from '@/navigation/types';
 
 import {
     CompletedTest,
-} from '../types';
+} from '../../types';
 
 import {
     useSaveCompletedTest,
-} from './useSaveCompletedTest';
+} from '../useSaveCompletedTest';
 
 import {
     useTestStore,
-} from '../store/useTestStore';
+} from '../../store/useTestStore';
 
 type NavigationProp =
     NativeStackNavigationProp<RootStackParamList>;

@@ -12,10 +12,8 @@ import {
 import {
     CompletedTest,
 } from '../../types';
-
-import {
-    styles,
-} from '../../styles/exam.styles';
+import { summaryStyles } from '../../styles/examSummary.styles';
+import { styles } from '../../styles/exam.styles';
 
 interface SummaryHeaderProps {
 
@@ -49,7 +47,7 @@ export function SummaryHeader({
                 {summary.oppositionName}
             </Text>
 
-            <Text style={styles.examName}>
+            <Text style={summaryStyles.examName}>
                 {summary.examName}
             </Text>
 

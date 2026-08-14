@@ -34,9 +34,9 @@ import {
 
 import {
     styles,
-} from '@/features/exam/styles/exam.styles';
+} from '../styles/questionForm.styles';
 import { buildQuestion } from '../utils/questionMapper';
-import { useOppositionStructure } from '@/features/exam/hooks/useOppositionStructure';
+import { useOppositionStructure } from '@/features/exam/hooks/opposition/useOppositionStructure';
 import { QuestionOptions } from './QuestionOptions';
 
 interface QuestionFormProps {
@@ -143,7 +143,7 @@ export function QuestionForm({
         blockId,
 
     );
-    
+
     /* -------------------------------------------------------------------------- */
     /*                                  HANDLERS                                  */
     /* -------------------------------------------------------------------------- */

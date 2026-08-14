@@ -60,13 +60,7 @@ export function handleAuthError(error: any) {
                 text2: 'Elige otro nombre de cuenta.',
             });
             break;
-        // default:
-        //     Toast.show({
-        //         type: 'error',
-        //         text1: 'Error de inicio de sesión',
-        //         text2: 'Inténtalo más tarde',
-        //     });
-        //     break;
+
         default:
             console.error(error);
 

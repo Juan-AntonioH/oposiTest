@@ -4,7 +4,6 @@ import {
     query,
     QueryConstraint,
     where,
-    orderBy,
 } from 'firebase/firestore';
 
 import { db } from '@/core/config/firebase';
@@ -19,10 +18,6 @@ const questionsCollection = collection(
     'questions',
 );
 
-/**
- * Public function.
- * Loads questions depending on the exam type.
- */
 export async function loadQuestions(
     filters: QuestionFilters,
 ): Promise<Question[]> {
@@ -80,11 +75,6 @@ async function loadOfficialQuestions(
     if (!convocatoria) {
         throw new Error('Exam convocatoria is required.');
     }
-
-    // 👇 AÑADE ESTO
-    const allQuestions = await getDocs(
-        questionsCollection,
-    );
 
     const constraints: QueryConstraint[] = [
         where('oppositionId', '==', oppositionId),

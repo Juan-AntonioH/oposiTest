@@ -5,12 +5,9 @@ import {
     View,
 } from 'react-native';
 
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-
-import { styles } from '../../styles/exam.styles';
+import { testStyles, styles, blockStyles } from '../../styles';
 
 interface TestHeaderProps {
-    // title: string;
     subtitle?: string;
     onExit: () => void;
 }
@@ -25,17 +22,13 @@ export function TestHeader({
 
         <View style={styles.headerContainer}>
 
-            <View style={styles.headerTopRow}>
+            <View style={blockStyles.headerTopRow}>
 
                 <View style={{ flex: 1 }}>
 
-                    {/* <Text style={styles.headerTitle}>
-                        {title}
-                    </Text> */}
-
                     {subtitle && (
 
-                        <Text style={styles.headerSubtitle}>
+                        <Text style={blockStyles.headerSubtitle}>
                             {subtitle}
                         </Text>
 
@@ -44,17 +37,12 @@ export function TestHeader({
                 </View>
 
                 <Pressable
-                    style={styles.closeButton}
+                    style={blockStyles.closeButton}
                     onPress={onExit}
                 >
-                    <Text style={styles.closeButton}>
+                    <Text style={blockStyles.closeButton}>
                         Finalizar Test
                     </Text>
-                    {/* <MaterialCommunityIcons
-                        name="close"
-                        size={24}
-                        color="#FFFFFF"
-                    /> */}
 
                 </Pressable>
 

@@ -4,11 +4,7 @@ import {
     Text,
     View,
 } from 'react-native';
-
-import {
-    styles,
-} from '../styles/exam.styles';
-
+import { blockStyles } from '../styles/examBlock.styles';
 import {
     ThemeItem,
 } from './ThemeItem';
@@ -63,7 +59,7 @@ export function ThemeGroupList({
 
                         style={[
 
-                            styles.blockRowTitle,
+                            blockStyles.blockRowTitle,
 
                             {
 
@@ -89,7 +85,7 @@ export function ThemeGroupList({
 
                         style={[
 
-                            styles.blocksContainerCard,
+                            blockStyles.blocksContainerCard,
 
                             {
 

@@ -11,7 +11,6 @@ import {
 
 import {
     mapCompletedTestToFirestore,
-    mapFirestoreToCompletedTest,
 } from '../mappers/completedTestMapper';
 
 const completedTestsCollection =
@@ -40,43 +39,5 @@ export async function saveCompletedTest(
         );
 
     return documentReference.id;
-
-}
-
-/* -------------------------------------------------------------------------- */
-/*                                    READ                                    */
-/* -------------------------------------------------------------------------- */
-
-export async function getCompletedTests(
-    userId: string,
-): Promise<CompletedTest[]> {
-
-    throw new Error(
-        'Not implemented.',
-    );
-
-}
-
-export async function getCompletedTest(
-    completedTestId: string,
-): Promise<CompletedTest | null> {
-
-    throw new Error(
-        'Not implemented.',
-    );
-
-}
-
-/* -------------------------------------------------------------------------- */
-/*                                   DELETE                                   */
-/* -------------------------------------------------------------------------- */
-
-export async function deleteCompletedTest(
-    completedTestId: string,
-): Promise<void> {
-
-    throw new Error(
-        'Not implemented.',
-    );
 
 }

@@ -50,7 +50,7 @@ export function RecoveryScreen() {
             <View style={styles.backButtonContainer}>
                 <Pressable
                     style={styles.backButton}
-                    onPress={() => navigation.goBack()} // ← Te regresa automáticamente a la pantalla anterior (Login)
+                    onPress={() => navigation.goBack()}
                 >
                     <Text style={styles.backButtonText}>← Volver</Text>
                 </Pressable>

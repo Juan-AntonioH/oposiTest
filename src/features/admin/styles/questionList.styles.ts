@@ -7,23 +7,17 @@ export const styles =
 
         filterCard: {
 
-            backgroundColor:
-                '#FFFFFF',
+            backgroundColor: '#FFFFFF',
 
-            padding:
-                16,
+            padding: 16,
 
-            borderRadius:
-                12,
+            borderRadius: 12,
 
-            marginBottom:
-                16,
+            marginBottom: 16,
 
-            borderWidth:
-                1,
+            borderWidth: 1,
 
-            borderColor:
-                '#E2E8F0',
+            borderColor: '#E2E8F0',
 
         },
 

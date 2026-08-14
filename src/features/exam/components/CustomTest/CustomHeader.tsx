@@ -13,6 +13,9 @@ import {
     MaterialCommunityIcons,
 } from '@expo/vector-icons';
 
+import { customStyles } from '../../styles';
+import { colors } from '@/core/theme/colors';
+
 interface CustomHeaderProps {
 
     questionCount: number;
@@ -40,17 +43,12 @@ interface CustomHeaderProps {
 export function CustomHeader({
 
     questionCount,
-
     timeLimit,
-
     immediateSolution,
-
     autoTime,
 
     onQuestionCountChange,
-
     onTimeLimitChange,
-
     onImmediateSolutionChange,
 
 }: CustomHeaderProps) {
@@ -61,538 +59,225 @@ export function CustomHeader({
 
             {/* CONFIGURACIÓN */}
 
-            <View
+            <View style={customStyles.configSection}>
 
-                style={{
-
-                    backgroundColor: '#FFFFFF',
-
-                    padding: 16,
-
-                    borderRadius: 12,
-
-                    marginBottom: 16,
-
-                    borderWidth: 1,
-
-                    borderColor: '#E2E8F0',
-
-                }}
-
-            >
-
-                <Text
-
-                    style={{
-
-                        fontSize: 16,
-
-                        fontWeight: '700',
-
-                        color: '#1E293B',
-
-                        marginBottom: 16,
-
-                    }}
-
-                >
-
+                <Text style={customStyles.configSectionTitle}>
                     Configuración del test
-
                 </Text>
 
                 {/* Nº PREGUNTAS */}
 
-                <Text
-
-                    style={{
-
-                        fontSize: 14,
-
-                        color: '#64748B',
-
-                        marginBottom: 6,
-
-                    }}
-
-                >
-
+                <Text style={customStyles.configLabel}>
                     <MaterialCommunityIcons
-
                         name="format-list-numbered"
-
                         size={14}
-
                     />
-
                     {' '}Número de preguntas
-
                 </Text>
 
-                <View
-
-                    style={{
-
-                        flexDirection: 'row',
-
-                        alignItems: 'center',
-
-                        borderWidth: 1,
-
-                        borderColor: '#CBD5E1',
-
-                        borderRadius: 8,
-
-                        marginBottom: 14,
-
-                        paddingHorizontal: 12,
-
-                        height: 48,
-
-                    }}
-
-                >
+                <View style={customStyles.numberInputContainer}>
 
                     <TextInput
-
-                        style={{
-
-                            flex: 1,
-
-                            color: '#1E293B',
-
-                            fontSize: 16,
-
-                            fontWeight: '500',
-
-                        }}
-
+                        style={customStyles.numberInput}
                         keyboardType="numeric"
-
                         value={String(questionCount)}
-
                         onChangeText={(text) =>
-
                             onQuestionCountChange(
-
                                 Number(
-
                                     text.replace(
-
                                         /[^0-9]/g,
-
                                         '',
-
                                     ),
-
                                 ),
-
                             )
-
                         }
-
                     />
 
-                    <View
-
-                        style={{
-
-                            flexDirection: 'column',
-
-                            justifyContent: 'center',
-
-                            height: '100%',
-
-                        }}
-
-                    >
+                    <View style={customStyles.numberInputControls}>
 
                         <Pressable
-
                             onPress={() =>
-
                                 onQuestionCountChange(
-
                                     questionCount + 1,
-
                                 )
-
                             }
-
-                            style={{
-
-                                padding: 2,
-
-                            }}
-
+                            style={customStyles.numberInputButton}
                         >
-
                             <Ionicons
-
                                 name="chevron-up"
-
                                 size={16}
-
                                 color="#64748B"
-
                             />
-
                         </Pressable>
 
                         <Pressable
-
                             onPress={() =>
-
                                 onQuestionCountChange(
-
                                     questionCount - 1,
-
                                 )
-
                             }
-
-                            style={{
-
-                                padding: 2,
-
-                            }}
-
+                            style={customStyles.numberInputButton}
                         >
-
                             <Ionicons
-
                                 name="chevron-down"
-
                                 size={16}
-
                                 color="#64748B"
-
                             />
-
                         </Pressable>
 
                     </View>
 
                 </View>
-
-                {/* TIEMPO */}
-
-                <Text
-
-                    style={{
-
-                        fontSize: 14,
-
-                        color: '#64748B',
-
-                        marginBottom: 6,
-
-                    }}
-
-                >
-
-                    <Ionicons
-
-                        name="time-outline"
-
-                        size={14}
-
-                    />
-
-                    {' '}Tiempo (minutos)
-
-                </Text>
-
-                <View
-
-                    style={{
-
-                        flexDirection: 'row',
-
-                        alignItems: 'center',
-
-                        borderWidth: 1,
-
-                        borderColor: '#CBD5E1',
-
-                        borderRadius: 8,
-
-                        paddingHorizontal: 12,
-
-                        height: 48,
-
-                    }}
-
-                >
-
-                    <TextInput
-
-                        style={{
-
-                            flex: 1,
-
-                            color: '#1E293B',
-
-                            fontSize: 16,
-
-                            fontWeight: '500',
-
-                        }}
-
-                        keyboardType="numeric"
-
-                        value={String(timeLimit)}
-
-                        onChangeText={(text) =>
-
-                            onTimeLimitChange(
-
-                                Number(
-
-                                    text.replace(
-
-                                        /[^0-9]/g,
-
-                                        '',
-
-                                    ),
-
-                                ),
-
-                            )
-
-                        }
-
-                    />
-
-                    <View
-
-                        style={{
-
-                            flexDirection: 'column',
-
-                            justifyContent: 'center',
-
-                            height: '100%',
-
-                        }}
-
-                    >
-
-                        <Pressable
-
-                            onPress={() =>
-
-                                onTimeLimitChange(
-
-                                    timeLimit + 1,
-
-                                )
-
-                            }
-
-                            style={{
-
-                                padding: 2,
-
-                            }}
-
-                        >
-
-                            <Ionicons
-
-                                name="chevron-up"
-
-                                size={16}
-
-                                color="#64748B"
-
-                            />
-
-                        </Pressable>
-
-                        <Pressable
-
-                            onPress={() =>
-
-                                onTimeLimitChange(
-
-                                    Math.max(
-
-                                        1,
-
-                                        timeLimit - 1,
-
-                                    ),
-
-                                )
-
-                            }
-
-                            style={{
-
-                                padding: 2,
-
-                            }}
-
-                        >
-
-                            <Ionicons
-
-                                name="chevron-down"
-
-                                size={16}
-
-                                color="#64748B"
-
-                            />
-
-                        </Pressable>
-
-                    </View>
-
-                </View>
-
-                <Text
-
-                    style={{
-
-                        fontSize: 12,
-
-                        color: '#94A3B8',
-
-                        marginTop: 6,
-
-                    }}
-
-                >
-
-                    {
-
-                        autoTime
-
-                            ? `Tiempo recomendado: ${questionCount} minutos`
-
-                            : `Tiempo personalizado: ${timeLimit} minutos`
-
-                    }
-
-                </Text>
 
             </View>
 
-            {/* SOLUCIÓN INMEDIATA */}
+            {/* TIEMPO */}
+
+            <Text
+                style={{
+                    fontSize: 14,
+                    color: '#64748B',
+                    marginBottom: 6,
+                }}
+            >
+                <Ionicons
+                    name="time-outline"
+                    size={14}
+                />
+                {' '}Tiempo (minutos)
+            </Text>
 
             <View
-
                 style={{
-
-                    backgroundColor: '#FFFFFF',
-
-                    padding: 14,
-
-                    borderRadius: 12,
-
-                    marginBottom: 16,
-
                     flexDirection: 'row',
-
                     alignItems: 'center',
-
-                    justifyContent: 'space-between',
-
                     borderWidth: 1,
-
-                    borderColor: '#E2E8F0',
-
+                    borderColor: '#CBD5E1',
+                    borderRadius: 8,
+                    paddingHorizontal: 12,
+                    height: 48,
                 }}
-
             >
 
-                <View
-
+                <TextInput
                     style={{
-
-                        flexDirection: 'row',
-
-                        alignItems: 'center',
-
+                        flex: 1,
+                        color: '#1E293B',
+                        fontSize: 16,
+                        fontWeight: '500',
                     }}
+                    keyboardType="numeric"
+                    value={String(timeLimit)}
+                    onChangeText={(text) =>
+                        onTimeLimitChange(
+                            Number(
+                                text.replace(
+                                    /[^0-9]/g,
+                                    '',
+                                ),
+                            ),
+                        )
+                    }
+                />
 
+                <View
+                    style={{
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        height: '100%',
+                    }}
                 >
 
-                    <Ionicons
-
-                        name={
-
-                            immediateSolution
-
-                                ? 'eye-outline'
-
-                                : 'eye-off-outline'
-
+                    <Pressable
+                        onPress={() =>
+                            onTimeLimitChange(
+                                timeLimit + 1,
+                            )
                         }
-
-                        size={20}
-
-                        color={
-
-                            immediateSolution
-
-                                ? '#2F70F2'
-
-                                : '#64748B'
-
-                        }
-
                         style={{
-
-                            marginRight: 8,
-
+                            padding: 2,
                         }}
+                    >
+                        <Ionicons
+                            name="chevron-up"
+                            size={16}
+                            color="#64748B"
+                        />
+                    </Pressable>
 
+                    <Pressable
+                        onPress={() =>
+                            onTimeLimitChange(
+                                Math.max(
+                                    1,
+                                    timeLimit - 1,
+                                ),
+                            )
+                        }
+                        style={{
+                            padding: 2,
+                        }}
+                    >
+                        <Ionicons
+                            name="chevron-down"
+                            size={16}
+                            color="#64748B"
+                        />
+                    </Pressable>
+
+                </View>
+
+            </View>
+
+            <Text
+                style={{
+                    fontSize: 12,
+                    color: '#94A3B8',
+                    marginTop: 6,
+                }}
+            >
+                {
+                    autoTime
+                        ? `Tiempo recomendado: ${questionCount} minutos`
+                        : `Tiempo personalizado: ${timeLimit} minutos`
+                }
+            </Text>
+
+            {/* SOLUCIÓN INMEDIATA */}
+
+            <View style={customStyles.solutionCard}>
+
+                <View style={customStyles.solutionContent}>
+
+                    <Ionicons
+                        name={
+                            immediateSolution
+                                ? 'eye-outline'
+                                : 'eye-off-outline'
+                        }
+                        size={20}
+                        color={
+                            immediateSolution
+                                ? colors.primary
+                                : colors.textSecondary
+                        }
+                        style={customStyles.solutionIcon}
                     />
 
-                    <Text
-
-                        style={{
-
-                            fontSize: 14,
-
-                            fontWeight: '600',
-
-                            color: '#1E293B',
-
-                        }}
-
-                    >
-
+                    <Text style={customStyles.solutionText}>
                         Mostrar solución inmediata
-
                     </Text>
 
                 </View>
 
                 <Switch
-
                     value={immediateSolution}
-
-                    onValueChange={
-
-                        onImmediateSolutionChange
-
-                    }
-
+                    onValueChange={onImmediateSolutionChange}
                     trackColor={{
-
-                        false: '#CBD5E1',
-
-                        true: '#2F70F2',
-
+                        false: colors.border,
+                        true: colors.primary,
                     }}
-
-                    thumbColor="#FFFFFF"
-
+                    thumbColor={colors.white}
                 />
 
             </View>

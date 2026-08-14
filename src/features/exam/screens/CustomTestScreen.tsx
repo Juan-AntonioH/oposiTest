@@ -3,16 +3,15 @@ import { ScrollView, } from 'react-native';
 import { ScreenLayout } from '@/shared/layouts/ScreenLayout';
 import {
     useNavigation,
-    useRoute,
     RouteProp,
 } from '@react-navigation/native';
 import {
     RootStackParamList,
 } from '@/navigation/types';
 import { BackButton } from '@/shared/components/Button/BackButton';
-import { useCustomTest } from '../hooks/useCustomTest';
+import { useCustomTest } from '../hooks/custom/useCustomTest';
 import { CustomBody, CustomFooter, CustomHeader } from '../components/CustomTest';
-import { useCustomSelection } from '../hooks/useCustomSelection';
+import { useCustomSelection } from '../hooks/custom/useCustomSelection';
 import { prepareExam } from '../services/examPreparationService';
 
 interface CustomTestScreenProps {

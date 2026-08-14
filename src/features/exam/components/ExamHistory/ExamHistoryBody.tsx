@@ -14,7 +14,7 @@ import {
 } from './ExamHistoryCard';
 
 import {
-    styles,
+    historyStyles,
 } from '../../styles/examHistory.styles';
 
 interface ExamHistoryBodyProps {
@@ -44,13 +44,13 @@ export function ExamHistoryBody({
 
             <View
                 style={
-                    styles.emptyContainer
+                    historyStyles.emptyContainer
                 }
             >
 
                 <Text
                     style={
-                        styles.emptyTitle
+                        historyStyles.emptyTitle
                     }
                 >
 
@@ -60,7 +60,7 @@ export function ExamHistoryBody({
 
                 <Text
                     style={
-                        styles.emptyText
+                        historyStyles.emptyText
                     }
                 >
 
@@ -80,7 +80,7 @@ export function ExamHistoryBody({
 
         <View
             style={
-                styles.bodyContainer
+                historyStyles.bodyContainer
             }
         >
 

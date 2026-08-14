@@ -5,7 +5,7 @@ import {
 import {
     useNavigation,
 } from '@react-navigation/native';
-import { Question } from '../types';
+import { Question } from '../../types';
 
 export function useReviewActions() {
 

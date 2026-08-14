@@ -25,10 +25,9 @@ import {
 import {
     RootStackParamList,
 } from '@/navigation/types';
-
 import {
-    styles,
-} from '../styles/exam.styles';
+    styles, testStyles,
+} from '../styles';
 
 import {
     useThemes,
@@ -162,7 +161,7 @@ export function ThemesScreen({
             <ScrollView
 
                 contentContainerStyle={
-                    styles.scrollContainer
+                    testStyles.scrollContainer
                 }
 
                 showsVerticalScrollIndicator={
@@ -294,9 +293,9 @@ export function ThemesScreen({
 
                             selectedThemes.length > 0
 
-                                ? styles.primaryButton
+                                ? testStyles.primaryButton
 
-                                : styles.primaryButtonDisabled
+                                : testStyles.primaryButtonDisabled
 
                         }
 
@@ -312,7 +311,7 @@ export function ThemesScreen({
 
                         <Text
                             style={
-                                styles.primaryButtonText
+                                testStyles.primaryButtonText
                             }
                         >
 

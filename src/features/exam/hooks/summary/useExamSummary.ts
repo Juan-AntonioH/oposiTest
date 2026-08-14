@@ -8,16 +8,15 @@ import {
 
 import {
     useTestStore,
-} from '../store/useTestStore';
+} from '../../store/useTestStore';
 
 import {
     buildExamSummary,
-} from '../services/examSummaryService';
+} from '../../services/examSummaryService';
 
 import {
     CompletedAnswer,
-    ExamType,
-} from '../types';
+} from '../../types';
 
 import {
     ExamSummaryParams,

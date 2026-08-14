@@ -15,7 +15,7 @@ import {
 } from '../../types';
 
 import {
-    styles,
+    historyStyles,
 } from '../../styles/examHistory.styles';
 
 interface ExamHistoryCardProps {
@@ -70,7 +70,7 @@ export function ExamHistoryCard({
         <Pressable
 
             style={
-                styles.card
+                historyStyles.card
             }
 
             onPress={
@@ -83,7 +83,7 @@ export function ExamHistoryCard({
 
             <View
                 style={
-                    styles.cardAccent
+                    historyStyles.cardAccent
                 }
             />
 
@@ -91,7 +91,7 @@ export function ExamHistoryCard({
 
             <View
                 style={
-                    styles.cardContent
+                    historyStyles.cardContent
                 }
             >
 
@@ -99,19 +99,19 @@ export function ExamHistoryCard({
 
                 <View
                     style={
-                        styles.cardHeader
+                        historyStyles.cardHeader
                     }
                 >
 
                     <View
                         style={
-                            styles.titleContainer
+                            historyStyles.titleContainer
                         }
                     >
 
                         <View
                             style={
-                                styles.titleRow
+                                historyStyles.titleRow
                             }
                         >
 
@@ -123,7 +123,7 @@ export function ExamHistoryCard({
 
                             <Text
                                 style={
-                                    styles.examName
+                                    historyStyles.examName
                                 }
                                 numberOfLines={
                                     1
@@ -138,7 +138,7 @@ export function ExamHistoryCard({
 
                         <View
                             style={
-                                styles.oppositionRow
+                                historyStyles.oppositionRow
                             }
                         >
 
@@ -150,7 +150,7 @@ export function ExamHistoryCard({
 
                             <Text
                                 style={
-                                    styles.oppositionName
+                                    historyStyles.oppositionName
                                 }
                                 numberOfLines={
                                     1
@@ -177,7 +177,7 @@ export function ExamHistoryCard({
 
                 <View
                     style={
-                        styles.headerSeparator
+                        historyStyles.headerSeparator
                     }
                 />
 
@@ -185,7 +185,7 @@ export function ExamHistoryCard({
 
                 <View
                     style={
-                        styles.cardDetails
+                        historyStyles.cardDetails
                     }
                 >
 
@@ -193,14 +193,14 @@ export function ExamHistoryCard({
 
                     <View
                         style={[
-                            styles.detailColumn,
-                            styles.lastDetailColumn,
+                            historyStyles.detailColumn,
+                            historyStyles.lastDetailColumn,
                         ]}
                     >
 
                         <View
                             style={
-                                styles.detailTopRow
+                                historyStyles.detailTopRow
                             }
                         >
 
@@ -212,7 +212,7 @@ export function ExamHistoryCard({
 
                             <Text
                                 style={
-                                    styles.detailTopText
+                                    historyStyles.detailTopText
                                 }
                                 numberOfLines={
                                     1
@@ -227,7 +227,7 @@ export function ExamHistoryCard({
 
                         <View
                             style={
-                                styles.detailResultRow
+                                historyStyles.detailResultRow
                             }
                         >
 
@@ -239,7 +239,7 @@ export function ExamHistoryCard({
 
                             <Text
                                 style={
-                                    styles.successText
+                                    historyStyles.successText
                                 }
                             >
                                 {
@@ -249,7 +249,7 @@ export function ExamHistoryCard({
 
                             <Text
                                 style={
-                                    styles.resultLabel
+                                    historyStyles.resultLabel
                                 }
                             >
                                 aciertos
@@ -263,13 +263,13 @@ export function ExamHistoryCard({
 
                     <View
                         style={
-                            styles.detailColumn
+                            historyStyles.detailColumn
                         }
                     >
 
                         <View
                             style={
-                                styles.detailTopRow
+                                historyStyles.detailTopRow
                             }
                         >
 
@@ -281,7 +281,7 @@ export function ExamHistoryCard({
 
                             <Text
                                 style={
-                                    styles.detailTopText
+                                    historyStyles.detailTopText
                                 }
                             >
                                 {
@@ -295,7 +295,7 @@ export function ExamHistoryCard({
 
                         <View
                             style={
-                                styles.detailResultRow
+                                historyStyles.detailResultRow
                             }
                         >
 
@@ -307,7 +307,7 @@ export function ExamHistoryCard({
 
                             <Text
                                 style={
-                                    styles.errorText
+                                    historyStyles.errorText
                                 }
                             >
                                 {
@@ -317,7 +317,7 @@ export function ExamHistoryCard({
 
                             <Text
                                 style={
-                                    styles.resultLabel
+                                    historyStyles.resultLabel
                                 }
                             >
                                 errores
@@ -331,13 +331,13 @@ export function ExamHistoryCard({
 
                     <View
                         style={
-                            styles.detailColumn
+                            historyStyles.detailColumn
                         }
                     >
 
                         <View
                             style={
-                                styles.detailTopRow
+                                historyStyles.detailTopRow
                             }
                         >
 
@@ -349,7 +349,7 @@ export function ExamHistoryCard({
 
                             <Text
                                 style={
-                                    styles.detailTopText
+                                    historyStyles.detailTopText
                                 }
                             >
                                 {
@@ -361,7 +361,7 @@ export function ExamHistoryCard({
 
                         <View
                             style={
-                                styles.detailResultRow
+                                historyStyles.detailResultRow
                             }
                         >
 
@@ -373,7 +373,7 @@ export function ExamHistoryCard({
 
                             <Text
                                 style={
-                                    styles.unansweredText
+                                    historyStyles.unansweredText
                                 }
                             >
                                 {
@@ -383,7 +383,7 @@ export function ExamHistoryCard({
 
                             <Text
                                 style={
-                                    styles.resultLabel
+                                    historyStyles.resultLabel
                                 }
                                 numberOfLines={
                                     1
@@ -402,13 +402,13 @@ export function ExamHistoryCard({
 
                 <View
                     style={
-                        styles.noteContainer
+                        historyStyles.noteContainer
                     }
                 >
 
                     <Text
                         style={
-                            styles.noteLabel
+                            historyStyles.noteLabel
                         }
                     >
                         Nota:
@@ -416,7 +416,7 @@ export function ExamHistoryCard({
 
                     <Text
                         style={
-                            styles.noteValue
+                            historyStyles.noteValue
                         }
                     >
                         {

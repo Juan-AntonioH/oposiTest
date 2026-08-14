@@ -9,7 +9,7 @@ import {
 
 import {
     styles,
-} from '@/features/exam/styles/exam.styles';
+} from '../styles/questionForm.styles';
 
 interface QuestionOptionsProps {
 

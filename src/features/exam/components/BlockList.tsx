@@ -15,8 +15,8 @@ import {
 } from '@expo/vector-icons';
 
 import {
-    styles,
-} from '@/features/exam/styles/exam.styles';
+    blockStyles, styles, testStyles
+} from '@/features/exam/styles';
 
 import {
     Block,
@@ -94,7 +94,7 @@ export function BlockList({
         <>
             <ScrollView
                 contentContainerStyle={
-                    styles.scrollContainer
+                    testStyles.scrollContainer
                 }
                 showsVerticalScrollIndicator={false}
             >
@@ -154,13 +154,13 @@ export function BlockList({
 
                 <View
                     style={
-                        styles.blocksContainerCard
+                        blockStyles.blocksContainerCard
                     }
                 >
 
                     <Text
                         style={
-                            styles.blocksContainerSubtitle
+                            blockStyles.blocksContainerSubtitle
                         }
                     >
 
@@ -185,10 +185,10 @@ export function BlockList({
 
                                     style={[
 
-                                        styles.blockRowCard,
+                                        blockStyles.blockRowCard,
 
                                         selected &&
-                                        styles.blockRowCardSelected,
+                                        blockStyles.blockRowCardSelected,
 
                                     ]}
 
@@ -219,7 +219,7 @@ export function BlockList({
 
                                     <View
                                         style={
-                                            styles.blockGridIconBox
+                                            blockStyles.blockGridIconBox
                                         }
                                     >
 
@@ -239,7 +239,7 @@ export function BlockList({
 
                                         <Text
                                             style={
-                                                styles.blockRowTitle
+                                                blockStyles.blockRowTitle
                                             }
                                         >
 
@@ -249,7 +249,7 @@ export function BlockList({
 
                                         <Text
                                             style={
-                                                styles.blockRowSub
+                                                blockStyles.blockRowSub
                                             }
                                         >
 
@@ -280,8 +280,8 @@ export function BlockList({
 
                         style={
                             selectedBlocks.length
-                                ? styles.primaryButton
-                                : styles.primaryButtonDisabled
+                                ? testStyles.primaryButton
+                                : testStyles.primaryButtonDisabled
                         }
 
                         disabled={
@@ -294,7 +294,7 @@ export function BlockList({
 
                         <Text
                             style={
-                                styles.primaryButtonText
+                                testStyles.primaryButtonText
                             }
                         >
 

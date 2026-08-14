@@ -15,7 +15,7 @@ import {
 } from '@expo/vector-icons';
 
 import {
-    styles,
+    historyStyles,
 } from '../../styles/examHistory.styles';
 
 export interface ExamHistoryOppositionOption {
@@ -98,7 +98,7 @@ export function ExamHistoryHeader({
 
         <View
             style={
-                styles.filterCard
+                historyStyles.filterCard
             }
         >
 
@@ -108,7 +108,7 @@ export function ExamHistoryHeader({
 
             <View
                 style={
-                    styles.filterTitleRow
+                    historyStyles.filterTitleRow
                 }
             >
 
@@ -120,7 +120,7 @@ export function ExamHistoryHeader({
 
                 <Text
                     style={
-                        styles.filterTitle
+                        historyStyles.filterTitle
                     }
                 >
                     Filtros
@@ -134,7 +134,7 @@ export function ExamHistoryHeader({
 
             <Text
                 style={
-                    styles.filterLabel
+                    historyStyles.filterLabel
                 }
             >
                 Oposiciones
@@ -143,15 +143,15 @@ export function ExamHistoryHeader({
             <Dropdown
 
                 style={
-                    styles.dropdown
+                    historyStyles.dropdown
                 }
 
                 placeholderStyle={
-                    styles.dropdownPlaceholder
+                    historyStyles.dropdownPlaceholder
                 }
 
                 selectedTextStyle={
-                    styles.dropdownSelectedText
+                    historyStyles.dropdownSelectedText
                 }
 
                 data={
@@ -195,7 +195,7 @@ export function ExamHistoryHeader({
 
             <Text
                 style={
-                    styles.filterLabel
+                    historyStyles.filterLabel
                 }
             >
 
@@ -206,7 +206,7 @@ export function ExamHistoryHeader({
             <Pressable
 
                 style={
-                    styles.dateSelector
+                    historyStyles.dateSelector
                 }
 
                 onPress={
@@ -217,7 +217,7 @@ export function ExamHistoryHeader({
 
                 <View
                     style={
-                        styles.dateSelectorLeft
+                        historyStyles.dateSelectorLeft
                     }
                 >
 
@@ -229,7 +229,7 @@ export function ExamHistoryHeader({
 
                     <Text
                         style={
-                            styles.dateSelectorText
+                            historyStyles.dateSelectorText
                         }
                     >
 
@@ -255,7 +255,7 @@ export function ExamHistoryHeader({
 
             <Text
                 style={
-                    styles.resultsText
+                    historyStyles.resultsText
                 }
             >
 

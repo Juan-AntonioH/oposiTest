@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { getActiveOppositions } from '../services/oppositionService';
-import { Opposition } from '../types/opposition';
+import { getActiveOppositions } from '../../services/oppositionService';
+import { Opposition } from '../../types/opposition';
 
 export function useOppositions() {
 

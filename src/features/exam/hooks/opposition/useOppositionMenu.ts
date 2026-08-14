@@ -1,10 +1,7 @@
 import { useCallback } from 'react';
 
-import { OppositionMenuItem } from '../constants/oppositionMenu';
-import { OppositionNavigationProp } from '../types/navigation';
-import {
-    prepareExam,
-} from '../services/examPreparationService';
+import { OppositionMenuItem } from '../../constants/oppositionMenu';
+import { OppositionNavigationProp } from '../../types/navigation';
 interface UseOppositionMenuProps {
     navigation: OppositionNavigationProp;
     oppositionId: string;
@@ -52,15 +49,6 @@ export function useOppositionMenu({
 
                 case 'simulacrum': {
 
-                    const totalQuestions =
-                        await prepareExam({
-
-                            examType: 'simulacrum',
-
-                            oppositionId,
-
-                        });
-
                     navigation.navigate(
 
                         'TestScreen',
@@ -71,7 +59,7 @@ export function useOppositionMenu({
 
                             name,
 
-                            setTime: 100, // el simulacro sigue teniendo tiempo fijo
+                            setTime: 100,
 
                             examType: 'simulacrum',
 

@@ -93,7 +93,7 @@ export function useSaveProfile({
                                 const {
                                     saveAvatarLocally,
                                 } = require(
-                                    '../utils/avatarStorage'
+                                    '../../utils/avatarStorage'
                                 );
 
                                 finalAvatar =

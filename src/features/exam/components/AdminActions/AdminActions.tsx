@@ -13,6 +13,7 @@ import {
 import { styles } from '../../styles/exam.styles';
 import { useAuthStore } from '@/store/authStore';
 import { canManageQuestions } from '@/features/auth/utils/permissions';
+import { colors } from '@/core/theme/colors';
 
 interface AdminActionsProps {
     navigation: any;
@@ -56,8 +57,8 @@ export function AdminActions({
         <View style={styles.adminActionContainer}>
 
             <Pressable
-                style={[styles.btn, styles.btnGreen]}
-                android_ripple={{ color: '#009943' }}
+                style={[styles.btn, { backgroundColor: colors.success }]}
+                android_ripple={{ color: colors.successDark }}
                 onPress={handleAddQuestion}
             >
                 <MaterialIcons
@@ -72,8 +73,8 @@ export function AdminActions({
             </Pressable>
 
             <Pressable
-                style={[styles.btn, styles.btnBlue]}
-                android_ripple={{ color: '#1B54C5' }}
+                style={[styles.btn, { backgroundColor: colors.primary }]}
+                android_ripple={{ color: colors.primaryDark }}
                 onPress={handleEditQuestions}
             >
                 <MaterialCommunityIcons

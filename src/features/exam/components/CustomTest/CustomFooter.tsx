@@ -5,7 +5,7 @@ import {
     Text,
 } from 'react-native';
 
-import { styles } from '../../styles/customTest.styles';
+import { customStyles } from '../../styles/customTest.styles';
 
 interface CustomFooterProps {
 
@@ -37,10 +37,10 @@ export function CustomFooter({
 
             style={[
 
-                styles.startButton,
+                customStyles.startButton,
 
                 !canStart &&
-                styles.startButtonDisabled,
+                customStyles.startButtonDisabled,
 
             ]}
 
@@ -50,7 +50,7 @@ export function CustomFooter({
 
         >
 
-            <Text style={styles.startButtonText}>
+            <Text style={customStyles.startButtonText}>
 
                 Iniciar Test ({questionCount} preg. · {timeLimit} min)
 

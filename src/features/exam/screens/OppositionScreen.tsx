@@ -15,8 +15,7 @@ import { BackButton } from '@/shared/components/Button/BackButton';
 import { RootStackParamList } from '@/navigation/types';
 import { useAuthStore } from '@/store/authStore';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useOppositionMenu } from '../hooks/useOppositionMenu';
-import { OppositionNavigationProp } from '../types/navigation';
+import { useOppositionMenu } from '../hooks/opposition/useOppositionMenu';
 
 import { styles } from '../styles/exam.styles';
 import {
@@ -25,7 +24,6 @@ import {
 } from '../components';
 import {
     OPPOSITION_MENU,
-    OppositionMenuItem,
 } from '../constants/oppositionMenu';
 
 interface OppositionScreenProps {

@@ -18,7 +18,7 @@ import {
 
 import {
     useTestStore,
-} from '../store/useTestStore';
+} from '../../store/useTestStore';
 
 type ReviewRoute =
     RouteProp<

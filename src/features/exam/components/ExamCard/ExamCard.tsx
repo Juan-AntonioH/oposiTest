@@ -22,22 +22,6 @@ export function ExamCard({
 
         <CustomCard
             onPress={onPress}
-            // icon={
-            //     <View
-            //         style={[
-            //             styles.iconContainer,
-            //             {
-            //                 backgroundColor: '#EBF2FF',
-            //             },
-            //         ]}
-            //     >
-            //         <Ionicons
-            //             name="calendar-outline"
-            //             size={24}
-            //             color="#2F70F2"
-            //         />
-            //     </View>
-            // }
             icon={
                 <Ionicons
                     name="calendar-outline"

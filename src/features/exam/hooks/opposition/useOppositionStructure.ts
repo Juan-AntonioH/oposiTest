@@ -6,7 +6,7 @@ import {
 import {
     getBlock,
     getOpposition,
-} from '../services/oppositionService';
+} from '../../services/oppositionService';
 
 export function useOppositionStructure(
     oppositionId: string,

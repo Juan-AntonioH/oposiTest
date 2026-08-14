@@ -13,7 +13,7 @@ import {
 
 import {
     styles,
-} from '../../styles/exam.styles';
+} from '@/features/admin/styles/questionForm.styles';
 
 interface DropdownItem {
 
