@@ -4,6 +4,8 @@ import {
     query,
     QueryConstraint,
     where,
+    limit as firestoreLimit,
+    orderBy,
 } from 'firebase/firestore';
 
 import { db } from '@/core/config/firebase';
@@ -12,7 +14,7 @@ import {
     Question,
     QuestionFilters,
 } from '../types';
-
+import { shuffleQuestions } from '../utils/shuffleQuestions';
 const questionsCollection = collection(
     db,
     'questions',
@@ -106,11 +108,8 @@ async function loadBlockQuestions(
 ): Promise<Question[]> {
 
     const {
-
         oppositionId,
-
         selectedBlocks,
-
     } = filters;
 
     if (!oppositionId) {
@@ -122,11 +121,8 @@ async function loadBlockQuestions(
     }
 
     if (
-
         !selectedBlocks ||
-
         selectedBlocks.length === 0
-
     ) {
 
         throw new Error(
@@ -139,7 +135,9 @@ async function loadBlockQuestions(
 
     for (const blockId of selectedBlocks) {
 
-        const snapshot =
+        const randomStart = Math.random();
+
+        const firstSnapshot =
             await getDocs(
 
                 query(
@@ -158,108 +156,119 @@ async function loadBlockQuestions(
                         blockId,
                     ),
 
+                    where(
+                        'active',
+                        '==',
+                        true,
+                    ),
+
+                    where(
+                        'randomId',
+                        '>=',
+                        randomStart,
+                    ),
+
+                    orderBy(
+                        'randomId',
+                    ),
+
+                    firestoreLimit(40),
+
                 ),
 
             );
 
-        const questions =
-            snapshot.docs
+        let questions =
+            firstSnapshot.docs
 
                 .map(document => ({
 
                     idDocument:
                         document.id,
 
-                    ...(document.data() as Omit<Question, 'idDocument'>),
+                    ...(document.data() as Omit<
+                        Question,
+                        'idDocument'
+                    >),
 
-                }))
+                }));
 
-                .filter(
-                    question =>
-                        question.active !== false,
-                )
+        if (questions.length < 40) {
 
-                .sort(
-                    (a, b) =>
-                        a.randomId - b.randomId,
+            const remaining =
+                40 - questions.length;
+
+            const secondSnapshot =
+                await getDocs(
+
+                    query(
+
+                        questionsCollection,
+
+                        where(
+                            'oppositionId',
+                            '==',
+                            oppositionId,
+                        ),
+
+                        where(
+                            'blockId',
+                            '==',
+                            blockId,
+                        ),
+
+                        where(
+                            'active',
+                            '==',
+                            true,
+                        ),
+
+                        where(
+                            'randomId',
+                            '<',
+                            randomStart,
+                        ),
+
+                        orderBy(
+                            'randomId',
+                        ),
+
+                        firestoreLimit(remaining),
+
+                    ),
+
                 );
 
-        if (questions.length === 0) {
+            questions.push(
 
-            continue;
+                ...secondSnapshot.docs
+
+                    .map(document => ({
+
+                        idDocument:
+                            document.id,
+
+                        ...(document.data() as Omit<
+                            Question,
+                            'idDocument'
+                        >),
+
+                    })),
+
+            );
 
         }
 
-        /*
-        ------------------------------------------------------------------------
-
-        TEMPORAL
-
-        Cuando el número de preguntas sea muy elevado,
-        esta selección deberá hacerse directamente desde Firestore
-        utilizando consultas sobre randomId.
-
-        Ahora mismo se ordenan por randomId y se comienza desde
-        una posición aleatoria.
-
-        ------------------------------------------------------------------------
-        */
-
-        const start =
-            Math.floor(
-                Math.random() *
-                questions.length,
-            );
-
-        const rotated = [
-
-            ...questions.slice(start),
-
-            ...questions.slice(0, start),
-
-        ];
-
         result.push(
-
-            ...rotated.slice(
-                0,
-                40,
-            ),
-
+            ...questions,
         );
 
     }
 
-    if (result.length <= 100) {
+    const shuffled =
+        shuffleQuestions(result);
 
-        return result;
-
-    }
-
-    const ordered =
-        [...result].sort(
-            (a, b) =>
-                a.randomId - b.randomId,
-        );
-
-    const start =
-        Math.floor(
-            Math.random() *
-            ordered.length,
-        );
-
-    const rotated = [
-
-        ...ordered.slice(start),
-
-        ...ordered.slice(0, start),
-
-    ];
-
-    return rotated.slice(
-        0,
-        100,
-    );
+    return shuffled.slice(0, 100);
 
 }
 
@@ -301,7 +310,9 @@ async function loadThemeQuestions(
 
     for (const selectedTheme of selectedThemes) {
 
-        const snapshot =
+        const randomStart = Math.random();
+
+        const firstSnapshot =
             await getDocs(
 
                 query(
@@ -326,108 +337,125 @@ async function loadThemeQuestions(
                         selectedTheme.themeId,
                     ),
 
+                    where(
+                        'active',
+                        '==',
+                        true,
+                    ),
+
+                    where(
+                        'randomId',
+                        '>=',
+                        randomStart,
+                    ),
+
+                    orderBy(
+                        'randomId',
+                    ),
+
+                    firestoreLimit(20),
+
                 ),
 
             );
 
-        const questions =
-            snapshot.docs
+        let questions =
+            firstSnapshot.docs
 
                 .map(document => ({
 
                     idDocument:
                         document.id,
 
-                    ...(document.data() as Omit<Question, 'idDocument'>),
+                    ...(document.data() as Omit<
+                        Question,
+                        'idDocument'
+                    >),
 
-                }))
+                }));
 
-                .filter(
-                    question =>
-                        question.active !== false,
-                )
+        if (questions.length < 20) {
 
-                .sort(
-                    (a, b) =>
-                        a.randomId - b.randomId,
+            const remaining =
+                20 - questions.length;
+
+            const secondSnapshot =
+                await getDocs(
+
+                    query(
+
+                        questionsCollection,
+
+                        where(
+                            'oppositionId',
+                            '==',
+                            oppositionId,
+                        ),
+
+                        where(
+                            'blockId',
+                            '==',
+                            selectedTheme.blockId,
+                        ),
+
+                        where(
+                            'themeId',
+                            '==',
+                            selectedTheme.themeId,
+                        ),
+
+                        where(
+                            'active',
+                            '==',
+                            true,
+                        ),
+
+                        where(
+                            'randomId',
+                            '<',
+                            randomStart,
+                        ),
+
+                        orderBy(
+                            'randomId',
+                        ),
+
+                        firestoreLimit(remaining),
+
+                    ),
+
                 );
 
-        if (questions.length === 0) {
+            questions.push(
 
-            continue;
+                ...secondSnapshot.docs
+
+                    .map(document => ({
+
+                        idDocument:
+                            document.id,
+
+                        ...(document.data() as Omit<
+                            Question,
+                            'idDocument'
+                        >),
+
+                    })),
+
+            );
 
         }
 
-        /*
-        ------------------------------------------------------------------------
-
-        TEMPORAL
-
-        Cuando el número de preguntas sea muy elevado,
-        esta selección deberá hacerse directamente desde Firestore
-        utilizando consultas sobre randomId.
-
-        Ahora mismo se ordenan por randomId y se comienza desde
-        una posición aleatoria.
-
-        ------------------------------------------------------------------------
-        */
-
-        const start =
-            Math.floor(
-                Math.random() *
-                questions.length,
-            );
-
-        const rotated = [
-
-            ...questions.slice(start),
-
-            ...questions.slice(0, start),
-
-        ];
-
         result.push(
-
-            ...rotated.slice(
-                0,
-                20,
-            ),
-
+            ...questions,
         );
 
     }
 
-    if (result.length <= 100) {
+    const shuffled =
+        shuffleQuestions(result);
 
-        return result;
-
-    }
-
-    const ordered =
-        [...result].sort(
-            (a, b) =>
-                a.randomId - b.randomId,
-        );
-
-    const start =
-        Math.floor(
-            Math.random() *
-            ordered.length,
-        );
-
-    const rotated = [
-
-        ...ordered.slice(start),
-
-        ...ordered.slice(0, start),
-
-    ];
-
-    return rotated.slice(
-        0,
-        100,
-    );
+    return shuffled.slice(0, 100);
 
 }
 
@@ -492,15 +520,10 @@ async function loadCustomQuestions(
 ): Promise<Question[]> {
 
     const {
-
         oppositionId,
-
         selectedBlocks,
-
         selectedThemes,
-
         limit = 20,
-
     } = filters;
 
     if (!oppositionId) {
@@ -512,11 +535,8 @@ async function loadCustomQuestions(
     }
 
     if (
-
         !selectedBlocks ||
-
         selectedBlocks.length === 0
-
     ) {
 
         throw new Error(
@@ -531,20 +551,18 @@ async function loadCustomQuestions(
 
         const blockThemes =
             selectedThemes?.filter(
-
                 theme =>
                     theme.blockId === blockId,
-
             ) ?? [];
-
-        // Si hay temas seleccionados del bloque,
-        // usamos únicamente esos temas.
 
         if (blockThemes.length > 0) {
 
             for (const selectedTheme of blockThemes) {
 
-                const snapshot =
+                const randomStart =
+                    Math.random();
+
+                const firstSnapshot =
                     await getDocs(
 
                         query(
@@ -569,27 +587,43 @@ async function loadCustomQuestions(
                                 selectedTheme.themeId,
                             ),
 
+                            where(
+                                'active',
+                                '==',
+                                true,
+                            ),
+
+                            where(
+                                'randomId',
+                                '>=',
+                                randomStart,
+                            ),
+
+                            orderBy(
+                                'randomId',
+                            ),
+
+                            firestoreLimit(limit),
+
                         ),
 
                     );
 
                 result.push(
 
-                    ...snapshot.docs
+                    ...firstSnapshot.docs
 
                         .map(document => ({
 
                             idDocument:
                                 document.id,
 
-                            ...(document.data() as Omit<Question, 'idDocument'>),
+                            ...(document.data() as Omit<
+                                Question,
+                                'idDocument'
+                            >),
 
-                        }))
-
-                        .filter(
-                            question =>
-                                question.active !== false,
-                        ),
+                        })),
 
                 );
 
@@ -597,12 +631,12 @@ async function loadCustomQuestions(
 
         }
 
-        // Si no se han seleccionado temas,
-        // cogemos todo el bloque.
-
         else {
 
-            const snapshot =
+            const randomStart =
+                Math.random();
+
+            const firstSnapshot =
                 await getDocs(
 
                     query(
@@ -621,27 +655,43 @@ async function loadCustomQuestions(
                             blockId,
                         ),
 
+                        where(
+                            'active',
+                            '==',
+                            true,
+                        ),
+
+                        where(
+                            'randomId',
+                            '>=',
+                            randomStart,
+                        ),
+
+                        orderBy(
+                            'randomId',
+                        ),
+
+                        firestoreLimit(limit),
+
                     ),
 
                 );
 
             result.push(
 
-                ...snapshot.docs
+                ...firstSnapshot.docs
 
                     .map(document => ({
 
                         idDocument:
                             document.id,
 
-                        ...(document.data() as Omit<Question, 'idDocument'>),
+                        ...(document.data() as Omit<
+                            Question,
+                            'idDocument'
+                        >),
 
-                    }))
-
-                    .filter(
-                        question =>
-                            question.active !== false,
-                    ),
+                    })),
 
             );
 
@@ -650,19 +700,14 @@ async function loadCustomQuestions(
     }
 
     const shuffled =
-        [...result].sort(
-            () => Math.random() - 0.5,
-        );
+        shuffleQuestions(result);
 
     return shuffled.slice(
-
         0,
-
         Math.min(
             limit,
             shuffled.length,
         ),
-
     );
 
 }
@@ -683,85 +728,126 @@ async function loadSimulacrumQuestions(
 
     }
 
-    const constraints: QueryConstraint[] = [
+    const randomStart = Math.random();
 
-        where(
-            'oppositionId',
-            '==',
-            oppositionId,
-        ),
-
-    ];
-
-    const snapshot =
+    const firstSnapshot =
         await getDocs(
 
             query(
 
                 questionsCollection,
 
-                ...constraints,
+                where(
+                    'oppositionId',
+                    '==',
+                    oppositionId,
+                ),
+
+                where(
+                    'active',
+                    '==',
+                    true,
+                ),
+
+                where(
+                    'randomId',
+                    '>=',
+                    randomStart,
+                ),
+
+                orderBy(
+                    'randomId',
+                ),
+
+                firestoreLimit(
+                    SIMULACRUM_LIMIT,
+                ),
 
             ),
 
         );
 
-    const questions =
-        snapshot.docs
+    let questions =
+        firstSnapshot.docs
             .map(document => ({
 
                 idDocument:
                     document.id,
 
-                ...(document.data() as Omit<Question, 'idDocument'>),
+                ...(document.data() as Omit<
+                    Question,
+                    'idDocument'
+                >),
 
-            }))
-            .filter(
-                question =>
-                    question.active !== false,
+            }));
+
+    if (
+        questions.length <
+        SIMULACRUM_LIMIT
+    ) {
+
+        const remaining =
+            SIMULACRUM_LIMIT -
+            questions.length;
+
+        const secondSnapshot =
+            await getDocs(
+
+                query(
+
+                    questionsCollection,
+
+                    where(
+                        'oppositionId',
+                        '==',
+                        oppositionId,
+                    ),
+
+                    where(
+                        'active',
+                        '==',
+                        true,
+                    ),
+
+                    where(
+                        'randomId',
+                        '<',
+                        randomStart,
+                    ),
+
+                    orderBy(
+                        'randomId',
+                    ),
+
+                    firestoreLimit(
+                        remaining,
+                    ),
+
+                ),
+
             );
 
-    /* ---------------------------------------------------------------------- */
-    /* TEMPORAL                                                               */
-    /* ---------------------------------------------------------------------- */
-    /*
-     * Actualmente la colección contiene pocas preguntas, por lo que se
-     * descargan todas las preguntas de la oposición, se mezclan en memoria
-     * y se seleccionan las primeras.
-     *
-     * FUTURO:
-     * Cuando la colección tenga miles de preguntas, esta parte deberá
-     * sustituirse por consultas utilizando el campo "randomId".
-     *
-     * Idea:
-     *
-     *  const seed = Math.random();
-     *
-     *  Primera consulta:
-     *      where('randomId', '>=', seed)
-     *      limit(SIMULACRUM_LIMIT)
-     *
-     *  Si no devuelve suficientes preguntas:
-     *
-     *      Segunda consulta:
-     *      where('randomId', '<', seed)
-     *      limit(restantes)
-     *
-     * De esta forma solo se descargan las preguntas necesarias sin recorrer
-     * toda la colección.
-     */
+        questions.push(
 
-    const shuffled =
-        [...questions].sort(
-            () => Math.random() - 0.5,
+            ...secondSnapshot.docs
+                .map(document => ({
+
+                    idDocument:
+                        document.id,
+
+                    ...(document.data() as Omit<
+                        Question,
+                        'idDocument'
+                    >),
+
+                })),
+
         );
 
-    return shuffled.slice(
-        0,
-        Math.min(
-            SIMULACRUM_LIMIT,
-            shuffled.length,
-        ),
+    }
+
+    return shuffleQuestions(
+        questions,
     );
 
 }
