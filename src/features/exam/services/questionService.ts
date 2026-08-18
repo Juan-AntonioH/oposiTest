@@ -715,7 +715,7 @@ async function loadCustomQuestions(
 async function loadSimulacrumQuestions(
     filters: QuestionFilters,
 ): Promise<Question[]> {
-
+console.log('prueba 1');
     const {
         oppositionId,
     } = filters;

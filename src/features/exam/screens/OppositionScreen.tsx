@@ -34,9 +34,6 @@ type NavigationProp = NativeStackNavigationProp<
     'OppositionScreen'
 >;
 
-
-
-
 export function OppositionScreen({
     route,
 }: OppositionScreenProps) {

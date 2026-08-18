@@ -5,7 +5,10 @@ import { useTestStore } from '../store/useTestStore';
 export async function prepareExam(
     filters: QuestionFilters,
 ): Promise<number> {
-
+    console.log(
+        'PREPARE: inicio',
+        filters,
+    );
     const {
         resetTest,
         initializeTestQuestions,
@@ -14,10 +17,15 @@ export async function prepareExam(
     resetTest();
 
     try {
-
+        console.log(
+            'PREPARE: antes de loadQuestions',
+        );
         const questions =
             await loadQuestions(filters);
-
+        console.log(
+            'PREPARE: loadQuestions terminado',
+            questions.length,
+        );
         initializeTestQuestions(
             questions,
         );
@@ -25,7 +33,10 @@ export async function prepareExam(
         return questions.length;
 
     } catch (error) {
-
+        console.error(
+            'PREPARE: error',
+            error,
+        );
         resetTest();
 
         throw error;

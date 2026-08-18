@@ -7,6 +7,7 @@ import { AuthRouter } from '@/navigation/AuthRouter';
 import { useAuthStore } from '@/store/authStore';
 
 import { addQuerys } from './agregarDatosDB';
+import { uploadQuestionsFromExcel } from './agregarDatosTablaDB';
 
 export default function App() {
   const initAuth = useAuthStore((state) => state.initAuth);
@@ -55,6 +56,8 @@ export default function App() {
   useEffect(() => {
     initAuth();
     // addQuerys(); //agregar datos a firestore
+    // @ts-ignore
+    // uploadQuestionsFromExcel(require("./Estructura_Pregunta.xlsx"));
   }, []);
 
   useEffect(() => {

@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   },
   filler: {
     height: '100%',
-    backgroundColor: '#10B981', // Color verde para indicar éxito/progreso
+    backgroundColor: '#10B981',
     borderRadius: 99,
   },
 });

@@ -128,120 +128,119 @@ export function CustomHeader({
                     </View>
 
                 </View>
+                {/* TIEMPO */}
 
-            </View>
-
-            {/* TIEMPO */}
-
-            <Text
-                style={{
-                    fontSize: 14,
-                    color: '#64748B',
-                    marginBottom: 6,
-                }}
-            >
-                <Ionicons
-                    name="time-outline"
-                    size={14}
-                />
-                {' '}Tiempo (minutos)
-            </Text>
-
-            <View
-                style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    borderWidth: 1,
-                    borderColor: '#CBD5E1',
-                    borderRadius: 8,
-                    paddingHorizontal: 12,
-                    height: 48,
-                }}
-            >
-
-                <TextInput
+                <Text
                     style={{
-                        flex: 1,
-                        color: '#1E293B',
-                        fontSize: 16,
-                        fontWeight: '500',
+                        fontSize: 14,
+                        color: '#64748B',
+                        marginBottom: 6,
                     }}
-                    keyboardType="numeric"
-                    value={String(timeLimit)}
-                    onChangeText={(text) =>
-                        onTimeLimitChange(
-                            Number(
-                                text.replace(
-                                    /[^0-9]/g,
-                                    '',
-                                ),
-                            ),
-                        )
-                    }
-                />
+                >
+                    <Ionicons
+                        name="time-outline"
+                        size={14}
+                    />
+                    {' '}Tiempo (minutos)
+                </Text>
 
                 <View
                     style={{
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                        height: '100%',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        borderWidth: 1,
+                        borderColor: '#CBD5E1',
+                        borderRadius: 8,
+                        paddingHorizontal: 12,
+                        height: 48,
                     }}
                 >
 
-                    <Pressable
-                        onPress={() =>
-                            onTimeLimitChange(
-                                timeLimit + 1,
-                            )
-                        }
+                    <TextInput
                         style={{
-                            padding: 2,
+                            flex: 1,
+                            color: '#1E293B',
+                            fontSize: 16,
+                            fontWeight: '500',
                         }}
-                    >
-                        <Ionicons
-                            name="chevron-up"
-                            size={16}
-                            color="#64748B"
-                        />
-                    </Pressable>
-
-                    <Pressable
-                        onPress={() =>
+                        keyboardType="numeric"
+                        value={String(timeLimit)}
+                        onChangeText={(text) =>
                             onTimeLimitChange(
-                                Math.max(
-                                    1,
-                                    timeLimit - 1,
+                                Number(
+                                    text.replace(
+                                        /[^0-9]/g,
+                                        '',
+                                    ),
                                 ),
                             )
                         }
+                    />
+
+                    <View
                         style={{
-                            padding: 2,
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            height: '100%',
                         }}
                     >
-                        <Ionicons
-                            name="chevron-down"
-                            size={16}
-                            color="#64748B"
-                        />
-                    </Pressable>
+
+                        <Pressable
+                            onPress={() =>
+                                onTimeLimitChange(
+                                    timeLimit + 1,
+                                )
+                            }
+                            style={{
+                                padding: 2,
+                            }}
+                        >
+                            <Ionicons
+                                name="chevron-up"
+                                size={16}
+                                color="#64748B"
+                            />
+                        </Pressable>
+
+                        <Pressable
+                            onPress={() =>
+                                onTimeLimitChange(
+                                    Math.max(
+                                        1,
+                                        timeLimit - 1,
+                                    ),
+                                )
+                            }
+                            style={{
+                                padding: 2,
+                            }}
+                        >
+                            <Ionicons
+                                name="chevron-down"
+                                size={16}
+                                color="#64748B"
+                            />
+                        </Pressable>
+
+                    </View>
 
                 </View>
 
-            </View>
+                <Text
+                    style={{
+                        fontSize: 12,
+                        color: '#94A3B8',
+                        marginTop: 6,
+                    }}
+                >
+                    {
+                        autoTime
+                            ? `Tiempo recomendado: ${questionCount} minutos`
+                            : `Tiempo personalizado: ${timeLimit} minutos`
+                    }
+                </Text>
 
-            <Text
-                style={{
-                    fontSize: 12,
-                    color: '#94A3B8',
-                    marginTop: 6,
-                }}
-            >
-                {
-                    autoTime
-                        ? `Tiempo recomendado: ${questionCount} minutos`
-                        : `Tiempo personalizado: ${timeLimit} minutos`
-                }
-            </Text>
+            </View>
 
             {/* SOLUCIÓN INMEDIATA */}
 
