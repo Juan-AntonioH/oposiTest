@@ -44,6 +44,7 @@ export function ScreenLayout({
   const isLoggedIn = status === 'authenticated';
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
   useFocusEffect(
 
     useCallback(() => {
@@ -103,6 +104,7 @@ export function ScreenLayout({
     }, []),
 
   );
+
   // =========================
   // NAVIGATION
   // =========================

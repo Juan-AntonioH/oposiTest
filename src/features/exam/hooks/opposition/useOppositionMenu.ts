@@ -1,7 +1,13 @@
-import { useCallback } from 'react';
+import {
+    useCallback,
+    useState,
+} from 'react';
+
+import Toast from 'react-native-toast-message';
 
 import { OppositionMenuItem } from '../../constants/oppositionMenu';
 import { OppositionNavigationProp } from '../../types/navigation';
+import { prepareExam } from '../../services/examPreparationService';
 interface UseOppositionMenuProps {
     navigation: OppositionNavigationProp;
     oppositionId: string;
@@ -13,6 +19,12 @@ export function useOppositionMenu({
     oppositionId,
     name,
 }: UseOppositionMenuProps) {
+
+    const [
+        preparingSimulacrum,
+        setPreparingSimulacrum,
+    ] = useState(false);
+
 
     const handleMenuPress = useCallback(
         async (item: OppositionMenuItem) => {
@@ -49,37 +61,133 @@ export function useOppositionMenu({
 
                 case 'simulacrum': {
 
-                    navigation.navigate(
+                    setPreparingSimulacrum(true);
 
-                        'TestScreen',
+                    let timedOut = false;
 
-                        {
+                    const timeout =
+                        setTimeout(() => {
 
-                            oppositionId,
+                            timedOut = true;
 
-                            name,
+                            setPreparingSimulacrum(false);
 
-                            setTime: 100,
+                            Toast.show({
+
+                                type: 'error',
+
+                                text1:
+                                    'No se pudo cargar el Simulacro',
+
+                                text2:
+                                    'La preparación ha tardado demasiado.',
+
+                            });
+
+                        }, 10000);
+
+                    try {
+
+                        await prepareExam({
 
                             examType: 'simulacrum',
 
-                            immediateSolution: false,
+                            oppositionId,
 
-                            titleParam: 'Simulacro',
+                        });
 
-                        },
+                        clearTimeout(timeout);
 
-                    );
+                        /*
+                         * Si ya hemos superado los 10 segundos,
+                         * no navegamos aunque Firestore termine.
+                         */
+
+                        if (timedOut) {
+
+                            return;
+
+                        }
+
+                        setPreparingSimulacrum(false);
+
+                        navigation.navigate(
+
+                            'TestScreen',
+
+                            {
+
+                                oppositionId,
+
+                                name,
+
+                                setTime: 100,
+
+                                examType: 'simulacrum',
+
+                                immediateSolution: false,
+
+                                titleParam: 'Simulacro',
+
+                            },
+
+                        );
+
+                    } catch (error) {
+
+                        clearTimeout(timeout);
+
+                        /*
+                         * Si el timeout ya ocurrió,
+                         * el Toast de timeout ya se mostró.
+                         */
+
+                        if (timedOut) {
+
+                            console.error(
+                                'SIMULACRUM: error after timeout',
+                                error,
+                            );
+
+                            return;
+
+                        }
+
+                        setPreparingSimulacrum(false);
+
+                        console.error(
+                            'SIMULACRUM: error starting test',
+                            error,
+                        );
+
+                        Toast.show({
+
+                            type: 'error',
+
+                            text1:
+                                'No se pudo cargar el Simulacro',
+
+                            text2:
+                                'Ha ocurrido un error al cargar las preguntas.',
+
+                        });
+
+                    }
 
                     break;
 
                 }
 
                 case 'wrong':
-                    navigation.navigate('WrongQuestionsScreen', {
-                        oppositionId,
-                        name,
-                    });
+
+                    navigation.navigate(
+                        'WrongQuestionsScreen',
+                        {
+                            oppositionId,
+                            name,
+                        },
+                    );
+
                     break;
 
             }
@@ -90,6 +198,7 @@ export function useOppositionMenu({
 
     return {
         handleMenuPress,
+        preparingSimulacrum,
     };
 
 }

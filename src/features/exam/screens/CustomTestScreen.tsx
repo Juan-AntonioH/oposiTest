@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { ScrollView, } from 'react-native';
 import { ScreenLayout } from '@/shared/layouts/ScreenLayout';
 import {
@@ -21,6 +21,7 @@ interface CustomTestScreenProps {
 export function CustomTestScreen({ route }: CustomTestScreenProps) {
     const navigation = useNavigation<any>();
     const { oppositionId, name } = route.params || { oppositionId: '', name: 'Oposición' };
+    const MAX_QUESTION_COUNT = 250;
 
     // Selección de preguntas, tiempo y solución inmediata.
     const {
@@ -58,44 +59,57 @@ export function CustomTestScreen({ route }: CustomTestScreenProps) {
 
     } = useCustomSelection(oppositionId);
 
+    const [isPreparingExam, setIsPreparingExam] = useState(false);
+
     const handleStartTest = useCallback(async () => {
+        try {
 
-        await prepareExam({
+            setIsPreparingExam(true);
 
-            examType: 'custom',
-
-            oppositionId,
-
-            selectedBlocks,
-
-            selectedThemes,
-
-            limit: questionCount,
-
-        });
-
-        navigation.navigate(
-
-            'TestScreen',
-
-            {
-
-                oppositionId,
-
-                name,
-
-                titleParam: 'Test Personalizado',
-
-                setTime: timeLimit,
+            await prepareExam({
 
                 examType: 'custom',
 
-                immediateSolution,
+                oppositionId,
 
-            },
+                selectedBlocks,
 
-        );
+                selectedThemes,
 
+                limit: Math.min(
+                    questionCount,
+                    MAX_QUESTION_COUNT,
+                ),
+
+            });
+
+            navigation.navigate(
+
+                'TestScreen',
+
+                {
+
+                    oppositionId,
+
+                    name,
+
+                    titleParam: 'Test Personalizado',
+
+                    setTime: timeLimit,
+
+                    examType: 'custom',
+
+                    immediateSolution,
+
+                },
+
+            );
+
+        } finally {
+
+            setIsPreparingExam(false);
+
+        }
     }, [
 
         navigation,
@@ -158,15 +172,14 @@ export function CustomTestScreen({ route }: CustomTestScreenProps) {
                 />
 
                 <CustomFooter
-
                     questionCount={questionCount}
-
                     timeLimit={timeLimit}
-
-                    canStart={selectedBlocks.length > 0}
-
+                    canStart={
+                        selectedBlocks.length > 0 &&
+                        !isPreparingExam
+                    }
+                    isPreparingExam={isPreparingExam}
                     onStartTest={handleStartTest}
-
                 />
 
             </ScrollView>

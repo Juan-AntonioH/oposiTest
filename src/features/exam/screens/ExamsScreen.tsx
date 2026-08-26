@@ -66,11 +66,16 @@ export function ExamsScreen({
         reload,
     } = useOfficialExams(oppositionId);
 
+    const [isPreparingExam, setIsPreparingExam] =
+        useState(false);
+
     async function handleExamPress(
         exam: OfficialExam,
     ) {
+        try {
 
-        const totalQuestions =
+            setIsPreparingExam(true);
+
             await prepareExam({
 
                 examType: 'official',
@@ -83,32 +88,43 @@ export function ExamsScreen({
 
             });
 
-        navigation.navigate(
+            navigation.navigate(
 
-            'TestScreen',
+                'TestScreen',
 
-            {
+                {
 
-                oppositionId,
+                    oppositionId,
 
-                name,
+                    name,
 
-                setTime: exam.setTime,
+                    setTime: exam.setTime,
 
-                examType: 'official',
+                    examType: 'official',
 
-                year: exam.year,
+                    year: exam.year,
 
-                convocatoria: exam.convocatoria,
+                    convocatoria: exam.convocatoria,
 
-                immediateSolution,
+                    immediateSolution,
 
-                titleParam: `Examen Oficial ${exam.year}`,
+                    titleParam: `Examen Oficial ${exam.year}`,
 
-            },
+                },
 
-        );
+            );
+        } catch (error) {
 
+            console.error(
+                'EXAMS: error preparando examen',
+                error,
+            );
+
+        } finally {
+
+            setIsPreparingExam(false);
+
+        }
     }
 
     return (
@@ -118,10 +134,14 @@ export function ExamsScreen({
             <BackButton />
 
             <ScreenState
-                loading={loading}
+                loading={loading || isPreparingExam}
                 error={error}
                 onRetry={reload}
-                isEmpty={!loading && exams.length === 0}
+                isEmpty={
+                    !loading &&
+                    !isPreparingExam &&
+                    exams.length === 0
+                }
                 emptyText="No hay exámenes disponibles."
             >
 

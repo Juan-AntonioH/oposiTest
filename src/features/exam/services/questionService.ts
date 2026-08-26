@@ -603,16 +603,16 @@ async function loadCustomQuestions(
                                 'randomId',
                             ),
 
-                            firestoreLimit(limit),
+                            firestoreLimit(
+                                limit,
+                            ),
 
                         ),
 
                     );
 
-                result.push(
-
-                    ...firstSnapshot.docs
-
+                let questions =
+                    firstSnapshot.docs
                         .map(document => ({
 
                             idDocument:
@@ -623,8 +623,87 @@ async function loadCustomQuestions(
                                 'idDocument'
                             >),
 
-                        })),
+                        }));
 
+                if (
+                    questions.length <
+                    limit
+                ) {
+
+                    const remaining =
+                        limit -
+                        questions.length;
+
+                    const secondSnapshot =
+                        await getDocs(
+
+                            query(
+
+                                questionsCollection,
+
+                                where(
+                                    'oppositionId',
+                                    '==',
+                                    oppositionId,
+                                ),
+
+                                where(
+                                    'blockId',
+                                    '==',
+                                    blockId,
+                                ),
+
+                                where(
+                                    'themeId',
+                                    '==',
+                                    selectedTheme.themeId,
+                                ),
+
+                                where(
+                                    'active',
+                                    '==',
+                                    true,
+                                ),
+
+                                where(
+                                    'randomId',
+                                    '<',
+                                    randomStart,
+                                ),
+
+                                orderBy(
+                                    'randomId',
+                                ),
+
+                                firestoreLimit(
+                                    remaining,
+                                ),
+
+                            ),
+
+                        );
+
+                    questions.push(
+
+                        ...secondSnapshot.docs
+                            .map(document => ({
+
+                                idDocument:
+                                    document.id,
+
+                                ...(document.data() as Omit<
+                                    Question,
+                                    'idDocument'
+                                >),
+
+                            })),
+
+                    );
+
+                }
+
+                result.push(
+                    ...questions,
                 );
 
             }
@@ -671,16 +750,16 @@ async function loadCustomQuestions(
                             'randomId',
                         ),
 
-                        firestoreLimit(limit),
+                        firestoreLimit(
+                            limit,
+                        ),
 
                     ),
 
                 );
 
-            result.push(
-
-                ...firstSnapshot.docs
-
+            let questions =
+                firstSnapshot.docs
                     .map(document => ({
 
                         idDocument:
@@ -691,8 +770,81 @@ async function loadCustomQuestions(
                             'idDocument'
                         >),
 
-                    })),
+                    }));
 
+            if (
+                questions.length <
+                limit
+            ) {
+
+                const remaining =
+                    limit -
+                    questions.length;
+
+                const secondSnapshot =
+                    await getDocs(
+
+                        query(
+
+                            questionsCollection,
+
+                            where(
+                                'oppositionId',
+                                '==',
+                                oppositionId,
+                            ),
+
+                            where(
+                                'blockId',
+                                '==',
+                                blockId,
+                            ),
+
+                            where(
+                                'active',
+                                '==',
+                                true,
+                            ),
+
+                            where(
+                                'randomId',
+                                '<',
+                                randomStart,
+                            ),
+
+                            orderBy(
+                                'randomId',
+                            ),
+
+                            firestoreLimit(
+                                remaining,
+                            ),
+
+                        ),
+
+                    );
+
+                questions.push(
+
+                    ...secondSnapshot.docs
+                        .map(document => ({
+
+                            idDocument:
+                                document.id,
+
+                            ...(document.data() as Omit<
+                                Question,
+                                'idDocument'
+                            >),
+
+                        })),
+
+                );
+
+            }
+
+            result.push(
+                ...questions,
             );
 
         }
@@ -715,7 +867,7 @@ async function loadCustomQuestions(
 async function loadSimulacrumQuestions(
     filters: QuestionFilters,
 ): Promise<Question[]> {
-console.log('prueba 1');
+
     const {
         oppositionId,
     } = filters;

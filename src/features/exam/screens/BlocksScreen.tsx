@@ -56,6 +56,7 @@ export function BlocksScreen() {
     } = route.params;
 
     const {
+        startingTest,
 
         loading,
 
@@ -92,6 +93,8 @@ export function BlocksScreen() {
             <BlockList
 
                 loading={loading}
+
+                startingTest={startingTest}
 
                 oppositionName={name}
 

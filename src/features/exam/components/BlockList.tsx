@@ -24,6 +24,8 @@ import {
 
 interface BlockListProps {
 
+    startingTest: boolean;
+
     loading: boolean;
 
     oppositionName: string;
@@ -47,6 +49,8 @@ interface BlockListProps {
 }
 
 export function BlockList({
+
+    startingTest,
 
     loading,
 
@@ -279,36 +283,48 @@ export function BlockList({
                     <Pressable
 
                         style={
-                            selectedBlocks.length
+                            selectedBlocks.length > 0 && !startingTest
                                 ? testStyles.primaryButton
                                 : testStyles.primaryButtonDisabled
                         }
 
                         disabled={
-                            selectedBlocks.length === 0
+                            selectedBlocks.length === 0 ||
+                            startingTest
                         }
 
                         onPress={onStartTest}
 
                     >
 
-                        <Text
-                            style={
-                                testStyles.primaryButtonText
-                            }
-                        >
+                        {startingTest ? (
 
-                            Iniciar Test (
-                            {selectedBlocks.length}
-                            {' '}
-                            {
-                                selectedBlocks.length === 1
-                                    ? 'bloque'
-                                    : 'bloques'
-                            }
-                            )
+                            <ActivityIndicator
+                                size="small"
+                                color="#FFFFFF"
+                            />
 
-                        </Text>
+                        ) : (
+
+                            <Text
+                                style={
+                                    testStyles.primaryButtonText
+                                }
+                            >
+
+                                Iniciar Test (
+                                {selectedBlocks.length}
+                                {' '}
+                                {
+                                    selectedBlocks.length === 1
+                                        ? 'bloque'
+                                        : 'bloques'
+                                }
+                                )
+
+                            </Text>
+
+                        )}
 
                     </Pressable>
 

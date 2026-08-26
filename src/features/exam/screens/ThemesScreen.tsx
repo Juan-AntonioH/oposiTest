@@ -65,6 +65,8 @@ export function ThemesScreen({
 
     const {
 
+        startingTest,
+
         loading,
 
         groups,
@@ -291,7 +293,7 @@ export function ThemesScreen({
 
                         style={
 
-                            selectedThemes.length > 0
+                            selectedThemes.length > 0 && !startingTest
 
                                 ? testStyles.primaryButton
 
@@ -300,7 +302,8 @@ export function ThemesScreen({
                         }
 
                         disabled={
-                            selectedThemes.length === 0
+                            selectedThemes.length === 0 ||
+                            startingTest
                         }
 
                         onPress={
@@ -309,31 +312,42 @@ export function ThemesScreen({
 
                     >
 
-                        <Text
-                            style={
-                                testStyles.primaryButtonText
-                            }
-                        >
+                        {startingTest ? (
 
-                            Iniciar Test (
+                            <ActivityIndicator
+                                size="small"
+                                color="#FFFFFF"
+                            />
 
-                            {selectedThemes.length}
+                        ) : (
 
-                            {' '}
+                            <Text
+                                style={
+                                    testStyles.primaryButtonText
+                                }
+                            >
 
-                            {
+                                Iniciar Test (
 
-                                selectedThemes.length === 1
+                                {selectedThemes.length}
 
-                                    ? 'tema'
+                                {' '}
 
-                                    : 'temas'
+                                {
 
-                            }
+                                    selectedThemes.length === 1
 
-                            )
+                                        ? 'tema'
 
-                        </Text>
+                                        : 'temas'
+
+                                }
+
+                                )
+
+                            </Text>
+
+                        )}
 
                     </Pressable>
 
