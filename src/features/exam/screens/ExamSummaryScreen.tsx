@@ -1,4 +1,13 @@
-import React from 'react';
+import React, {
+    useState,
+} from 'react';
+
+import {
+    ActivityIndicator,
+    Image,
+    Text,
+    View,
+} from 'react-native';
 
 import {
     ScrollView,
@@ -18,11 +27,11 @@ import {
 
 import {
     useExamSummary,
-} from '../hooks/useExamSummary';
+} from '../hooks/summary/useExamSummary';
 
 import {
     useSummaryActions,
-} from '../hooks/useSummaryActions';
+} from '../hooks/summary/useSummaryActions';
 
 import {
     SummaryHeader,
@@ -30,10 +39,7 @@ import {
     AnswersMap,
     SummaryFooter,
 } from '../components';
-
-import {
-    styles,
-} from '../styles/exam.styles';
+import { summaryStyles } from '../styles/examSummary.styles';
 
 interface ExamSummaryScreenProps {
 
@@ -101,6 +107,8 @@ export function ExamSummaryScreen({
 
         finish,
 
+        savingExam,
+
     } = useSummaryActions({
 
         summary,
@@ -119,11 +127,11 @@ export function ExamSummaryScreen({
             <ScrollView
 
                 style={
-                    styles.summaryContainer
+                    summaryStyles.summaryContainer
                 }
 
                 contentContainerStyle={
-                    styles.summaryContent
+                    summaryStyles.summaryContent
                 }
 
                 showsVerticalScrollIndicator={
@@ -173,6 +181,48 @@ export function ExamSummaryScreen({
                 />
 
             </ScrollView>
+
+            {savingExam && (
+
+                <View
+                    style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        backgroundColor: 'rgba(0, 0, 0, 0.35)',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        zIndex: 9999,
+                    }}
+                >
+
+                    {/* <ActivityIndicator
+                        size="large"
+                        color="#2F70F2"
+                    /> */}
+                    <Image
+                        source={require("@assets/images/tiburoncin.gif")}
+                        style={{
+                            width: 100,
+                            height: 100,
+                        }}
+                    />
+                    <Text
+                        style={{
+                            marginTop: 16,
+                            fontSize: 16,
+                            fontWeight: '600',
+                            color: '#FFFFFF',
+                        }}
+                    >
+                        Guardando examen...
+                    </Text>
+
+                </View>
+
+            )}
 
         </ScreenLayout>
 

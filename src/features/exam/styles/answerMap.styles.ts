@@ -1,6 +1,6 @@
 import { AnswerState } from '../types/answerState';
 
-import { styles } from './exam.styles';
+import { summaryStyles } from './examSummary.styles';
 
 export function getAnswerCircleStyle(
     state: AnswerState,
@@ -9,13 +9,13 @@ export function getAnswerCircleStyle(
     switch (state) {
 
         case 'correct':
-            return styles.answerCircleCorrect;
+            return summaryStyles.answerCircleCorrect;
 
         case 'incorrect':
-            return styles.answerCircleIncorrect;
+            return summaryStyles.answerCircleIncorrect;
 
         default:
-            return styles.answerCircleUnanswered;
+            return summaryStyles.answerCircleUnanswered;
 
     }
 
@@ -29,10 +29,10 @@ export function getAnswerNumberStyle(
 
         case 'correct':
         case 'incorrect':
-            return styles.answerNumberWhite;
+            return summaryStyles.answerNumberWhite;
 
         default:
-            return styles.answerNumberDark;
+            return summaryStyles.answerNumberDark;
 
     }
 

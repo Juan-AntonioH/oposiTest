@@ -92,7 +92,7 @@ export const styles = StyleSheet.create({
     // fontSize: 12,
   },
   recoveryText: {
-    color: colors.danger,
+    color: colors.errorDark,
     textAlign: 'center',
     fontSize: 14,
   },

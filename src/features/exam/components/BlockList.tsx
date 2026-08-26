@@ -15,14 +15,16 @@ import {
 } from '@expo/vector-icons';
 
 import {
-    styles,
-} from '@/features/exam/styles/exam.styles';
+    blockStyles, styles, testStyles
+} from '@/features/exam/styles';
 
 import {
     Block,
 } from '../types';
 
 interface BlockListProps {
+
+    startingTest: boolean;
 
     loading: boolean;
 
@@ -47,6 +49,8 @@ interface BlockListProps {
 }
 
 export function BlockList({
+
+    startingTest,
 
     loading,
 
@@ -94,7 +98,7 @@ export function BlockList({
         <>
             <ScrollView
                 contentContainerStyle={
-                    styles.scrollContainer
+                    testStyles.scrollContainer
                 }
                 showsVerticalScrollIndicator={false}
             >
@@ -154,13 +158,13 @@ export function BlockList({
 
                 <View
                     style={
-                        styles.blocksContainerCard
+                        blockStyles.blocksContainerCard
                     }
                 >
 
                     <Text
                         style={
-                            styles.blocksContainerSubtitle
+                            blockStyles.blocksContainerSubtitle
                         }
                     >
 
@@ -185,10 +189,10 @@ export function BlockList({
 
                                     style={[
 
-                                        styles.blockRowCard,
+                                        blockStyles.blockRowCard,
 
                                         selected &&
-                                        styles.blockRowCardSelected,
+                                        blockStyles.blockRowCardSelected,
 
                                     ]}
 
@@ -219,7 +223,7 @@ export function BlockList({
 
                                     <View
                                         style={
-                                            styles.blockGridIconBox
+                                            blockStyles.blockGridIconBox
                                         }
                                     >
 
@@ -239,7 +243,7 @@ export function BlockList({
 
                                         <Text
                                             style={
-                                                styles.blockRowTitle
+                                                blockStyles.blockRowTitle
                                             }
                                         >
 
@@ -249,7 +253,7 @@ export function BlockList({
 
                                         <Text
                                             style={
-                                                styles.blockRowSub
+                                                blockStyles.blockRowSub
                                             }
                                         >
 
@@ -279,36 +283,48 @@ export function BlockList({
                     <Pressable
 
                         style={
-                            selectedBlocks.length
-                                ? styles.primaryButton
-                                : styles.primaryButtonDisabled
+                            selectedBlocks.length > 0 && !startingTest
+                                ? testStyles.primaryButton
+                                : testStyles.primaryButtonDisabled
                         }
 
                         disabled={
-                            selectedBlocks.length === 0
+                            selectedBlocks.length === 0 ||
+                            startingTest
                         }
 
                         onPress={onStartTest}
 
                     >
 
-                        <Text
-                            style={
-                                styles.primaryButtonText
-                            }
-                        >
+                        {startingTest ? (
 
-                            Iniciar Test (
-                            {selectedBlocks.length}
-                            {' '}
-                            {
-                                selectedBlocks.length === 1
-                                    ? 'bloque'
-                                    : 'bloques'
-                            }
-                            )
+                            <ActivityIndicator
+                                size="small"
+                                color="#FFFFFF"
+                            />
 
-                        </Text>
+                        ) : (
+
+                            <Text
+                                style={
+                                    testStyles.primaryButtonText
+                                }
+                            >
+
+                                Iniciar Test (
+                                {selectedBlocks.length}
+                                {' '}
+                                {
+                                    selectedBlocks.length === 1
+                                        ? 'bloque'
+                                        : 'bloques'
+                                }
+                                )
+
+                            </Text>
+
+                        )}
 
                     </Pressable>
 

@@ -4,7 +4,7 @@ import {
     View,
 } from 'react-native';
 
-import { styles } from '../../styles/exam.styles';
+import { testStyles, blockStyles } from '../../styles/';
 
 interface TestProgressCardProps {
     currentQuestion: number;
@@ -58,17 +58,17 @@ export function TestProgressCard({
 
     return (
 
-        <View style={styles.progressCard}>
+        <View style={blockStyles.progressCard}>
 
-            <View style={styles.progressHeader}>
+            <View style={blockStyles.progressHeader}>
 
-                <Text style={styles.progressTitle}>
+                <Text style={testStyles.progressTitle}>
                     Pregunta {currentQuestion} de {totalQuestions}
                 </Text>
 
-                <View style={styles.timerBadge}>
+                <View style={testStyles.timerBadge}>
 
-                    <Text style={styles.timerText}>
+                    <Text style={testStyles.timerText}>
                         ⏱ {formatTime(elapsedTime)}
                     </Text>
 
@@ -76,11 +76,11 @@ export function TestProgressCard({
 
             </View>
 
-            <View style={styles.progressBarBackground}>
+            <View style={testStyles.progressBarBackground}>
 
                 <View
                     style={[
-                        styles.progressBarFill,
+                        testStyles.progressBarFill,
                         {
                             width: `${progress * 100}%`,
                         },

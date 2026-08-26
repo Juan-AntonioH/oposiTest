@@ -2,7 +2,7 @@ import {
     StyleSheet,
 } from 'react-native';
 
-export const styles =
+export const historyStyles =
     StyleSheet.create({
 
         filterCard: {

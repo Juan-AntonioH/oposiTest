@@ -5,7 +5,7 @@ import {
     View,
 } from 'react-native';
 
-import { styles } from '../../styles/exam.styles';
+import { testStyles } from '../../styles';
 
 interface TestActionsProps {
     canAnswer: boolean;
@@ -29,13 +29,13 @@ export function TestActions({
 
     return (
 
-        <View style={styles.actionsContainer}>
+        <View style={testStyles.actionsContainer}>
 
             {showNextButton ? (
 
                 <Pressable
                     style={[
-                        styles.primaryButton,
+                        testStyles.primaryButton,
                         {
                             width: '100%',
                         },
@@ -44,7 +44,7 @@ export function TestActions({
                 >
                     <Text
                         style={
-                            styles.primaryButtonText
+                            testStyles.primaryButtonText
                         }
                     >
                         Siguiente
@@ -58,15 +58,15 @@ export function TestActions({
                     <Pressable
                         style={
                             canAnswer
-                                ? styles.primaryButton
-                                : styles.primaryButtonDisabled
+                                ? testStyles.primaryButton
+                                : testStyles.primaryButtonDisabled
                         }
                         disabled={!canAnswer}
                         onPress={onAnswer}
                     >
                         <Text
                             style={
-                                styles.primaryButtonText
+                                testStyles.primaryButtonText
                             }
                         >
                             Confirmar respuesta
@@ -75,13 +75,13 @@ export function TestActions({
 
                     <Pressable
                         style={
-                            styles.secondaryButton
+                            testStyles.secondaryButton
                         }
                         onPress={onLeaveBlank}
                     >
                         <Text
                             style={
-                                styles.secondaryButtonText
+                                testStyles.secondaryButtonText
                             }
                         >
                             Dejar en blanco

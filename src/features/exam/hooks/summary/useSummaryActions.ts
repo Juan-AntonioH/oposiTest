@@ -1,5 +1,6 @@
 import {
     useCallback,
+    useState,
 } from 'react';
 
 import {
@@ -18,15 +19,15 @@ import { RootStackParamList } from '@/navigation/types';
 
 import {
     CompletedTest,
-} from '../types';
+} from '../../types';
 
 import {
     useSaveCompletedTest,
-} from './useSaveCompletedTest';
+} from '../useSaveCompletedTest';
 
 import {
     useTestStore,
-} from '../store/useTestStore';
+} from '../../store/useTestStore';
 
 type NavigationProp =
     NativeStackNavigationProp<RootStackParamList>;
@@ -54,6 +55,11 @@ export function useSummaryActions({
     const {
         save,
     } = useSaveCompletedTest();
+
+    const [
+        savingExam,
+        setSavingExam,
+    ] = useState(false);
 
     const openQuestion =
         useCallback((
@@ -130,6 +136,8 @@ export function useSummaryActions({
 
                             try {
 
+                                setSavingExam(true);
+
                                 await save(
                                     summary,
                                 );
@@ -162,6 +170,10 @@ export function useSummaryActions({
 
                                 );
 
+                            } finally {
+
+                                setSavingExam(false);
+
                             }
 
                         },
@@ -188,6 +200,8 @@ export function useSummaryActions({
         openQuestion,
 
         finish,
+
+        savingExam,
 
     };
 

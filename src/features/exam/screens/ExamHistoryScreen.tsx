@@ -80,10 +80,6 @@ export function ExamHistoryScreen() {
 
         allTests,
 
-        // loading,
-
-        // error,
-
         oppositionOptions,
 
         selectedOppositionId,

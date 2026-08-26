@@ -19,7 +19,7 @@ import {
 } from '../../types';
 
 import {
-    styles,
+    historyStyles,
 } from '../../styles/examHistory.styles';
 
 interface ExamHistoryCalendarProps {
@@ -440,14 +440,14 @@ export function ExamHistoryCalendar({
 
             <View
                 style={
-                    styles.calendarOverlay
+                    historyStyles.calendarOverlay
                 }
             >
 
                 <Pressable
 
                     style={
-                        styles.calendarBackdrop
+                        historyStyles.calendarBackdrop
                     }
 
                     onPress={
@@ -458,13 +458,13 @@ export function ExamHistoryCalendar({
 
                 <View
                     style={
-                        styles.calendarModal
+                        historyStyles.calendarModal
                     }
                 >
 
                     <View
                         style={
-                            styles.calendarTopBar
+                            historyStyles.calendarTopBar
                         }
                     >
 
@@ -472,7 +472,7 @@ export function ExamHistoryCalendar({
 
                             <Text
                                 style={
-                                    styles.calendarTitle
+                                    historyStyles.calendarTitle
                                 }
                             >
                                 Seleccionar fechas
@@ -480,7 +480,7 @@ export function ExamHistoryCalendar({
 
                             <Text
                                 style={
-                                    styles.calendarSubtitle
+                                    historyStyles.calendarSubtitle
                                 }
                             >
 
@@ -497,7 +497,7 @@ export function ExamHistoryCalendar({
                         <Pressable
 
                             style={
-                                styles.calendarCloseButton
+                                historyStyles.calendarCloseButton
                             }
 
                             onPress={
@@ -528,14 +528,14 @@ export function ExamHistoryCalendar({
 
                     <View
                         style={
-                            styles.calendarMonthHeader
+                            historyStyles.calendarMonthHeader
                         }
                     >
 
                         <Pressable
 
                             style={
-                                styles.calendarArrowButton
+                                historyStyles.calendarArrowButton
                             }
 
                             onPress={
@@ -564,7 +564,7 @@ export function ExamHistoryCalendar({
 
                         <Text
                             style={
-                                styles.calendarMonthText
+                                historyStyles.calendarMonthText
                             }
                         >
 
@@ -589,7 +589,7 @@ export function ExamHistoryCalendar({
                         <Pressable
 
                             style={
-                                styles.calendarArrowButton
+                                historyStyles.calendarArrowButton
                             }
 
                             onPress={
@@ -620,7 +620,7 @@ export function ExamHistoryCalendar({
 
                     <View
                         style={
-                            styles.calendarWeekRow
+                            historyStyles.calendarWeekRow
                         }
                     >
 
@@ -636,14 +636,14 @@ export function ExamHistoryCalendar({
                                         }
 
                                         style={
-                                            styles.calendarWeekDay
+                                            historyStyles.calendarWeekDay
                                         }
 
                                     >
 
                                         <Text
                                             style={
-                                                styles.calendarWeekDayText
+                                                historyStyles.calendarWeekDayText
                                             }
                                         >
 
@@ -664,7 +664,7 @@ export function ExamHistoryCalendar({
 
                     <View
                         style={
-                            styles.calendarDays
+                            historyStyles.calendarDays
                         }
                     >
 
@@ -690,7 +690,7 @@ export function ExamHistoryCalendar({
                                                 }
 
                                                 style={
-                                                    styles.calendarDayCell
+                                                    historyStyles.calendarDayCell
                                                 }
 
                                             />
@@ -738,7 +738,7 @@ export function ExamHistoryCalendar({
                                             }
 
                                             style={
-                                                styles.calendarDayCell
+                                                historyStyles.calendarDayCell
                                             }
 
                                         >
@@ -759,15 +759,15 @@ export function ExamHistoryCalendar({
 
                                                 style={[
 
-                                                    styles.calendarDay,
+                                                    historyStyles.calendarDay,
 
                                                     hasExam &&
 
-                                                    styles.calendarDayAvailable,
+                                                    historyStyles.calendarDayAvailable,
 
                                                     isSelected &&
 
-                                                    styles.calendarDaySelected,
+                                                    historyStyles.calendarDaySelected,
 
                                                 ]}
 
@@ -777,15 +777,15 @@ export function ExamHistoryCalendar({
 
                                                     style={[
 
-                                                        styles.calendarDayText,
+                                                        historyStyles.calendarDayText,
 
                                                         !hasExam &&
 
-                                                        styles.calendarDayDisabledText,
+                                                        historyStyles.calendarDayDisabledText,
 
                                                         isSelected &&
 
-                                                        styles.calendarDaySelectedText,
+                                                        historyStyles.calendarDaySelectedText,
 
                                                     ]}
 
@@ -809,7 +809,7 @@ export function ExamHistoryCalendar({
                                                         <View
 
                                                             style={
-                                                                styles.calendarExamCount
+                                                                historyStyles.calendarExamCount
                                                             }
 
                                                         >
@@ -817,7 +817,7 @@ export function ExamHistoryCalendar({
                                                             <Text
 
                                                                 style={
-                                                                    styles.calendarExamCountText
+                                                                    historyStyles.calendarExamCountText
                                                                 }
 
                                                             >
@@ -851,14 +851,14 @@ export function ExamHistoryCalendar({
 
                     <View
                         style={
-                            styles.calendarFooter
+                            historyStyles.calendarFooter
                         }
                     >
 
                         <Pressable
 
                             style={
-                                styles.calendarClearButton
+                                historyStyles.calendarClearButton
                             }
 
                             onPress={
@@ -869,7 +869,7 @@ export function ExamHistoryCalendar({
 
                             <Text
                                 style={
-                                    styles.calendarClearButtonText
+                                    historyStyles.calendarClearButtonText
                                 }
                             >
                                 Limpiar fechas
@@ -880,7 +880,7 @@ export function ExamHistoryCalendar({
                         <Pressable
 
                             style={
-                                styles.calendarApplyButton
+                                historyStyles.calendarApplyButton
                             }
 
                             onPress={
@@ -891,7 +891,7 @@ export function ExamHistoryCalendar({
 
                             <Text
                                 style={
-                                    styles.calendarApplyButtonText
+                                    historyStyles.calendarApplyButtonText
                                 }
                             >
                                 Aplicar

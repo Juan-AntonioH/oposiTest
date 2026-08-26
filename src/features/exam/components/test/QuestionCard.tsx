@@ -6,8 +6,7 @@ import {
 } from 'react-native';
 
 import { TestQuestion } from '../../types';
-
-import { styles } from '../../styles/exam.styles';
+import { blockStyles, testStyles } from '../../styles/';
 
 interface QuestionCardProps {
     question: TestQuestion;
@@ -68,16 +67,16 @@ export function QuestionCard({
         switch (state) {
 
             case 'selected':
-                return styles.optionCardSelected;
+                return testStyles.optionCardSelected;
 
             case 'correct':
-                return styles.optionCardCorrect;
+                return testStyles.optionCardCorrect;
 
             case 'incorrect':
-                return styles.optionCardIncorrect;
+                return testStyles.optionCardIncorrect;
 
             default:
-                return styles.optionCard;
+                return testStyles.optionCard;
 
         }
 
@@ -90,16 +89,16 @@ export function QuestionCard({
         switch (state) {
 
             case 'selected':
-                return styles.optionCircleSelected;
+                return testStyles.optionCircleSelected;
 
             case 'correct':
-                return styles.optionCircleCorrect;
+                return testStyles.optionCircleCorrect;
 
             case 'incorrect':
-                return styles.optionCircleIncorrect;
+                return testStyles.optionCircleIncorrect;
 
             default:
-                return styles.optionCircle;
+                return testStyles.optionCircle;
 
         }
 
@@ -114,10 +113,10 @@ export function QuestionCard({
             case 'selected':
             case 'correct':
             case 'incorrect':
-                return styles.optionTextSelected;
+                return testStyles.optionTextSelected;
 
             default:
-                return styles.optionText;
+                return testStyles.optionText;
 
         }
 
@@ -131,19 +130,19 @@ export function QuestionCard({
             case 'selected':
             case 'correct':
             case 'incorrect':
-                return styles.optionLetterSelected;
+                return blockStyles.optionLetterSelected;
 
             default:
-                return styles.optionLetter;
+                return blockStyles.optionLetter;
 
         }
 
     };
     return (
 
-        <View style={styles.questionCard}>
+        <View style={testStyles.questionCard}>
 
-            <Text style={styles.questionText}>
+            <Text style={testStyles.questionText}>
                 {question.question}
             </Text>
 
@@ -185,7 +184,7 @@ export function QuestionCard({
 
                             <Text
                                 style={[
-                                    styles.optionLabel,
+                                    testStyles.optionLabel,
                                     getOptionTextStyle(
                                         optionState,
                                     ),

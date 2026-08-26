@@ -1,25 +1,75 @@
 export const colors = {
-  primary: '#2563eb',
-  primaryDark: '#1d4ed8',
+  // Brand
+  primary: '#2563EB',
+  primaryDark: '#1D4ED8',
+  primaryLight: '#DBEAFE',
 
-  secondary: '#14b8a6',
-  secondaryLight: '#ccfbf1',
+  secondary: '#14B8A6',
+  secondaryDark: '#0F766E',
+  secondaryLight: '#CCFBF1',
 
-  danger: '#b91c1c',
-  dangerDark: '#991b1b',
+  // Backgrounds
+  background: '#F3F4F6',
+  surface: '#FFFFFF',
+  surfaceSecondary: '#F8FAFC',
 
-  background: '#f3f4f6',
-  surface: '#F8FAFC',
+  // Text
+  text: '#1F2937',
+  textSecondary: '#6B7280',
+  textTertiary: '#9CA3AF',
+  textDisabled: '#D1D5DB',
+  textOnPrimary: '#FFFFFF',
 
-  text: '#1f2937',
-  textSecondary: '#6b7280',
+  // Borders
+  border: '#D1D5DB',
+  borderLight: '#E5E7EB',
+  borderDark: '#9CA3AF',
 
-  border: '#d1d5db',
-
+  // Success
   success: '#16A34A',
-  warning: '#F59E0B',
-  error: '#DC2626',
+  successLight: '#DCFCE7',
+  successDark: '#15803D',
 
+  // Warning
+  warning: '#F59E0B',
+  warningLight: '#FEF3C7',
+  warningDark: '#D97706',
+
+  // Error
+  error: '#DC2626',
+  errorLight: '#FEE2E2',
+  errorDark: '#B91C1C',
+
+  // Info
+  info: '#2563EB',
+  infoLight: '#DBEAFE',
+  infoDark: '#1D4ED8',
+
+  // Exam / answers
+  answerCorrect: '#16A34A',
+  answerCorrectBackground: '#DCFCE7',
+
+  answerIncorrect: '#DC2626',
+  answerIncorrectBackground: '#FEE2E2',
+
+  answerSelected: '#2563EB',
+  answerSelectedBackground: '#DBEAFE',
+
+  // Premium
+  premium: '#F59E0B',
+  premiumLight: '#FEF3C7',
+
+  // UI states
+  selected: '#DBEAFE',
+  pressed: '#EFF6FF',
+  disabled: '#E5E7EB',
+
+  // Common
   white: '#FFFFFF',
   black: '#000000',
-};
+  transparent: 'transparent',
+
+  // Overlays
+  overlay: 'rgba(0, 0, 0, 0.5)',
+  overlayLight: 'rgba(0, 0, 0, 0.25)',
+} as const;

@@ -53,7 +53,7 @@ export function ReviewQuestion({
 
             <Text style={styles.questionStatement}>
 
-                {/* Pregunta {question.numQuestion}: */}{question.question}
+                {question.question}
 
             </Text>
 

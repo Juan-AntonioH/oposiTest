@@ -15,7 +15,6 @@ import {
   useNavigation,
 } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { resolveAvatar } from '@/features/auth/utils/avatarResolver';
 import { Toolbar } from '@/shared/components/toolbar/ToolBar';
 import { Sidebar } from '@/shared/components/sidebar/Sidebar';
 import { useAuthStore } from '@/store/authStore';
@@ -35,9 +34,7 @@ export function ScreenLayout({
 
   const {
     status,
-    uid,
     displayName,
-    accountName,
     email,
     role,
     avatar,
@@ -47,6 +44,7 @@ export function ScreenLayout({
   const isLoggedIn = status === 'authenticated';
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
   useFocusEffect(
 
     useCallback(() => {
@@ -106,6 +104,7 @@ export function ScreenLayout({
     }, []),
 
   );
+
   // =========================
   // NAVIGATION
   // =========================

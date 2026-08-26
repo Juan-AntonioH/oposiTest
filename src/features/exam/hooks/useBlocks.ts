@@ -110,6 +110,8 @@ export function useBlocks({
 
         }, []);
 
+    const [startingTest, setStartingTest] = useState(false);
+
     const handleStartTest =
         useCallback(async () => {
 
@@ -120,42 +122,57 @@ export function useBlocks({
                 return;
 
             }
+            try {
 
-            const totalQuestions =
-                await prepareExam({
+                setStartingTest(true);
 
-                    examType: 'blocks',
+                const totalQuestions =
+                    await prepareExam({
 
-                    oppositionId,
+                        examType: 'blocks',
 
-                    selectedBlocks,
+                        oppositionId,
 
-                });
+                        selectedBlocks,
 
-            navigation.navigate(
+                    });
 
-                'TestScreen',
+                navigation.navigate(
 
-                {
+                    'TestScreen',
 
-                    oppositionId,
+                    {
 
-                    name,
+                        oppositionId,
 
-                    setTime: totalQuestions,
+                        name,
 
-                    examType: 'blocks',
+                        setTime: totalQuestions,
 
-                    immediateSolution,
+                        examType: 'blocks',
 
-                    titleParam: 'Test por Bloques',
+                        immediateSolution,
 
-                    selectedBlocks,
+                        titleParam: 'Test por Bloques',
 
-                },
+                        selectedBlocks,
 
-            );
+                    },
 
+                );
+
+            } catch (error) {
+
+                console.error(
+                    'BLOCKS: error starting test',
+                    error,
+                );
+
+            } finally {
+
+                setStartingTest(false);
+
+            }
         }, [
 
             navigation,
@@ -171,6 +188,8 @@ export function useBlocks({
         ]);
 
     return {
+
+        startingTest,
 
         loading,
 

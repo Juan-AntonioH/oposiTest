@@ -16,7 +16,7 @@ import { EmailRequirements } from '../components/EmailRequirements';
 
 import { CustomButton } from '@/shared/components/Button/CustomButton';
 
-import { colors } from '@/core/theme';
+import { colors, commonStyles } from '@/core/theme';
 import { styles } from '../styles/Auth.styles';
 
 import { usePasswordRecovery } from '../hooks/usePasswordRecovery';
@@ -50,7 +50,7 @@ export function RecoveryScreen() {
             <View style={styles.backButtonContainer}>
                 <Pressable
                     style={styles.backButton}
-                    onPress={() => navigation.goBack()} // ← Te regresa automáticamente a la pantalla anterior (Login)
+                    onPress={() => navigation.goBack()}
                 >
                     <Text style={styles.backButtonText}>← Volver</Text>
                 </Pressable>
@@ -58,17 +58,7 @@ export function RecoveryScreen() {
             {/* OVERLAY */}
             {loading && (
                 <View
-                    style={{
-                        position: 'absolute',
-                        top: 100,
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
-                        backgroundColor: 'rgba(0,0,0,0.4)',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        zIndex: 999,
-                    }}
+                    style={commonStyles.overlay}
                 >
                     <ActivityIndicator
                         size="large"

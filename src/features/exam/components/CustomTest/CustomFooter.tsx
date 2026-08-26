@@ -1,11 +1,12 @@
 import React from 'react';
 
 import {
+    ActivityIndicator,
     Pressable,
     Text,
 } from 'react-native';
 
-import { styles } from '../../styles/customTest.styles';
+import { customStyles } from '../../styles/customTest.styles';
 
 interface CustomFooterProps {
 
@@ -14,6 +15,8 @@ interface CustomFooterProps {
     timeLimit: number;
 
     canStart: boolean;
+
+    isPreparingExam: boolean;
 
     onStartTest: () => void;
 
@@ -27,6 +30,8 @@ export function CustomFooter({
 
     canStart,
 
+    isPreparingExam,
+
     onStartTest,
 
 }: CustomFooterProps) {
@@ -37,10 +42,10 @@ export function CustomFooter({
 
             style={[
 
-                styles.startButton,
+                customStyles.startButton,
 
                 !canStart &&
-                styles.startButtonDisabled,
+                customStyles.startButtonDisabled,
 
             ]}
 
@@ -50,11 +55,22 @@ export function CustomFooter({
 
         >
 
-            <Text style={styles.startButtonText}>
+            {isPreparingExam ? (
 
-                Iniciar Test ({questionCount} preg. · {timeLimit} min)
+                <ActivityIndicator
+                    size="small"
+                    color="#FFFFFF"
+                />
 
-            </Text>
+            ) : (
+
+                <Text style={customStyles.startButtonText}>
+
+                    Iniciar Test ({questionCount} preg. · {timeLimit} min)
+
+                </Text>
+
+            )}
 
         </Pressable>
 

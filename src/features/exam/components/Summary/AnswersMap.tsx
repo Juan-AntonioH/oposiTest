@@ -19,6 +19,10 @@ import {
 } from '../../styles/exam.styles';
 
 import {
+    summaryStyles,
+} from '../../styles/';
+
+import {
     getAnswerCircleStyle,
     getAnswerNumberStyle,
 } from '../../styles/answerMap.styles';
@@ -47,11 +51,11 @@ export function AnswersMap({
 
         <>
 
-            <Text style={styles.answersMapTitle}>
+            <Text style={summaryStyles.answersMapTitle}>
                 Mapa de respuestas
             </Text>
 
-            <View style={styles.answersMap}>
+            <View style={summaryStyles.answersMap}>
 
                 {summary.answers.map((
                     answer,
@@ -70,7 +74,7 @@ export function AnswersMap({
                                 borderless: true,
                             }}
                             style={[
-                                styles.answerCircle,
+                                summaryStyles.answerCircle,
                                 getAnswerCircleStyle(state),
                                 {
                                     width: buttonSize,
@@ -85,7 +89,7 @@ export function AnswersMap({
 
                             <Text
                                 style={[
-                                    styles.answerNumber,
+                                    summaryStyles.answerNumber,
                                     getAnswerNumberStyle(state),
                                 ]}
                             >

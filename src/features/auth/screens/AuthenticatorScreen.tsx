@@ -1,21 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, Pressable, ActivityIndicator } from 'react-native';
-import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import { ScreenLayout } from '@/shared/layouts/ScreenLayout';
-import { RootStackParamList } from '@/navigation/types';
 import { auth } from '@/core/config/firebase';
 import { sendEmailVerification } from 'firebase/auth';
 
 import { useAuthStore } from '@/store/authStore';
 
-
-type Nav = NativeStackNavigationProp<RootStackParamList, 'Authenticator'>;
-// type Route = RouteProp<RootStackParamList, 'Authenticator'>;
-
 export function AuthenticatorScreen() {
-    const navigation = useNavigation<Nav>();
     const email = useAuthStore((s) => s.email);
 
     const [loading, setLoading] = useState(false);

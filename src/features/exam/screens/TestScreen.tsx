@@ -26,7 +26,7 @@ import { useFinishExam } from '../hooks/test/useFinishExam';
 import { useTestStore } from '../store/useTestStore';
 
 import { TestHeader, TestProgressCard, QuestionCard, ExplanationCard, TestActions } from '../components/';
-import { styles } from '../styles/exam.styles';
+import { testStyles } from '../styles/';
 
 interface TestScreenProps {
     route: RouteProp<
@@ -52,17 +52,9 @@ export function TestScreen({
 
         examType,
 
-        year,
-
-        convocatoria,
-
         immediateSolution,
 
         titleParam,
-
-        selectedBlocks,
-
-        selectedThemes,
 
     } = route.params;
 
@@ -304,11 +296,10 @@ export function TestScreen({
             showSidebar={false}
         >
             <ScrollView
-                contentContainerStyle={styles.scrollContainer}
+                contentContainerStyle={testStyles.scrollContainer}
                 showsVerticalScrollIndicator={false}
             >
                 <TestHeader
-                    // title={titleParam}
                     subtitle={name}
                     onExit={handleExitExam}
                 />

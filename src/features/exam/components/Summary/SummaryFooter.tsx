@@ -6,10 +6,7 @@ import {
     View,
 } from 'react-native';
 
-import {
-    styles,
-} from '../../styles/exam.styles';
-
+import { summaryStyles } from '../../styles/examSummary.styles';
 import {
     CompletedTest,
 } from '../../types';
@@ -40,26 +37,26 @@ export function SummaryFooter({
 
         <View
             style={
-                styles.footerContainer
+                summaryStyles.footerContainer
             }
         >
 
             <View
                 style={
-                    styles.legendContainer
+                    summaryStyles.legendContainer
                 }
             >
 
                 <View
                     style={
-                        styles.legendItem
+                        summaryStyles.legendItem
                     }
                 >
 
                     <View
                         style={[
 
-                            styles.legendDot,
+                            summaryStyles.legendDot,
 
                             {
 
@@ -73,7 +70,7 @@ export function SummaryFooter({
 
                     <Text
                         style={
-                            styles.legendText
+                            summaryStyles.legendText
                         }
                     >
                         Correcta
@@ -83,14 +80,14 @@ export function SummaryFooter({
 
                 <View
                     style={
-                        styles.legendItem
+                        summaryStyles.legendItem
                     }
                 >
 
                     <View
                         style={[
 
-                            styles.legendDot,
+                            summaryStyles.legendDot,
 
                             {
 
@@ -104,7 +101,7 @@ export function SummaryFooter({
 
                     <Text
                         style={
-                            styles.legendText
+                            summaryStyles.legendText
                         }
                     >
                         Incorrecta
@@ -114,14 +111,14 @@ export function SummaryFooter({
 
                 <View
                     style={
-                        styles.legendItem
+                        summaryStyles.legendItem
                     }
                 >
 
                     <View
                         style={[
 
-                            styles.legendDot,
+                            summaryStyles.legendDot,
 
                             {
 
@@ -141,7 +138,7 @@ export function SummaryFooter({
 
                     <Text
                         style={
-                            styles.legendText
+                            summaryStyles.legendText
                         }
                     >
                         Sin responder
@@ -154,7 +151,7 @@ export function SummaryFooter({
             <Pressable
 
                 style={
-                    styles.summaryButton
+                    summaryStyles.summaryButton
                 }
 
                 onPress={
@@ -165,7 +162,7 @@ export function SummaryFooter({
 
                 <Text
                     style={
-                        styles.summaryButtonText
+                        summaryStyles.summaryButtonText
                     }
                 >
 

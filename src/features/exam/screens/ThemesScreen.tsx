@@ -25,10 +25,9 @@ import {
 import {
     RootStackParamList,
 } from '@/navigation/types';
-
 import {
-    styles,
-} from '../styles/exam.styles';
+    styles, testStyles,
+} from '../styles';
 
 import {
     useThemes,
@@ -65,6 +64,8 @@ export function ThemesScreen({
     } = route.params;
 
     const {
+
+        startingTest,
 
         loading,
 
@@ -162,7 +163,7 @@ export function ThemesScreen({
             <ScrollView
 
                 contentContainerStyle={
-                    styles.scrollContainer
+                    testStyles.scrollContainer
                 }
 
                 showsVerticalScrollIndicator={
@@ -292,16 +293,17 @@ export function ThemesScreen({
 
                         style={
 
-                            selectedThemes.length > 0
+                            selectedThemes.length > 0 && !startingTest
 
-                                ? styles.primaryButton
+                                ? testStyles.primaryButton
 
-                                : styles.primaryButtonDisabled
+                                : testStyles.primaryButtonDisabled
 
                         }
 
                         disabled={
-                            selectedThemes.length === 0
+                            selectedThemes.length === 0 ||
+                            startingTest
                         }
 
                         onPress={
@@ -310,31 +312,42 @@ export function ThemesScreen({
 
                     >
 
-                        <Text
-                            style={
-                                styles.primaryButtonText
-                            }
-                        >
+                        {startingTest ? (
 
-                            Iniciar Test (
+                            <ActivityIndicator
+                                size="small"
+                                color="#FFFFFF"
+                            />
 
-                            {selectedThemes.length}
+                        ) : (
 
-                            {' '}
+                            <Text
+                                style={
+                                    testStyles.primaryButtonText
+                                }
+                            >
 
-                            {
+                                Iniciar Test (
 
-                                selectedThemes.length === 1
+                                {selectedThemes.length}
 
-                                    ? 'tema'
+                                {' '}
 
-                                    : 'temas'
+                                {
 
-                            }
+                                    selectedThemes.length === 1
 
-                            )
+                                        ? 'tema'
 
-                        </Text>
+                                        : 'temas'
+
+                                }
+
+                                )
+
+                            </Text>
+
+                        )}
 
                     </Pressable>
 

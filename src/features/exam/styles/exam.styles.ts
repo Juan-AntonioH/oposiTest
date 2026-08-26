@@ -1,543 +1,216 @@
 import { StyleSheet } from 'react-native';
-import { colors, spacing, radius, shadows } from '@/core/theme';
+
+import {
+    colors,
+    spacing,
+    radius,
+    shadows,
+    commonStyles,
+} from '@/core/theme';
+
+export const cardBase = {
+    backgroundColor: colors.surface,
+    borderRadius: radius.xxl,
+    padding: spacing.xxl,
+};
+
+export const borderedCardBase = {
+    ...cardBase,
+    borderWidth: 1,
+    borderColor: colors.borderLight,
+};
+
+export const optionDimensions = {
+    width: 32,
+    height: 32,
+}
+
+export const centeredBase = {
+    ...commonStyles.centered,
+};
+
+export const buttonBase = {
+    ...commonStyles.centered,
+    borderRadius: radius.xl,
+};
+
+export const optionCardBase = {
+    ...commonStyles.row,
+    borderWidth: 2,
+    borderRadius: radius.xl,
+    padding: spacing.lg,
+    marginBottom: spacing.md,
+};
+
+export const inputBase = {
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderRadius: radius.md,
+    backgroundColor: colors.surfaceSecondary,
+    color: colors.text,
+};
 
 export const styles = StyleSheet.create({
     container: {
-        paddingHorizontal: 20,
-        // paddingTop: 24,
-        paddingTop: 5,
-        // paddingBottom: 40,
-        backgroundColor: '#F8F9FC',
+        paddingHorizontal: spacing.xxl,
+        paddingTop: spacing.xs,
+        backgroundColor: colors.surfaceSecondary,
     },
+
     listContainer: {
-        paddingHorizontal: 20,
-        paddingBottom: 24,
-        backgroundColor: '#F8F9FC', // Fondo gris claro idéntico a la imagen
+        paddingHorizontal: spacing.xxl,
+        paddingBottom: spacing.xl,
+        backgroundColor: colors.surfaceSecondary,
         flexGrow: 1,
     },
+
     menuContainer: {
-        gap: 16,
-        marginBottom: 32,
+        gap: spacing.xxl,
+        marginBottom: spacing.xxxl,
     },
+
     headerContainer: {
-        // marginTop: 24,
-        marginBottom: 10,
+        marginBottom: spacing.lg,
     },
+
     titleRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 12,
-        marginBottom: 14,
+        ...commonStyles.row,
+        gap: spacing.xl,
+        marginBottom: spacing.lg,
     },
+
     mainTitle: {
         fontSize: 26,
         fontWeight: 'bold',
-        color: '#1C2434',
-        marginBottom: 6,
+        color: colors.text,
+        marginBottom: spacing.sm,
     },
+
     mainSubtitle: {
         fontSize: 14,
-        color: '#64748B',
-        marginBottom: 16
+        color: colors.textSecondary,
+        marginBottom: spacing.xxl,
     },
+
     card: {
+        ...cardBase,
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#FFFFFF',
-        borderRadius: 16, // Bordes muy suaves
-        padding: 20,
-        marginBottom: 16,
-        // Configuración de sombras nativas para iOS y Android
-        shadowColor: '#000000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.04,
-        shadowRadius: 8,
-        elevation: 2,
+        marginBottom: spacing.xxl,
+        ...shadows.sm,
     },
+
     iconBox: {
+        ...commonStyles.centered,
         width: 48,
         height: 48,
-        borderRadius: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
+        borderRadius: radius.lg,
     },
+
     iconContainer: {
+        ...commonStyles.centered,
         width: 56,
         height: 56,
-        borderRadius: 12,
-        justifyContent: 'center',
-        alignItems: 'center',
+        borderRadius: radius.xl,
     },
     textContainer: {
         marginLeft: 16,
         flex: 1,
     },
+
     cardTitle: {
         fontSize: 18,
         fontWeight: 'bold',
-        color: '#1C2434',
-        marginBottom: 4,
+        color: colors.text,
+        marginBottom: spacing.xs,
     },
+
     cardSub: {
         fontSize: 12,
-        color: '#64748B',
-        marginTop: 2,
+        color: colors.textSecondary,
+        marginTop: spacing.xxs,
     },
+
     adminActionContainer: {
-        gap: 12,
-        marginTop: 8,
+        gap: spacing.md,
+        marginTop: spacing.md,
     },
+
     btn: {
-        flexDirection: 'row',
-        height: 48,
-        borderRadius: 10,
+        ...commonStyles.row,
         justifyContent: 'center',
-        alignItems: 'center',
-        gap: 8,
+        height: 48,
+        borderRadius: radius.lg,
+        gap: spacing.md,
     },
-    btnGreen: {
-        backgroundColor: '#00BA52',
-    },
-    btnBlue: {
-        backgroundColor: '#2F70F2',
-    },
+
     btnText: {
-        color: '#FFFFFF',
-        fontSize: 15,
-        fontWeight: '600',
+        color: colors.white,
+        ...commonStyles.buttonText,
     },
+
     cardSubtitle: {
         fontSize: 13,
-        color: '#64748B',
+        color: colors.textSecondary,
     },
+
     backButtonText: {
-        color: '#64748B', // Usa tu paleta de colores del tema global si existe
-        fontSize: 15,
-        fontWeight: '600',
+        color: colors.textSecondary,
+        ...commonStyles.buttonText,
     },
+
     backButtonContainer: {
         width: '100%',
         alignItems: 'flex-start',
-        marginBottom: 12,
-        paddingHorizontal: 4, // Pequeño margen para que no pegue directo al borde de la pantalla
+        marginBottom: spacing.xl,
+        paddingHorizontal: spacing.xs,
     },
-    // Área táctil del botón volver (facilita la pulsación del usuario)
+
     backButton: {
-        paddingVertical: 8,
-        paddingRight: 16, // Espacio interactivo hacia la derecha
+        paddingVertical: spacing.sm,
+        paddingRight: spacing.lg,
     },
+
     customCardTitle: {
         fontSize: 16,
         fontWeight: '500',
-        color: '#1C2434',
-        marginBottom: 4,
+        color: colors.text,
+        marginBottom: spacing.xs,
     },
+
     yearTextBold: {
         fontSize: 18,
         fontWeight: 'bold',
-        color: '#1C2434',
+        color: colors.text,
     },
+
     toggleCard: {
-        backgroundColor: '#FFFFFF',
-        borderRadius: 16,
-        padding: 16,
-        marginBottom: 24,
-        shadowColor: '#000000',
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.03,
-        shadowRadius: 6,
-        elevation: 2,
+        backgroundColor: colors.surface,
+        borderRadius: radius.xxl,
+        padding: spacing.lg,
+        marginBottom: spacing.xl,
+        ...shadows.sm,
     },
+
     toggleHeader: {
-        flexDirection: 'row',
-        alignItems: 'center',
+        ...commonStyles.row,
         justifyContent: 'space-between',
-        marginBottom: 6,
+        marginBottom: spacing.xs,
     },
+
     toggleTitle: {
-        fontSize: 15,
-        fontWeight: '600',
-        color: '#1C2434',
+        ...commonStyles.buttonText,
+        color: colors.text,
         flex: 1,
     },
+
     toggleSubtitle: {
         fontSize: 12,
-        color: '#64748B',
+        color: colors.textSecondary,
         lineHeight: 16,
-        paddingLeft: 28,
-    },
-    // ESTILOS PARA REALIZACIÓN DE TEST
-    headerControlContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        paddingHorizontal: 16,
-        paddingVertical: 12,
-        backgroundColor: '#FFFFFF',
-        borderBottomWidth: 1,
-        borderColor: '#E2E8F0',
-    },
-    examSubtitle: {
-        fontSize: 14,
-        fontWeight: '600',
-        color: '#64748B',
-    },
-    finishHeaderButton: {
-        backgroundColor: '#FEE2E2',
-        paddingHorizontal: 12,
-        paddingVertical: 6,
-        borderRadius: 8,
-        borderWidth: 1,
-        borderColor: '#FCA5A5',
-    },
-    finishHeaderButtonText: {
-        color: '#DC2626',
-        fontWeight: '700',
-        fontSize: 13,
-    },
-    statusCard: {
-        backgroundColor: '#FFFFFF',
-        borderRadius: 12,
-        padding: 16,
-        marginBottom: 16,
-        borderWidth: 1,
-        borderColor: '#E2E8F0',
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    progressTextContainer: {
-        flexDirection: 'row',
-        alignItems: 'baseline',
-    },
-    progressTitle: {
-        fontSize: 13,
-        color: '#64748B',
-    },
-    progressTotal: {
-        fontSize: 13,
-        fontWeight: 'bold',
-        color: '#1E293B',
-    },
-    progressBarBackground: {
-        flex: 1,
-        height: 10,
-        backgroundColor: '#F1F5F9',
-        borderRadius: 999,
-        marginHorizontal: 12,
-    },
-    progressBarFill: {
-        height: '100%',
-        backgroundColor: '#2563EB', // Color primario de tu tema
-        borderRadius: 3,
-    },
-    timerBadge: {
-        backgroundColor: '#F8FAFC',
-        borderWidth: 1,
-        borderColor: '#E2E8F0',
-        borderRadius: 999,
-
-        paddingHorizontal: 12,
-        paddingVertical: 6,
-
-        justifyContent: 'center',
-        alignItems: 'center',
-
-        minWidth: 95,
+        paddingLeft: spacing.xxxl,
     },
 
-    timerText: {
-        fontSize: 14,
-        fontWeight: '700',
-        color: '#334155',
-    },
-    questionCard: {
-        backgroundColor: '#FFFFFF',
-        borderRadius: 16,
-        padding: 16,
-        borderWidth: 1,
-        borderColor: '#E2E8F0',
-        marginBottom: 20,
-    },
-    questionText: {
-        fontSize: 16,
-        fontWeight: '700',
-        color: '#0F172A',
-        lineHeight: 24,
-        marginBottom: 20,
-    },
-    optionCard: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        borderWidth: 1,
-        borderColor: '#E2E8F0',
-        borderRadius: 12,
-        padding: 14,
-        marginBottom: 12,
-        backgroundColor: '#FFFFFF',
-    },
-    optionCardSelected: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        borderWidth: 2,
-        borderColor: '#2563EB',
-        borderRadius: 12,
-        padding: 13,
-        marginBottom: 12,
-        backgroundColor: '#EFF6FF',
-    },
-    optionCardCorrect: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        borderWidth: 2,
-        borderColor: '#10B981',
-        borderRadius: 12,
-        padding: 13,
-        marginBottom: 12,
-        backgroundColor: '#ECFDF5',
-    },
-    optionCardIncorrect: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        borderWidth: 2,
-        borderColor: '#EF4444',
-        borderRadius: 12,
-        padding: 13,
-        marginBottom: 12,
-        backgroundColor: '#FEF2F2',
-    },
-    optionCircle: {
-        width: 32,
-        height: 32,
-        borderRadius: 16,
-        borderWidth: 1,
-        borderColor: '#CBD5E1',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginRight: 12,
-    },
-    optionCircleSelected: {
-        color: '#FFFFFF',
-        width: 32,
-        height: 32,
-        borderRadius: 16,
-        backgroundColor: '#2563EB',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginRight: 12,
-    },
-    optionCircleCorrect: {
-        color: '#FFFFFF',
-        width: 32,
-        height: 32,
-        borderRadius: 16,
-        backgroundColor: '#10B981',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginRight: 12,
-    },
-    optionCircleIncorrect: {
-        width: 32,
-        height: 32,
-        borderRadius: 16,
-        color: '#FFFFFF',
-        backgroundColor: '#EF4444',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginRight: 12,
-    },
-    optionText: {
-        fontSize: 14,
-        color: '#475569',
-        fontWeight: '600',
-    },
-    optionTextSelected: {
-        // fontSize: 14,
-        // color: '#FFFFFF',
-        fontWeight: '700',
-    },
-    optionLabel: {
-        fontSize: 15,
-        color: '#334155',
-        flex: 1,
-    },
-    explanationCard: {
-        backgroundColor: '#F0F9FF',
-        borderRadius: 12,
-        padding: 14,
-        marginTop: 6,
-        marginBottom: 10,
-        borderWidth: 1,
-        borderColor: '#BAE6FD',
-    },
-    explanationHeader: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: 6,
-    },
-    explanationTitle: {
-        fontSize: 14,
-        paddingLeft: 6,
-        fontWeight: '700',
-        color: '#0369A1',
-    },
-    explanationText: {
-        fontSize: 13,
-        color: '#0C4A6E',
-        lineHeight: 18,
-    },
-    actionsContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        gap: 12,
-    },
-    primaryButton: {
-        flex: 1,
-        backgroundColor: '#2563EB',
-        borderRadius: 12,
-        paddingVertical: 14,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    primaryButtonDisabled: {
-        flex: 1,
-        backgroundColor: '#CBD5E1',
-        borderRadius: 12,
-        paddingVertical: 14,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    primaryButtonText: {
-        color: '#FFFFFF',
-        fontWeight: '700',
-        fontSize: 15,
-    },
-    secondaryButton: {
-        flex: 1,
-        backgroundColor: '#FFFFFF',
-        borderRadius: 12,
-        paddingVertical: 14,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderWidth: 1,
-        borderColor: '#CBD5E1',
-    },
-    secondaryButtonText: {
-        color: '#475569',
-        fontWeight: '600',
-        fontSize: 15,
-    },
-    scrollContainer: {
-        paddingHorizontal: 16,
-        paddingTop: 16,
-        paddingBottom: 32, // Margen extra abajo para que los botones de acción no se peguen al borde físico de la pantalla
-        backgroundColor: '#F8FAFC', // Fondo grisáceo claro muy limpio para que resalten las tarjetas blancas
-    },
-    /// EXAMSUMARYSCREEN
-    mainTitleSumary: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: '#1C2434',
-    },
-    scoreCard: {
-        backgroundColor: '#FFFFFF',
-        borderRadius: 16,
-        padding: 20,
-        alignItems: 'center',
-        marginBottom: 20,
-        elevation: 2,
-        shadowColor: '#000000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.04,
-        shadowRadius: 8,
-    },
-    badgeContainer: {
-        width: 60,
-        height: 60,
-        borderRadius: 30,
-        backgroundColor: '#EFF6FF',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: 8,
-    },
-    scoreNumber: {
-        fontSize: 34,
-        fontWeight: 'bold',
-        color: '#1C2434',
-    },
-    scoreLabel: {
-        fontSize: 13,
-        color: '#64748B',
-        fontWeight: '500',
-    },
-    gridContainer: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        justifyContent: 'space-between',
-        marginBottom: 12,
-    },
-    metricBox: {
-        backgroundColor: '#FFFFFF',
-        width: '48%',
-        borderRadius: 12,
-        padding: 14,
-        marginBottom: 12,
-        alignItems: 'center',
-        elevation: 2,
-        shadowColor: '#000000',
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.02,
-        shadowRadius: 4,
-    },
-    metricValue: {
-        fontSize: 15,
-        fontWeight: 'bold',
-        color: '#1C2434',
-        marginTop: 4,
-    },
-    metricLabel: {
-        fontSize: 11,
-        color: '#64748B',
-        marginTop: 2,
-        textAlign: 'center',
-        fontWeight: '500',
-    },
-    footerContainer: {
-        marginTop: 12,
-    },
-
-    legendContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        paddingHorizontal: 8,
-        marginTop: 8,
-    },
-    legendItem: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 6,
-    },
-    legendDot: {
-        width: 12,
-        height: 12,
-        borderRadius: 6,
-    },
-    legendText: {
-        fontSize: 12,
-        color: '#64748B',
-        fontWeight: '500',
-    },
-    backButtonContainerSumary: {
-        width: '100%',
-        marginBottom: 12,
-    },
-    backButtonSumary: {
-        borderRadius: 10,
-        paddingVertical: 12,
-    },
-    backButtonTextSumary: {
-        fontSize: 15,
-        fontWeight: '600',
-    },
     ///// EXAMREVIEWSCREEN
     scrollContainerReview: {
         paddingHorizontal: 20,
@@ -587,15 +260,9 @@ export const styles = StyleSheet.create({
         fontSize: 14,
     },
     questionMainCard: {
-        backgroundColor: '#FFFFFF',
-        borderRadius: 16,
-        padding: 16,
-        elevation: 2,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.02,
-        shadowRadius: 6,
-        marginBottom: 20,
+        ...cardBase,
+        marginBottom: spacing.xxl,
+        ...shadows.sm,
     },
     progressRow: {
         borderBottomWidth: 1,
@@ -741,381 +408,4 @@ export const styles = StyleSheet.create({
         color: '#FFFFFF',
         fontWeight: '600',
     },
-    //QUESTIONFORMSCREEN
-    containerQuestion: {
-        flex: 1,
-        backgroundColor: '#F8F9FA'
-    },
-    contentContainer: {
-        paddingHorizontal: 16,
-        paddingBottom: 32,
-        paddingTop: 8
-
-    },
-    subHeader: {
-        fontSize: 18,
-        color: '#333333',
-        marginBottom: 16
-
-    },
-    boldText: {
-        fontWeight: 'bold'
-    },
-    cardQuestion: {
-        backgroundColor: '#FFFFFF',
-        borderRadius: 12,
-        padding: 16,
-        elevation: 3,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-    },
-    label: {
-        fontSize: 14,
-        fontWeight: '600',
-        color: '#495057',
-        marginTop: 14,
-        marginBottom: 6
-
-    },
-    input: {
-        borderWidth: 1,
-        borderColor: '#CED4DA',
-        borderRadius: 8,
-        paddingHorizontal: 12,
-        paddingVertical: 10,
-        fontSize: 15,
-        backgroundColor: '#FAFAFA',
-        color: '#212529',
-    },
-    textArea: {
-        textAlignVertical: 'top',
-        minHeight: 80
-    },
-    optionContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: 10
-
-    },
-    optionBadge: {
-        width: 32,
-        height: 32,
-        borderRadius: 16,
-        backgroundColor: '#E8F0FE',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginRight: 10,
-    },
-    optionBadgeText: {
-        color: '#1A73E8',
-        fontWeight: 'bold'
-
-    },
-    optionInput: {
-        flex: 1,
-        borderWidth: 1,
-        borderColor: '#CED4DA',
-        borderRadius: 8,
-        paddingHorizontal: 12,
-        paddingVertical: 8,
-        fontSize: 14,
-        backgroundColor: '#FAFAFA',
-        color: '#212529',
-    },
-    buttonRow: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginTop: 24,
-        gap: 8
-
-    },
-    btnQuestion: {
-        flex: 1,
-        paddingVertical: 12,
-        borderRadius: 8,
-        alignItems: 'center',
-        justifyContent: 'center'
-
-    },
-    btnGuardar: {
-        backgroundColor: '#00A650'
-
-    },
-    btnEliminar: {
-        backgroundColor: '#D90404'
-
-    },
-    btnCancelar: {
-        borderWidth: 1,
-        borderColor: '#CED4DA',
-        backgroundColor: '#FFFFFF'
-
-    },
-    btnTextGuardar: {
-        color: '#FFFFFF',
-        fontWeight: 'bold',
-        fontSize: 13
-
-    },
-    btnTextEliminar: {
-        color: '#FFFFFF',
-        fontWeight: 'bold',
-        fontSize: 13
-
-    },
-    btnTextCancelar: {
-        color: '#495057',
-        fontSize: 13
-
-    },
-    dropdown: {
-        height: 50,
-        borderColor: '#ccc',
-        borderWidth: 1,
-        borderRadius: 8,
-        paddingHorizontal: 12,
-        backgroundColor: '#fff',
-        marginBottom: 16,
-    },
-    placeholder: {
-        color: '#999',
-        fontSize: 14,
-    },
-    selectedText: {
-        color: '#000',
-        fontSize: 14,
-    },
-    ///// QuestionsListScreen
-    containerList: { flex: 1, backgroundColor: '#F5F7FA' },
-    contentContainerList: { padding: 16 },
-    filterCard: { backgroundColor: '#FFF', borderRadius: 8, padding: 16, marginBottom: 16, borderWidth: 1, borderColor: '#EEE' },
-    labelList: { fontSize: 13, fontWeight: '600', color: '#555', marginBottom: 6 },
-    searchInput: { height: 45, borderColor: '#DDD', borderWidth: 1, borderRadius: 8, paddingHorizontal: 12, backgroundColor: '#FFF', marginBottom: 14, fontSize: 14 },
-    dropdownList: { height: 45, borderColor: '#DDD', borderWidth: 1, borderRadius: 8, paddingHorizontal: 12, backgroundColor: '#FFF', marginBottom: 14 },
-    resultsText: { fontSize: 12, color: '#777', marginTop: 4 },
-    questionCardList: { backgroundColor: '#FFF', borderRadius: 8, padding: 16, marginBottom: 12, borderWidth: 1, borderColor: '#EEE' },
-    questionHeaderRow: { flexDirection: 'row', alignItems: 'flex-start' },
-    questionTextList: { fontSize: 14, color: '#333', lineHeight: 20, flex: 1 },
-    metaRow: { flexDirection: 'row', marginTop: 8, alignItems: 'center' },
-    metaText: { fontSize: 12, color: '#666' },
-    metaDot: { marginHorizontal: 8, color: '#999' },
-    btnVolver: { backgroundColor: '#FFF', borderColor: '#DDD', borderWidth: 1, borderRadius: 8, height: 48, justifyContent: 'center', alignItems: 'center', marginTop: 12 },
-    btnVolverText: { color: '#333', fontSize: 15, fontWeight: '500' },
-    btnClearFilters: {
-        marginTop: 12,
-        backgroundColor: '#F0F4F8',
-        borderRadius: 6,
-        height: 36,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    btnClearFiltersText: {
-        color: '#475569',
-        fontSize: 13,
-        fontWeight: '600',
-    },
-    //BLOCKSCREEN
-    toggleCardCheckbox: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: '#FFFFFF',
-        padding: 16,
-        borderRadius: 12,
-        marginTop: 10,
-        marginBottom: 20,
-        borderWidth: 1,
-        borderColor: '#F1F5F9',
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.05,
-        shadowRadius: 3,
-        elevation: 2,
-    },
-    toggleCheckboxText: {
-        fontSize: 15,
-        fontWeight: '500',
-        color: '#1E293B',
-    },
-    blocksContainerCard: {
-        backgroundColor: '#FFFFFF',
-        borderRadius: 16,
-        padding: 16,
-        borderWidth: 1,
-        borderColor: '#F1F5F9',
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.05,
-        shadowRadius: 4,
-        elevation: 3,
-    },
-    blocksContainerSubtitle: {
-        fontSize: 15,
-        fontWeight: '600',
-        color: '#334155',
-        marginBottom: 16,
-        textAlign: 'center',
-    },
-    blockRowCard: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: '#FFFFFF',
-        borderWidth: 1,
-        borderColor: '#E2E8F0',
-        borderRadius: 12,
-        padding: 14,
-        marginBottom: 12,
-    },
-    blockRowCardSelected: {
-        borderColor: '#2F70F2',
-        backgroundColor: '#F8FAFC',
-    },
-    blockGridIconBox: {
-        marginRight: 12,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    blockRowTitle: {
-        fontSize: 15,
-        fontWeight: 'bold',
-        color: '#1E293B',
-    },
-    blockRowSub: {
-        fontSize: 13,
-        color: '#64748B',
-        marginTop: 2,
-    },
-    progressCard: {
-        backgroundColor: '#FFFFFF',
-        borderRadius: 16,
-        padding: 16,
-        marginBottom: 16,
-        borderWidth: 1,
-        borderColor: '#E5E7EB',
-        elevation: 2, // Android
-        shadowColor: '#000', // iOS
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.08,
-        shadowRadius: 4,
-    },
-
-    progressHeader: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginBottom: 12,
-    },
-    headerTopRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-    },
-
-    headerTitle: {
-        fontSize: 22,
-        fontWeight: '700',
-        color: '#1F2937',
-    },
-
-    headerSubtitle: {
-        marginTop: 4,
-        fontSize: 14,
-        color: '#6B7280',
-    },
-
-    closeButton: {
-        // width: 42,
-        // height: 42,
-        padding: 4,
-        color: '#FFF',
-        fontWeight: 'bold',
-        fontSize: 12,
-        borderRadius: 21,
-        backgroundColor: colors.error,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    optionLetter: {
-        color: '#475569',
-        fontWeight: '700',
-    },
-
-    optionLetterSelected: {
-        color: '#FFFFFF',
-        fontWeight: '700',
-    },
-    examName: {
-        marginTop: 4,
-        fontSize: 14,
-        color: '#64748B',
-        fontWeight: '500',
-    },
-    answersMap: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        gap: 8,
-    },
-
-    answerCircle: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: 8,
-    },
-
-    summaryButton: {
-        marginTop: 24,
-        backgroundColor: '#2563EB',
-        borderRadius: 12,
-        paddingVertical: 14,
-        alignItems: 'center',
-    },
-
-    summaryButtonText: {
-        color: '#FFFFFF',
-        fontSize: 16,
-        fontWeight: '700',
-    },
-    answersMapTitle: {
-        fontSize: 18,
-        marginTop: 20,
-        marginBottom: 12,
-    },
-    answerNumber: {
-        fontSize: 12,
-        fontWeight: '700',
-    },
-    answerCircleCorrect: {
-        backgroundColor: '#22C55E',
-    },
-
-    answerCircleIncorrect: {
-        backgroundColor: '#EF4444',
-    },
-
-    answerCircleUnanswered: {
-        backgroundColor: '#E9EBEE',
-        borderWidth: 1,
-        borderColor: '#CBD5E1',
-    },
-
-    answerNumberWhite: {
-        color: '#FFFFFF',
-    },
-
-    answerNumberDark: {
-        color: '#475569',
-    },
-    summaryContainer: {
-        flex: 1,
-    },
-
-    summaryContent: {
-        padding: 16,
-        paddingBottom: 40,
-    },  
 });
-

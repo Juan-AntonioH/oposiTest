@@ -69,7 +69,7 @@ const VARIANT_STYLES: Record<
 
   danger: {
     button: {
-      backgroundColor: colors.danger,
+      backgroundColor: colors.errorDark,
     },
     text: {
       color: colors.white,

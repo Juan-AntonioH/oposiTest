@@ -21,11 +21,11 @@ import {
 
 import {
     useExamReview,
-} from '../hooks/useExamReview';
+} from '../hooks/review/useExamReview';
 
 import {
     useReviewActions,
-} from '../hooks/useReviewActions';
+} from '../hooks/review/useReviewActions';
 
 import {
     ReviewHeader,

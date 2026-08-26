@@ -13,9 +13,9 @@ import {
     ThemeWithCount,
 } from '../../types';
 
-import { ThemeGroup } from '../../hooks/useCustomSelection';
+import { ThemeGroup } from '../../hooks/custom/useCustomSelection';
 
-import { styles } from '../../styles/customTest.styles';
+import { customStyles } from '../../styles';
 
 interface CustomBodyProps {
 
@@ -64,9 +64,9 @@ export function CustomBody({
 
         <>
 
-            <View style={styles.section}>
+            <View style={customStyles.section}>
 
-                <Text style={styles.sectionTitle}>
+                <Text style={customStyles.sectionTitle}>
                     Selecciona bloques
                 </Text>
 
@@ -85,10 +85,10 @@ export function CustomBody({
 
                             style={[
 
-                                styles.blockCard,
+                                customStyles.blockCard,
 
                                 checked &&
-                                styles.blockCardSelected,
+                                customStyles.blockCardSelected,
 
                             ]}
 
@@ -122,15 +122,15 @@ export function CustomBody({
 
                             />
 
-                            <View style={styles.blockInfo}>
+                            <View style={customStyles.blockInfo}>
 
-                                <Text style={styles.blockTitle}>
+                                <Text style={customStyles.blockTitle}>
 
                                     {group.block.name}
 
                                 </Text>
 
-                                <Text style={styles.blockSubtitle}>
+                                <Text style={customStyles.blockSubtitle}>
 
                                     {group.themes.reduce(
 
@@ -164,9 +164,9 @@ export function CustomBody({
 
             </View>
 
-            <View style={styles.section}>
+            <View style={customStyles.section}>
 
-                <Text style={styles.sectionTitle}>
+                <Text style={customStyles.sectionTitle}>
                     Selecciona temas (opcional)
                 </Text>
 
@@ -188,11 +188,11 @@ export function CustomBody({
 
                             key={group.block.id}
 
-                            style={styles.themeGroup}
+                            style={customStyles.themeGroup}
 
                         >
 
-                            <Text style={styles.themeGroupTitle}>
+                            <Text style={customStyles.themeGroupTitle}>
 
                                 {group.block.name}
 
@@ -223,10 +223,10 @@ export function CustomBody({
 
                                         style={[
 
-                                            styles.themeCard,
+                                            customStyles.themeCard,
 
                                             checked &&
-                                            styles.themeCardSelected,
+                                            customStyles.themeCardSelected,
 
                                         ]}
 
@@ -272,13 +272,13 @@ export function CustomBody({
 
                                         <View
 
-                                            style={styles.themeInfo}
+                                            style={customStyles.themeInfo}
 
                                         >
 
                                             <Text
 
-                                                style={styles.themeTitle}
+                                                style={customStyles.themeTitle}
 
                                             >
 
@@ -288,7 +288,7 @@ export function CustomBody({
 
                                             <Text
 
-                                                style={styles.themeSubtitle}
+                                                style={customStyles.themeSubtitle}
 
                                             >
 

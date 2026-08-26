@@ -16,10 +16,7 @@ import {
 import {
     formatExamTime,
 } from '../../utils/formatExamTime';
-
-import {
-    styles,
-} from '../../styles/exam.styles';
+import { summaryStyles } from '../../styles/examSummary.styles';
 
 interface SummaryMetricsProps {
 
@@ -53,9 +50,9 @@ export function SummaryMetrics({
 
         <>
 
-            <View style={styles.scoreCard}>
+            <View style={summaryStyles.scoreCard}>
 
-                <View style={styles.badgeContainer}>
+                <View style={summaryStyles.badgeContainer}>
 
                     <MaterialCommunityIcons
                         name="medal"
@@ -65,21 +62,21 @@ export function SummaryMetrics({
 
                 </View>
 
-                <Text style={styles.scoreNumber}>
+                <Text style={summaryStyles.scoreNumber}>
                     {summary.note.toFixed(2)}
                 </Text>
 
-                <Text style={styles.scoreLabel}>
+                <Text style={summaryStyles.scoreLabel}>
                     Nota final
                 </Text>
 
             </View>
 
-            <View style={styles.gridContainer}>
+            <View style={summaryStyles.gridContainer}>
 
                 {/* Tiempo */}
 
-                <View style={styles.metricBox}>
+                <View style={summaryStyles.metricBox}>
 
                     <MaterialCommunityIcons
                         name="clock-outline"
@@ -87,11 +84,11 @@ export function SummaryMetrics({
                         color="#64748B"
                     />
 
-                    <Text style={styles.metricValue}>
+                    <Text style={summaryStyles.metricValue}>
                         {formatExamTime(summary.timeSpent)}
                     </Text>
 
-                    <Text style={styles.metricLabel}>
+                    <Text style={summaryStyles.metricLabel}>
                         Tiempo
                     </Text>
 
@@ -101,7 +98,7 @@ export function SummaryMetrics({
 
                 <View
                     style={[
-                        styles.metricBox,
+                        summaryStyles.metricBox,
                         {
                             backgroundColor:
                                 '#E8F5E9',
@@ -117,7 +114,7 @@ export function SummaryMetrics({
 
                     <Text
                         style={[
-                            styles.metricValue,
+                            summaryStyles.metricValue,
                             {
                                 color:
                                     '#2E7D32',
@@ -129,7 +126,7 @@ export function SummaryMetrics({
 
                     <Text
                         style={[
-                            styles.metricLabel,
+                            summaryStyles.metricLabel,
                             {
                                 color:
                                     '#2E7D32',
@@ -145,7 +142,7 @@ export function SummaryMetrics({
 
                 <View
                     style={[
-                        styles.metricBox,
+                        summaryStyles.metricBox,
                         {
                             backgroundColor:
                                 '#FFEBEE',
@@ -161,7 +158,7 @@ export function SummaryMetrics({
 
                     <Text
                         style={[
-                            styles.metricValue,
+                            summaryStyles.metricValue,
                             {
                                 color:
                                     '#C62828',
@@ -173,7 +170,7 @@ export function SummaryMetrics({
 
                     <Text
                         style={[
-                            styles.metricLabel,
+                            summaryStyles.metricLabel,
                             {
                                 color:
                                     '#C62828',
@@ -187,7 +184,7 @@ export function SummaryMetrics({
 
                 {/* Sin responder */}
 
-                <View style={styles.metricBox}>
+                <View style={summaryStyles.metricBox}>
 
                     <MaterialCommunityIcons
                         name="minus-circle-outline"
@@ -195,11 +192,11 @@ export function SummaryMetrics({
                         color="#64748B"
                     />
 
-                    <Text style={styles.metricValue}>
+                    <Text style={summaryStyles.metricValue}>
                         {summary.unanswered}
                     </Text>
 
-                    <Text style={styles.metricLabel}>
+                    <Text style={summaryStyles.metricLabel}>
                         Sin responder ({unansweredPercentage.toFixed(1)}%)
                     </Text>
 

@@ -12,7 +12,7 @@ import { ScreenLayout } from '@/shared/layouts/ScreenLayout';
 import { ScreenState } from '@/shared/components/ScreenState/ScreenState';
 
 import { OppositionCard } from '../components/OppositionCard/OppositionCard';
-import { useOppositions } from '../hooks/useOppositions';
+import { useOppositions } from '../hooks/opposition/useOppositions';
 import { styles } from '../styles/exam.styles';
 
 interface OppositionsScreenProps {

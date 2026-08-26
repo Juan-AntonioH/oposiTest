@@ -12,7 +12,6 @@ import {
     isValidPassword,
 } from '../utils/validators';
 
-import { PRESET_AVATARS } from '../constants/avatars';
 import { normalizeAccountName } from '../types/helpers';
 
 type Nav = NativeStackNavigationProp<any, 'Register'>;
@@ -46,14 +45,6 @@ export function useRegister() {
     >('idle');
 
     const [loading, setLoading] = useState(false);
-
-    // =========================
-    // FINAL AVATAR VALUE (CLEAN)
-    // =========================
-    const avatarValue: string =
-        avatarType === 'custom'
-            ? (customAvatarUri ?? 'avatar_01')
-            : selectedAvatarId;
 
     // =========================
     // VALIDATION
@@ -186,7 +177,7 @@ export function useRegister() {
             const result = await ImagePicker.launchImageLibraryAsync({
                 mediaTypes: ImagePicker.MediaTypeOptions.Images,
                 allowsEditing: true,
-                aspect: [1, 1], // 👈 Corrección: Relación de aspecto 1:1 (Cuadrado perfecto)
+                aspect: [1, 1],
                 quality: 0.6,
             });
 
@@ -220,7 +211,7 @@ export function useRegister() {
             setAccountName,
             setEmail,
             setPassword,
-            setSelectedAvatarId: handleSelectAvatar, // 🔥 override correcto
+            setSelectedAvatarId: handleSelectAvatar,
             handlePickImage,
             handleRegister,
         },

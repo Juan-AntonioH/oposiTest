@@ -1,8 +1,4 @@
 import {
-    Alert,
-} from 'react-native';
-
-import {
     createQuestion,
     updateQuestion,
     deleteQuestion,

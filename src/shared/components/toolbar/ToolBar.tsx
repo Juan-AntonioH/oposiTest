@@ -12,7 +12,7 @@ interface ToolbarProps {
 export function Toolbar({ title, onMenuPress }: ToolbarProps) {
   return (
     <View style={styles.container}>
-      
+
       {/* SOLO MOSTRAR HAMBURGER SI EXISTE onMenuPress */}
       {onMenuPress ? (
         <Pressable
@@ -22,7 +22,6 @@ export function Toolbar({ title, onMenuPress }: ToolbarProps) {
           <MaterialIcons name="menu" size={32} color={colors.white}></MaterialIcons>
         </Pressable>
       ) : (
-        // placeholder para mantener centrado el título
         <View style={{ width: 40 }} />
       )}
 
@@ -32,29 +31,3 @@ export function Toolbar({ title, onMenuPress }: ToolbarProps) {
     </View>
   );
 }
-// interface ToolbarProps {
-//   title: string;
-//   onMenuPress?: () => void;
-// }
-
-// export function Toolbar({
-//   title,
-//   onMenuPress,
-// }: ToolbarProps) {
-//   return (
-//     <View style={styles.container}>
-//       <Pressable
-//         style={styles.menuButton}
-//         onPress={onMenuPress}
-//       >
-//         <Text style={styles.menuIcon}>☰</Text>
-//       </Pressable>
-
-//       <Text style={styles.title}>
-//         {title}
-//       </Text>
-
-//       <View style={styles.placeholder} />
-//     </View>
-//   );
-// }

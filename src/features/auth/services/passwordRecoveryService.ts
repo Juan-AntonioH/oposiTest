@@ -2,8 +2,6 @@ import { sendPasswordResetEmail } from 'firebase/auth';
 
 import { auth } from '@/core/config/firebase';
 
-import { existsEmail } from './firestoreUserService';
-
 import { getUserByEmail } from './firestoreUserService';
 
 export async function sendRecoveryEmail(email: string) {

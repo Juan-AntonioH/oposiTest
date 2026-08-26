@@ -9,11 +9,13 @@ export async function prepareExam(
     const {
         resetTest,
         initializeTestQuestions,
+        setLoading,
     } = useTestStore.getState();
 
     resetTest();
 
     try {
+        setLoading(true);
 
         const questions =
             await loadQuestions(filters);
@@ -25,10 +27,17 @@ export async function prepareExam(
         return questions.length;
 
     } catch (error) {
-
+        console.error(
+            'PREPARE: error',
+            error,
+        );
         resetTest();
 
         throw error;
+
+    } finally {
+
+        setLoading(false);
 
     }
 

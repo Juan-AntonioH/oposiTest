@@ -13,10 +13,7 @@ import {
 import {
     ThemeWithCount,
 } from '../types';
-
-import {
-    styles,
-} from '../styles/exam.styles';
+import { blockStyles } from '../styles/examBlock.styles';
 
 interface ThemeItemProps {
 
@@ -44,10 +41,10 @@ export function ThemeItem({
 
             style={[
 
-                styles.blockRowCard,
+                blockStyles.blockRowCard,
 
                 selected &&
-                styles.blockRowCardSelected,
+                blockStyles.blockRowCardSelected,
 
                 {
                     marginVertical: 6,
@@ -85,7 +82,7 @@ export function ThemeItem({
 
             <View
                 style={
-                    styles.blockGridIconBox
+                    blockStyles.blockGridIconBox
                 }
             >
 
@@ -109,7 +106,7 @@ export function ThemeItem({
 
                 <Text
                     style={
-                        styles.blockRowTitle
+                        blockStyles.blockRowTitle
                     }
                 >
 
@@ -119,7 +116,7 @@ export function ThemeItem({
 
                 <Text
                     style={
-                        styles.blockRowSub
+                        blockStyles.blockRowSub
                     }
                 >
 

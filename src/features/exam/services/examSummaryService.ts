@@ -240,15 +240,6 @@ function calculateScore(
     totalQuestions: number,
 ): number {
 
-    /*
-     * TODO:
-     * Actualmente se aplica una penalización fija de 1/3 por respuesta
-     * incorrecta.
-     *
-     * En el futuro este valor deberá obtenerse desde la configuración
-     * de cada oposición.
-     */
-
     const penalty =
         1 / 3;
 

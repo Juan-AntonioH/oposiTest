@@ -224,6 +224,8 @@ export function useThemes({
 
         }, []);
 
+    const [startingTest, setStartingTest] = useState(false);
+
     const handleStartTest =
         useCallback(async () => {
 
@@ -232,42 +234,56 @@ export function useThemes({
                 return;
 
             }
+            try {
 
-            const totalQuestions =
-                await prepareExam({
+                setStartingTest(true);
 
-                    examType: 'themes',
+                const totalQuestions =
+                    await prepareExam({
 
-                    oppositionId,
+                        examType: 'themes',
 
-                    selectedThemes,
+                        oppositionId,
 
-                });
+                        selectedThemes,
 
-            navigation.navigate(
+                    });
 
-                'TestScreen',
+                navigation.navigate(
 
-                {
+                    'TestScreen',
 
-                    oppositionId,
+                    {
 
-                    name,
+                        oppositionId,
 
-                    setTime: totalQuestions,
+                        name,
 
-                    examType: 'themes',
+                        setTime: totalQuestions,
 
-                    immediateSolution,
+                        examType: 'themes',
 
-                    titleParam: 'Test por Temas',
+                        immediateSolution,
 
-                    selectedThemes,
+                        titleParam: 'Test por Temas',
 
-                },
+                        selectedThemes,
 
-            );
+                    },
 
+                );
+            } catch (error) {
+
+                console.error(
+                    'THEMES: error starting test',
+                    error,
+                );
+
+            } finally {
+
+                setStartingTest(false);
+
+            }
         }, [
 
             navigation,
@@ -282,6 +298,8 @@ export function useThemes({
 
         ]);
     return {
+
+        startingTest,
 
         loading,
 

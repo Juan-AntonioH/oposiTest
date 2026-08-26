@@ -1,205 +1,197 @@
 import { StyleSheet } from 'react-native';
 
-export const styles = StyleSheet.create({
+import { radius, spacing, colors, commonStyles } from '@/core/theme';
+
+export const customStyles = StyleSheet.create({
+
+    // =========================================================
+    // SECCIÓN
+    // =========================================================
 
     section: {
-
-        backgroundColor: '#FFFFFF',
-
-        borderRadius: 12,
-
+        backgroundColor: colors.surface,
+        borderRadius: radius.xl,
         borderWidth: 1,
-
-        borderColor: '#E2E8F0',
-
-        padding: 16,
-
-        marginBottom: 16,
-
+        borderColor: colors.borderLight,
+        padding: spacing.xxl,
+        marginBottom: spacing.xxl,
     },
 
     sectionTitle: {
-
-        fontSize: 16,
-
-        fontWeight: '700',
-
-        color: '#1E293B',
-
-        marginBottom: 16,
-
+        ...commonStyles.sectionTitle,
+        marginBottom: spacing.xxl,
     },
 
+    // =========================================================
+    // BLOQUES
+    // =========================================================
+
     blockCard: {
-
-        flexDirection: 'row',
-
-        alignItems: 'center',
-
-        padding: 14,
-
-        borderRadius: 10,
-
+        ...commonStyles.row,
+        padding: spacing.lg,
+        borderRadius: radius.lg,
         borderWidth: 1,
-
-        borderColor: '#E2E8F0',
-
-        backgroundColor: '#FFFFFF',
-
-        marginBottom: 12,
-
+        borderColor: colors.borderLight,
+        backgroundColor: colors.surface,
+        marginBottom: spacing.xl,
     },
 
     blockCardSelected: {
-
-        borderColor: '#2F70F2',
-
-        backgroundColor: '#EFF6FF',
-
+        borderColor: colors.primary,
+        backgroundColor: colors.primaryLight,
     },
 
     blockInfo: {
-
         flex: 1,
-
-        marginLeft: 12,
-
+        marginLeft: spacing.xl,
     },
 
     blockTitle: {
-
-        fontSize: 15,
-
-        fontWeight: '600',
-
-        color: '#1E293B',
-
+        ...commonStyles.titleSmall,
     },
 
     blockSubtitle: {
-
-        marginTop: 2,
-
-        fontSize: 13,
-
-        color: '#64748B',
-
+        ...commonStyles.subtitle,
+        marginTop: spacing.xxs,
     },
 
+    // =========================================================
+    // GRUPO DE TEMAS
+    // =========================================================
+
     themeGroup: {
-
-        backgroundColor: '#FFFFFF',
-
-        borderRadius: 10,
-
+        backgroundColor: colors.surface,
+        borderRadius: radius.lg,
         borderWidth: 1,
-
-        borderColor: '#E2E8F0',
-
-        padding: 14,
-
-        marginBottom: 16,
-
+        borderColor: colors.borderLight,
+        padding: spacing.lg,
+        marginBottom: spacing.xxl,
     },
 
     themeGroupTitle: {
-
-        fontSize: 14,
-
-        fontWeight: '700',
-
-        color: '#475569',
-
-        marginBottom: 12,
-
+        ...commonStyles.sectionSubtitle,
+        marginBottom: spacing.xl,
     },
 
     themeCard: {
-
-        flexDirection: 'row',
-
-        alignItems: 'center',
-
-        padding: 12,
-
-        borderRadius: 8,
-
+        ...commonStyles.row,
+        padding: spacing.md,
+        borderRadius: radius.md,
         borderWidth: 1,
-
-        borderColor: '#E2E8F0',
-
-        backgroundColor: '#FFFFFF',
-
-        marginBottom: 10,
-
+        borderColor: colors.borderLight,
+        backgroundColor: colors.surface,
+        marginBottom: spacing.lg,
     },
 
     themeCardSelected: {
-
-        borderColor: '#2F70F2',
-
-        backgroundColor: '#EFF6FF',
-
+        borderColor: colors.primary,
+        backgroundColor: colors.primaryLight,
     },
 
     themeInfo: {
-
         flex: 1,
-
-        marginLeft: 12,
-
+        marginLeft: spacing.xl,
     },
 
     themeTitle: {
-
-        fontSize: 14,
-
-        fontWeight: '500',
-
-        color: '#1E293B',
-
+        ...commonStyles.textMedium,
     },
 
     themeSubtitle: {
-
-        marginTop: 2,
-
-        fontSize: 12,
-
-        color: '#64748B',
-
+        ...commonStyles.subtitleSmall,
+        marginTop: spacing.xxs,
     },
+
+    // =========================================================
+    // BOTÓN COMENZAR
+    // =========================================================
+
     startButton: {
-
         height: 52,
-
-        borderRadius: 10,
-
-        backgroundColor: '#2F70F2',
-
+        borderRadius: radius.lg,
+        backgroundColor: colors.primary,
         justifyContent: 'center',
-
         alignItems: 'center',
-
-        marginTop: 12,
-
+        marginTop: spacing.xl,
         marginBottom: 30,
-
     },
 
     startButtonDisabled: {
-
-        backgroundColor: '#CBD5E1',
-
+        backgroundColor: colors.disabled,
     },
 
     startButtonText: {
+        ...commonStyles.buttonText,
+    },
+    configSection: {
+        backgroundColor: colors.surface,
+        padding: spacing.xxl,
+        borderRadius: radius.xl,
+        marginBottom: spacing.xxl,
+        borderWidth: 1,
+        borderColor: colors.borderLight,
+    },
 
-        color: '#FFFFFF',
-
-        fontSize: 15,
-
+    configSectionTitle: {
+        fontSize: 16,
         fontWeight: '700',
+        color: colors.text,
+        marginBottom: spacing.xxl,
+    },
 
+    configLabel: {
+        fontSize: 14,
+        color: colors.textSecondary,
+        marginBottom: spacing.sm,
+    },
+
+    numberInputContainer: {
+        ...commonStyles.row,
+        borderWidth: 1,
+        borderColor: colors.border,
+        borderRadius: radius.md,
+        marginBottom: spacing.lg,
+        paddingHorizontal: spacing.xl,
+        height: 48,
+    },
+
+    numberInput: {
+        flex: 1,
+        color: colors.text,
+        fontSize: 16,
+        fontWeight: '500',
+    },
+
+    numberInputControls: {
+        flexDirection: 'column',
+        justifyContent: 'center',
+        height: '100%',
+    },
+
+    numberInputButton: {
+        padding: spacing.xxs,
+    },
+    solutionCard: {
+        ...commonStyles.rowBetween,
+        backgroundColor: colors.surface,
+        padding: spacing.lg,
+        borderRadius: radius.xl,
+        marginBottom: spacing.xxl,
+        borderWidth: 1,
+        borderColor: colors.borderLight,
+    },
+
+    solutionContent: {
+        ...commonStyles.row,
+    },
+
+    solutionIcon: {
+        marginRight: spacing.md,
+    },
+
+    solutionText: {
+        fontSize: 14,
+        fontWeight: '600' as const,
+        color: colors.text,
     },
 });

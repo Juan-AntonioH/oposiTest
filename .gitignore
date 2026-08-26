@@ -34,7 +34,10 @@ yarn-error.*
 # local env files
 .env
 .env*.local
+eas.json
 agregarDatosDB.js
+agregarDatosTablaDB.js
+Estructura_Pregunta.xlsx
 # typescript
 *.tsbuildinfo
 
